@@ -3,11 +3,15 @@
 namespace app\controllers\prestadores;
 
 use Yii;
+use app\models\MultipleModel as Model;
 use app\models\prestadores\Prestadores;
 use app\models\prestadores\PrestadoresSearch;
+use app\models\Prestadores\Foneprestador;
+use app\models\Prestadores\Emailprestador;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * PrestadoresController implements the CRUD actions for Prestadores model.
@@ -52,8 +56,14 @@ class PrestadoresController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $modelsFones = $model->foneprestador;
+        $modelsEmails = $model->emailprestador;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'modelsFones' => $modelsFones,
+            'modelsEmails' => $modelsEmails,
         ]);
     }
 
@@ -65,13 +75,57 @@ class PrestadoresController extends Controller
     public function actionCreate()
     {
         $model = new Prestadores();
+        $modelsFones = [new Foneprestador];
+        $modelsEmails = [new Emailprestador];
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->pres_codprestador]);
+
+            $modelsFones = Model::createMultiple(Foneprestador::classname());
+            Model::loadMultiple($modelsFones, Yii::$app->request->post());
+
+            $modelsEmails = Model::createMultiple(Emailprestador::classname());
+            Model::loadMultiple($modelsEmails, Yii::$app->request->post());
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($modelsFones) || Model::validateMultiple($modelsEmails) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($modelsFones as $modelFone) {
+                            $modelFone->fopre_codprestador = $model->pres_codprestador;
+                            if (! ($flag = $modelFone->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+
+                        foreach ($modelsEmails as $modelEmail) {
+                            $modelEmail->empre_codprestador = $model->pres_codprestador;
+                            if (! ($flag = $modelEmail->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->pres_codprestador]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'modelsFones' => (empty($modelsFones)) ? [new Foneprestador] : $modelsFones,
+            'modelsEmails' => (empty($modelsEmails)) ? [new Emailprestador] : $modelsEmails,
         ]);
     }
 
@@ -85,13 +139,68 @@ class PrestadoresController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelsFones = $model->foneprestador;
+        $modelsEmails = $model->emailprestador;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->pres_codprestador]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            //--------Telefones--------------
+            $oldIDsFones = ArrayHelper::map($modelsFones, 'id', 'id');
+            $modelsFones = Model::createMultiple(Foneprestador::classname(), $modelsFones);
+            Model::loadMultiple($modelsFones, Yii::$app->request->post());
+            $deletedIDsFones = array_diff($oldIDsFones, array_filter(ArrayHelper::map($modelsFones, 'id', 'id')));
+
+            //--------E-mails--------------
+            $oldIDsEmails = ArrayHelper::map($modelsEmails, 'id', 'id');
+            $modelsEmails = Model::createMultiple(Emailprestador::classname(), $modelsEmails);
+            Model::loadMultiple($modelsEmails, Yii::$app->request->post());
+            $deletedIDsEmails = array_diff($oldIDsEmails, array_filter(ArrayHelper::map($modelsEmails, 'id', 'id')));
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($modelsFones) || Model::validateMultiple($modelsEmails) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (!empty($deletedIDsFones)) {
+                            Foneprestador::deleteAll(['id' => $deletedIDsFones]);
+                        }
+                        foreach ($modelsFones as $modelFone) {
+                            $modelFone->fopre_codprestador = $model->pres_codprestador;
+                            if (! ($flag = $modelFone->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+
+                        if (!empty($deletedIDsEmails)) {
+                            Emailprestador::deleteAll(['id' => $deletedIDsEmails]);
+                        }
+                        foreach ($modelsEmails as $modelEmail) {
+                            $modelEmail->empre_codprestador = $model->pres_codprestador;
+                            if (! ($flag = $modelEmail->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', '<b>SUCESSO! </b> Prestador atualizado!</b>');
+                        return $this->redirect(['view', 'id' => $model->pres_codprestador]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'modelsFones' => (empty($modelsFones)) ? [new Foneprestador] : $modelsFones,
+            'modelsEmails' => (empty($modelsEmails)) ? [new Emailprestador] : $modelsEmails,
         ]);
     }
 

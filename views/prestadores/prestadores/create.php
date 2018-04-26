@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelsFones' => (empty($modelsFones)) ? [new Foneprestador] : $modelsFones,
+        'modelsEmails' => (empty($modelsEmails)) ? [new Emailprestador] : $modelsEmails,
     ]) ?>
 
 </div>

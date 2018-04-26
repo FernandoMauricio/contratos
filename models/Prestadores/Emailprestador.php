@@ -29,11 +29,12 @@ class Emailprestador extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['empre_codprestador', 'empre_email'], 'required'],
+            [['empre_email'], 'required'],
             [['empre_codprestador'], 'integer'],
+            [['empre_email'], 'email'],
             [['empre_email', 'empre_contato'], 'string', 'max' => 45],
             [['empre_codprestador', 'empre_email'], 'unique', 'targetAttribute' => ['empre_codprestador', 'empre_email']],
-            [['empre_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => PrestadoresPres::className(), 'targetAttribute' => ['empre_codprestador' => 'pres_codprestador']],
+            [['empre_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['empre_codprestador' => 'pres_codprestador']],
         ];
     }
 
@@ -43,9 +44,9 @@ class Emailprestador extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'empre_codprestador' => 'Empre Codprestador',
-            'empre_email' => 'Empre Email',
-            'empre_contato' => 'Empre Contato',
+            'empre_codprestador' => 'Codprestador',
+            'empre_email' => 'Email',
+            'empre_contato' => 'Contato',
         ];
     }
 

@@ -18,7 +18,7 @@ use Yii;
  * @property string $pres_cidade
  * @property string $pres_estado
  *
- * @property ContratosCont[] $contratosConts
+ * @property ContratosCont[] $contratos
  * @property EmailprestadorEmpre[] $emailprestadorEmpres
  * @property FoneprestadorFopre[] $foneprestadorFopres
  */
@@ -54,40 +54,40 @@ class Prestadores extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pres_codprestador' => 'Pres Codprestador',
-            'pres_nomefantasia' => 'Pres Nomefantasia',
-            'pres_razaosocial' => 'Pres Razaosocial',
-            'pres_cnpj' => 'Pres Cnpj',
-            'pres_cep' => 'Pres Cep',
-            'pres_logradouro' => 'Pres Logradouro',
-            'pres_bairro' => 'Pres Bairro',
-            'pres_complemento' => 'Pres Complemento',
-            'pres_cidade' => 'Pres Cidade',
-            'pres_estado' => 'Pres Estado',
+            'pres_codprestador' => 'Código',
+            'pres_nomefantasia' => 'Nome Fantasia',
+            'pres_razaosocial' => 'Razão Social',
+            'pres_cnpj' => 'CNPJ',
+            'pres_cep' => 'CEP',
+            'pres_logradouro' => 'Endereço',
+            'pres_bairro' => 'Bairro',
+            'pres_complemento' => 'Complemento',
+            'pres_cidade' => 'Cidade',
+            'pres_estado' => 'Estado',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContratosConts()
+    public function getContratos()
     {
-        return $this->hasMany(ContratosCont::className(), ['cont_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(Contratos::className(), ['cont_codprestador' => 'pres_codprestador']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEmailprestadorEmpres()
+    public function getEmailprestador()
     {
-        return $this->hasMany(EmailprestadorEmpre::className(), ['empre_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(Emailprestador::className(), ['empre_codprestador' => 'pres_codprestador']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFoneprestadorFopres()
+    public function getFoneprestador()
     {
-        return $this->hasMany(FoneprestadorFopre::className(), ['fopre_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(Foneprestador::className(), ['fopre_codprestador' => 'pres_codprestador']);
     }
 }

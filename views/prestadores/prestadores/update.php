@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\prestadores\Prestadores */
 
-$this->title = 'Update Prestadores: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Prestadores', 'url' => ['index']];
+$this->title = 'Atualizar Prestador: '.$model->pres_nomefantasia.'';
+$this->params['breadcrumbs'][] = ['label' => 'Listagem de Prestadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->pres_codprestador, 'url' => ['view', 'id' => $model->pres_codprestador]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Atualizar';
 ?>
 <div class="prestadores-update">
 
@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelsFones' => (empty($modelsFones)) ? [new Address] : $modelsFones,
+        'modelsEmails' => (empty($modelsEmails)) ? [new Emailprestador] : $modelsEmails,
     ]) ?>
 
 </div>
