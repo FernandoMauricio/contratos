@@ -39,20 +39,16 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
+
+            ['label' => 'Parâmetros', 'items' => [
+            '<li class="dropdown-header">Administração dos Parâmetros</li>',
+                ['label' => 'Cadastro de Prestadores', 'url' => ['/base/prestadores']],
+                ['label' => 'Tipos de Instrumento', 'url' => ['/base/instrumentos']],
+                ['label' => 'Tipos de Natureza', 'url' => ['/base/naturezas']],
+
+            ]],
+
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
         ],
     ]);
     NavBar::end();

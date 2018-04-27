@@ -1,13 +1,13 @@
 <?php
 
-namespace app\controllers\prestadores;
+namespace app\controllers\base;
 
 use Yii;
 use app\models\MultipleModel as Model;
-use app\models\prestadores\Prestadores;
-use app\models\prestadores\PrestadoresSearch;
-use app\models\Prestadores\Foneprestador;
-use app\models\Prestadores\Emailprestador;
+use app\models\base\prestadores\Prestadores;
+use app\models\base\prestadores\PrestadoresSearch;
+use app\models\base\Prestadores\Foneprestador;
+use app\models\base\Prestadores\Emailprestador;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\prestadores;
+namespace app\models\base\Prestadores;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\prestadores\Prestadores;
+use app\models\base\prestadores\Prestadores;
 
 /**
  * PrestadoresSearch represents the model behind the search form of `app\models\prestadores\Prestadores`.
