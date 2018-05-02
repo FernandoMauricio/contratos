@@ -41,6 +41,7 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Parâmetros', 'items' => [
             '<li class="dropdown-header">Administração dos Parâmetros</li>',
+                ['label' => 'Cadastro de Contratos', 'url' => ['/contratos/contratos']],
                 ['label' => 'Cadastro de Prestadores', 'url' => ['/base/prestadores']],
                 ['label' => 'Tipos de Instrumento', 'url' => ['/base/instrumentos']],
                 ['label' => 'Tipos de Natureza', 'url' => ['/base/naturezas']],

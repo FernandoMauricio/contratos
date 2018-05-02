@@ -28,7 +28,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
             <div class="tab-pane" id="tab1">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-5"><?= $form->field($model, 'pres_nomefantasia')->textInput(['maxlength' => true]) ?></div>
+                        <div class="col-md-5"><?= $form->field($model, 'pres_nome')->textInput(['maxlength' => true]) ?></div>
 
                         <div class="col-md-5"><?= $form->field($model, 'pres_razaosocial')->textInput(['maxlength' => true]) ?></div>
 

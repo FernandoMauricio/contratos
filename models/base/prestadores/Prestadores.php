@@ -8,8 +8,9 @@ use Yii;
  * This is the model class for table "prestadores_pres".
  *
  * @property string $pres_codprestador
- * @property string $pres_nomefantasia
+ * @property string $pres_nome
  * @property string $pres_razaosocial
+ * @property string $pres_cpf
  * @property string $pres_cnpj
  * @property string $pres_cep
  * @property string $pres_logradouro
@@ -17,10 +18,12 @@ use Yii;
  * @property string $pres_complemento
  * @property string $pres_cidade
  * @property string $pres_estado
+ * @property int $tipoprestador_cod
  *
- * @property ContratosCont[] $contratos
+ * @property ContratosCont[] $contratosConts
  * @property EmailprestadorEmpre[] $emailprestadorEmpres
  * @property FoneprestadorFopre[] $foneprestadorFopres
+ * @property TipoprestadorTipre $tipoprestadorCod
  */
 class Prestadores extends \yii\db\ActiveRecord
 {
@@ -38,13 +41,15 @@ class Prestadores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pres_nomefantasia', 'pres_razaosocial', 'pres_cnpj'], 'required'],
-            [['pres_nomefantasia', 'pres_logradouro'], 'string', 'max' => 60],
+            [['pres_nome', 'tipoprestador_cod'], 'required'],
+            [['tipoprestador_cod'], 'integer'],
+            [['pres_nome', 'pres_logradouro'], 'string', 'max' => 60],
             [['pres_razaosocial'], 'string', 'max' => 50],
+            [['pres_cpf', 'pres_cidade', 'pres_estado'], 'string', 'max' => 45],
             [['pres_cnpj'], 'string', 'max' => 20],
             [['pres_cep'], 'string', 'max' => 15],
             [['pres_bairro', 'pres_complemento'], 'string', 'max' => 40],
-            [['pres_cidade', 'pres_estado'], 'string', 'max' => 45],
+            [['tipoprestador_cod'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoprestador::className(), 'targetAttribute' => ['tipoprestador_cod' => 'tipre_codtipo']],
         ];
     }
 
@@ -55,15 +60,17 @@ class Prestadores extends \yii\db\ActiveRecord
     {
         return [
             'pres_codprestador' => 'Código',
-            'pres_nomefantasia' => 'Nome Fantasia',
+            'pres_nome' => 'Nome',
             'pres_razaosocial' => 'Razão Social',
-            'pres_cnpj' => 'CNPJ',
-            'pres_cep' => 'CEP',
-            'pres_logradouro' => 'Endereço',
+            'pres_cpf' => 'Cpf',
+            'pres_cnpj' => 'Cnpj',
+            'pres_cep' => 'Cep',
+            'pres_logradouro' => 'Logradouro',
             'pres_bairro' => 'Bairro',
             'pres_complemento' => 'Complemento',
             'pres_cidade' => 'Cidade',
             'pres_estado' => 'Estado',
+            'tipoprestador_cod' => 'Tipo de Prestador',
         ];
     }
 
@@ -72,7 +79,7 @@ class Prestadores extends \yii\db\ActiveRecord
      */
     public function getContratos()
     {
-        return $this->hasMany(Contratos::className(), ['cont_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(ContratosCont::className(), ['cont_codprestador' => 'pres_codprestador']);
     }
 
     /**
@@ -80,7 +87,7 @@ class Prestadores extends \yii\db\ActiveRecord
      */
     public function getEmailprestador()
     {
-        return $this->hasMany(Emailprestador::className(), ['empre_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(EmailprestadorEmpre::className(), ['empre_codprestador' => 'pres_codprestador']);
     }
 
     /**
@@ -88,6 +95,14 @@ class Prestadores extends \yii\db\ActiveRecord
      */
     public function getFoneprestador()
     {
-        return $this->hasMany(Foneprestador::className(), ['fopre_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(FoneprestadorFopre::className(), ['fopre_codprestador' => 'pres_codprestador']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTipoprestador()
+    {
+        return $this->hasOne(TipoprestadorTipre::className(), ['tipre_codtipo' => 'tipoprestador_cod']);
     }
 }

@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'pres_codprestador') ?>
 
-    <?= $form->field($model, 'pres_nomefantasia') ?>
+    <?= $form->field($model, 'pres_nome') ?>
 
     <?= $form->field($model, 'pres_razaosocial') ?>
 

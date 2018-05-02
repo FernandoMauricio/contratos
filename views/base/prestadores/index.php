@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
 
             'pres_codprestador',
-            'pres_nomefantasia',
+            'pres_nome',
             'pres_razaosocial',
             'pres_cnpj',
             'pres_cep',

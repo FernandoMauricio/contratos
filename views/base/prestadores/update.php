@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\prestadores\Prestadores */
 
-$this->title = 'Atualizar Prestador: '.$model->pres_nomefantasia.'';
+$this->title = 'Atualizar Prestador: '.$model->pres_nome.'';
 $this->params['breadcrumbs'][] = ['label' => 'Listagem de Prestadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->pres_codprestador, 'url' => ['view', 'id' => $model->pres_codprestador]];
 $this->params['breadcrumbs'][] = 'Atualizar';
