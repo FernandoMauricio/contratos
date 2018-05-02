@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\base\instrumentos\Instrumentos */
 
-$this->title = 'Novo Instrumento';
+$this->title = 'Novo Tipo de Instrumento';
 $this->params['breadcrumbs'][] = ['label' => 'Listagem de Tipos de Instrumentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -37,7 +37,7 @@ $gridColumns = [
             //'pres_estado'
 
 
-        ['class' => 'yii\grid\ActionColumn'],
+        ['class' => 'yii\grid\ActionColumn','template' => '{view} {update}'],
 
     ];
  ?>

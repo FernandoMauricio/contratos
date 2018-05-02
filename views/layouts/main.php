@@ -39,7 +39,6 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-
             ['label' => 'Parâmetros', 'items' => [
             '<li class="dropdown-header">Administração dos Parâmetros</li>',
                 ['label' => 'Cadastro de Prestadores', 'url' => ['/base/prestadores']],
@@ -47,8 +46,6 @@ AppAsset::register($this);
                 ['label' => 'Tipos de Natureza', 'url' => ['/base/naturezas']],
 
             ]],
-
-            ['label' => 'Contact', 'url' => ['/site/contact']],
         ],
     ]);
     NavBar::end();

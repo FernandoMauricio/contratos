@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Naturezas', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Novo Tipo de Natureza', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'tipna_codtipo',
             'tipna_natureza',
 
-            ['class' => 'yii\grid\ActionColumn','template' => '{update}'],
+            ['class' => 'yii\grid\ActionColumn','template' => '{view} {update}'],
         ],
     ]); ?>
 </div>

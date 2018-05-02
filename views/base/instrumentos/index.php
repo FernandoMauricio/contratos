@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'inst_codinstrumento',
             'inst_descricao',
 
-            ['class' => 'yii\grid\ActionColumn','template' => '{update}'],
+            ['class' => 'yii\grid\ActionColumn','template' => '{view} {update}'],
         ],
     ]); ?>
 </div>
