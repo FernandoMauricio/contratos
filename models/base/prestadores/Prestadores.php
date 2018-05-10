@@ -27,6 +27,8 @@ use Yii;
  */
 class Prestadores extends \yii\db\ActiveRecord
 {
+    public $tipoprestador;
+
     /**
      * @inheritdoc
      */
@@ -41,8 +43,9 @@ class Prestadores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pres_nome', 'tipoprestador_cod'], 'required'],
+            //[['pres_nome', 'tipoprestador_cod'], 'required'],
             [['tipoprestador_cod'], 'integer'],
+            [['tipoprestador'], 'safe'],
             [['pres_nome', 'pres_logradouro'], 'string', 'max' => 60],
             [['pres_razaosocial'], 'string', 'max' => 50],
             [['pres_cpf', 'pres_cidade', 'pres_estado'], 'string', 'max' => 45],
@@ -60,11 +63,12 @@ class Prestadores extends \yii\db\ActiveRecord
     {
         return [
             'pres_codprestador' => 'Código',
+            'tipoprestador' => 'Tipo de Prestador',
             'pres_nome' => 'Nome',
             'pres_razaosocial' => 'Razão Social',
-            'pres_cpf' => 'Cpf',
-            'pres_cnpj' => 'Cnpj',
-            'pres_cep' => 'Cep',
+            'pres_cpf' => 'CPF',
+            'pres_cnpj' => 'CNPJ',
+            'pres_cep' => 'CEP',
             'pres_logradouro' => 'Logradouro',
             'pres_bairro' => 'Bairro',
             'pres_complemento' => 'Complemento',
@@ -79,7 +83,7 @@ class Prestadores extends \yii\db\ActiveRecord
      */
     public function getContratos()
     {
-        return $this->hasMany(ContratosCont::className(), ['cont_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(Contratos::className(), ['cont_codprestador' => 'pres_codprestador']);
     }
 
     /**
@@ -87,7 +91,7 @@ class Prestadores extends \yii\db\ActiveRecord
      */
     public function getEmailprestador()
     {
-        return $this->hasMany(EmailprestadorEmpre::className(), ['empre_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(Emailprestador::className(), ['empre_codprestador' => 'pres_codprestador']);
     }
 
     /**
@@ -95,7 +99,7 @@ class Prestadores extends \yii\db\ActiveRecord
      */
     public function getFoneprestador()
     {
-        return $this->hasMany(FoneprestadorFopre::className(), ['fopre_codprestador' => 'pres_codprestador']);
+        return $this->hasMany(Foneprestador::className(), ['fopre_codprestador' => 'pres_codprestador']);
     }
 
     /**
@@ -103,6 +107,6 @@ class Prestadores extends \yii\db\ActiveRecord
      */
     public function getTipoprestador()
     {
-        return $this->hasOne(TipoprestadorTipre::className(), ['tipre_codtipo' => 'tipoprestador_cod']);
+        return $this->hasOne(Tipoprestador::className(), ['tipre_codtipo' => 'tipoprestador_cod']);
     }
 }

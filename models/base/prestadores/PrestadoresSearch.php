@@ -18,8 +18,8 @@ class PrestadoresSearch extends Prestadores
     public function rules()
     {
         return [
-            [['pres_codprestador'], 'integer'],
-            [['pres_nome', 'pres_razaosocial', 'pres_cnpj', 'pres_cep', 'pres_logradouro', 'pres_bairro', 'pres_complemento', 'pres_cidade', 'pres_estado'], 'safe'],
+            [['pres_codprestador', 'tipoprestador_cod'], 'integer'],
+            [['pres_nome', 'pres_razaosocial', 'pres_cnpj', 'pres_cpf', 'pres_cep', 'pres_logradouro', 'pres_bairro', 'pres_complemento', 'pres_cidade', 'pres_estado'], 'safe'],
         ];
     }
 
@@ -60,11 +60,13 @@ class PrestadoresSearch extends Prestadores
         // grid filtering conditions
         $query->andFilterWhere([
             'pres_codprestador' => $this->pres_codprestador,
+            'tipoprestador_cod' => $this->tipoprestador_cod,
         ]);
 
         $query->andFilterWhere(['like', 'pres_nome', $this->pres_nome])
             ->andFilterWhere(['like', 'pres_razaosocial', $this->pres_razaosocial])
             ->andFilterWhere(['like', 'pres_cnpj', $this->pres_cnpj])
+            ->andFilterWhere(['like', 'pres_cpf', $this->pres_cpf])
             ->andFilterWhere(['like', 'pres_cep', $this->pres_cep])
             ->andFilterWhere(['like', 'pres_logradouro', $this->pres_logradouro])
             ->andFilterWhere(['like', 'pres_bairro', $this->pres_bairro])

@@ -47,8 +47,8 @@ class Tipoprestador extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPrestadoresPres()
+    public function getPrestadores()
     {
-        return $this->hasMany(PrestadoresPres::className(), ['tipoprestador_cod' => 'tipre_codtipo']);
+        return $this->hasMany(Prestadores::className(), ['tipoprestador_cod' => 'tipre_codtipo']);
     }
 }

@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\prestadores\Prestadores */
 
 $this->title = $model->pres_codprestador;
+
 $this->params['breadcrumbs'][] = ['label' => 'Listagem de Prestadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -36,9 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'model' => $model,
                         'attributes' => [
                             'pres_codprestador',
+                            [
+                                'attribute' => 'tipoprestador_cod',
+                                'value' => $model->tipoprestador_cod == 1 ? 'Pessoa Jurídica' : 'Pessoa Física',
+                            ],
                             'pres_nome',
                             'pres_razaosocial',
                             'pres_cnpj',
+                            'pres_cpf',
                             'pres_cep',
                             'pres_logradouro',
                             'pres_bairro',

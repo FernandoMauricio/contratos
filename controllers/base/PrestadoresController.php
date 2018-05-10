@@ -67,6 +67,18 @@ class PrestadoresController extends Controller
         ]);
     }
 
+    public function actionGerarPrestador()
+    {
+        $model = new Prestadores();
+
+        if ($model->load(Yii::$app->request->post())) {
+                return $this->redirect(['create', 'tipo' => $model->tipoprestador_cod]);
+            }
+            return $this->renderAjax('gerar-prestador', [
+                'model' => $model,
+            ]);
+    }
+
     /**
      * Creates a new Prestadores model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -77,6 +89,8 @@ class PrestadoresController extends Controller
         $model = new Prestadores();
         $modelsFones = [new Foneprestador];
         $modelsEmails = [new Emailprestador];
+
+        $model->tipoprestador_cod = $_GET['tipo']; //tipo de prestador selecionado
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
