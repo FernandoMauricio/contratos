@@ -5,6 +5,10 @@ namespace app\controllers\contratos;
 use Yii;
 use app\models\contratos\Contratos;
 use app\models\contratos\ContratosSearch;
+use app\models\contratos\Tipocontrato;
+use app\models\base\unidades\Unidades;
+use app\models\base\instrumentos\Instrumentos;
+use app\models\base\prestadores\Prestadores;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -86,12 +90,21 @@ class ContratosController extends Controller
     {
         $model = $this->findModel($id);
 
+        $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
+        $tipoContrato = Tipocontrato::find()->all();
+        $instrumentos = Instrumentos::find()->all();
+        $prestadores = Prestadores::find()->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->cont_codcontrato]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'unidades' => $unidades,
+            'tipoContrato' => $tipoContrato,
+            'instrumentos' => $instrumentos,
+            'prestadores' => $prestadores,
         ]);
     }
 

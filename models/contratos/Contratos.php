@@ -5,7 +5,6 @@ namespace app\models\contratos;
 use Yii;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
-use app\models\base\tipocontrato\Tipocontrato;
 
 /**
  * This is the model class for table "contratos_cont".
@@ -71,7 +70,7 @@ class Contratos extends \yii\db\ActiveRecord
     {
         return [
             'cont_codcontrato' => 'Cód.',
-            'cont_numerocontrato' => 'Cód. do Contrato',
+            'cont_numerocontrato' => 'Contrato',
             'cont_data_ini_vigencia' => 'Início da Vigência',
             'cont_data_fim_vigencia' => 'Fim da Vigência',
             'cont_codunidadecontrato' => 'Unidade',
