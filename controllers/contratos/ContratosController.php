@@ -3,15 +3,19 @@
 namespace app\controllers\contratos;
 
 use Yii;
+use app\models\MultipleModel as Model;
 use app\models\contratos\Contratos;
 use app\models\contratos\ContratosSearch;
 use app\models\contratos\Tipocontrato;
 use app\models\base\unidades\Unidades;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
+use app\models\base\naturezas\NaturezaContrato;
+use app\models\base\naturezas\Naturezas;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * ContratosController implements the CRUD actions for Contratos model.
@@ -94,8 +98,15 @@ class ContratosController extends Controller
         $tipoContrato = Tipocontrato::find()->all();
         $instrumentos = Instrumentos::find()->all();
         $prestadores = Prestadores::find()->all();
+        $naturezas = Naturezas::find()->all();
+
+        $model->naturezasContrato = \yii\helpers\ArrayHelper::getColumn(
+            $model->getNaturezaContrato()->asArray()->all(),
+            'nat_codtipo'
+        );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->cont_codcontrato]);
         }
 
@@ -105,6 +116,7 @@ class ContratosController extends Controller
             'tipoContrato' => $tipoContrato,
             'instrumentos' => $instrumentos,
             'prestadores' => $prestadores,
+            'naturezas' => $naturezas,
         ]);
     }
 
