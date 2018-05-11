@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use wbraganca\dynamicform\DynamicFormWidget;
+use kartik\datecontrol\DateControl;
+use kartik\widgets\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\contratos\Contratos */
@@ -23,8 +25,9 @@ use wbraganca\dynamicform\DynamicFormWidget;
     <div id="rootwizard" class="tabbable tabs-left">
         <ul>
             <li><a href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-book"></span> Informações</a></li>
-            <li><a href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-credit-card"></span> Títulos</a></li>
-            <li><a href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-transfer"></span> Tramitações</a></li>
+            <li><a href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-credit-card"></span> Pagamentos</a></li>
+            <li><a href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-credit-card"></span> Aditivos</a></li>
+            <li><a href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-transfer"></span> Tramitações</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane" id="tab1">
@@ -149,10 +152,91 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
                     <div class="row">
                         <div class="col-md-12"><?= $form->field($model, 'cont_arquivocontrato')->textInput() ?></div>
-                    </div>  
+                    </div> 
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab2">
+                <div class="panel-body">
+                    <?php DynamicFormWidget::begin([
+                        'widgetContainer' => 'dynamicform_pagamentos', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                        'widgetBody' => '.container-items', // required: css class selector
+                        'widgetItem' => '.item', // required: css class
+                        'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                        'min' => 0, // 0 or 1 (default 1)
+                        'insertButton' => '.add-item', // css class
+                        'deleteButton' => '.remove-item', // css class
+                        'model' => $modelsPagamentos[0],
+                        'formId' => 'dynamic-form',
+                        'formFields' => [
+                            'pag_codpagamento',
+                            'pag_codcontrato',
+                            'pag_datavencimento',
+                            'pag_valorpagar',
+                            'pag_databaixado',
+                            'pag_valorpago',
+                            'pag_situacao',
+                        ],
+                    ]); ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-envelope"></i> Listagem de Pagamentos
+                        <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Adicionar Pagamento</button>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body container-items"><!-- widgetContainer -->
+                        <?php foreach ($modelsPagamentos as $index => $modelPagamento): ?>
+                             <?= $modelPagamento->pag_situacao == 'Baixado' ? '<div class="item panel panel-success">': '<div class="item panel panel-danger">'; ?><!-- widgetBody -->
+                                <div class="panel-heading">
+                                    <span class="panel-title-pagamento">Pagamento: <?= ($index + 1) ?></span>
+                                    <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <?php
+                                        // necessary for update action.
+                                        if (!$modelPagamento->isNewRecord) {
+                                            echo Html::activeHiddenInput($modelPagamento, "[{$index}]pag_codpagamento");
+                                        }
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-sm-3"><?= $form->field($modelPagamento, "[{$index}]pag_datavencimento")->textInput(['maxlength' => true]) ?></div>
+                                        
+                                        <div class="col-sm-2"><?= $form->field($modelPagamento, "[{$index}]pag_valorpagar")->textInput(['maxlength' => true]) ?></div>
+
+                                        <div class="col-sm-2">
+                                            <?php
+                                                echo $form->field($modelPagamento, "[{$index}]pag_databaixado")->widget(DateControl::classname(), [
+                                                    'type'=>DateControl::FORMAT_DATE,
+                                                    'ajaxConversion'=>false,
+                                                    'widgetOptions' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true
+                                                        ]
+                                                    ]
+                                                ]); 
+                                            ?>
+                                        </div>
+
+                                        <div class="col-sm-2"><?= $form->field($modelPagamento, "[{$index}]pag_valorpago")->textInput(['maxlength' => true]) ?></div>
+
+                                        <div class="col-sm-3"><?= $form->field($modelPagamento, "[{$index}]pag_situacao")->radioList(['Pendente' => 'Pendente', 'Baixado' => 'Baixado']) ?></div>
+                                    </div><!-- end:row -->
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php DynamicFormWidget::end(); ?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -160,27 +244,15 @@ use wbraganca\dynamicform\DynamicFormWidget;
 </div>
 <?php
 $js = '
-jQuery(".dynamicform_natureza").on("afterInsert", function(e, item) {
-    jQuery(".dynamicform_natureza .panel-title-natureza").each(function(index) {
-        jQuery(this).html("Natureza: " + (index + 1))
+jQuery(".dynamicform_pagamentos").on("afterInsert", function(e, item) {
+    jQuery(".dynamicform_pagamentos .panel-title-pagamento").each(function(index) {
+        jQuery(this).html("pagamento: " + (index + 1))
     });
 });
 
-jQuery(".dynamicform_natureza").on("afterDelete", function(e) {
-    jQuery(".dynamicform_natureza .panel-title-natureza").each(function(index) {
-        jQuery(this).html("Natureza: " + (index + 1))
-    });
-});
-
-jQuery(".dynamicform_email").on("afterInsert", function(e, item) {
-    jQuery(".dynamicform_email .panel-title-email").each(function(index) {
-        jQuery(this).html("Email: " + (index + 1))
-    });
-});
-
-jQuery(".dynamicform_email").on("afterDelete", function(e) {
-    jQuery(".dynamicform_email .panel-title-email").each(function(index) {
-        jQuery(this).html("natureza: " + (index + 1))
+jQuery(".dynamicform_pagamentos").on("afterDelete", function(e) {
+    jQuery(".dynamicform_pagamentos .panel-title-pagamento").each(function(index) {
+        jQuery(this).html("Telefone: " + (index + 1))
     });
 });
 

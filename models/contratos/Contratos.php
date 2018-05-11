@@ -6,6 +6,7 @@ use Yii;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
 use app\models\base\naturezas\NaturezaContrato;
+use app\models\contratos\pagamentos\Pagamentos;
 
 /**
  * This is the model class for table "contratos_cont".
@@ -145,8 +146,8 @@ class Contratos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPagamentosPags()
+    public function getPagamentos()
     {
-        return $this->hasMany(PagamentosPag::className(), ['pag_codcontrato' => 'cont_codcontrato']);
+        return $this->hasMany(Pagamentos::className(), ['pag_codcontrato' => 'cont_codcontrato']);
     }
 }

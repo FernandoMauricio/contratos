@@ -80,6 +80,7 @@ class ContratosController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+
         ]);
     }
 
@@ -93,6 +94,7 @@ class ContratosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelsPagamentos = $model->pagamentos;
 
         $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
         $tipoContrato = Tipocontrato::find()->all();
@@ -117,6 +119,7 @@ class ContratosController extends Controller
             'instrumentos' => $instrumentos,
             'prestadores' => $prestadores,
             'naturezas' => $naturezas,
+            'modelsPagamentos' => $modelsPagamentos,
         ]);
     }
 
