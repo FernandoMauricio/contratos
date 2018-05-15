@@ -7,6 +7,7 @@ use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
 use app\models\base\naturezas\NaturezaContrato;
 use app\models\contratos\pagamentos\Pagamentos;
+use app\models\contratos\aditivos\Aditivos;
 
 /**
  * This is the model class for table "contratos_cont".
@@ -109,6 +110,14 @@ class Contratos extends \yii\db\ActiveRecord
             $tc->nat_codtipo = $id;
             $tc->save(false);
         }
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAditivos()
+    {
+        return $this->hasMany(Aditivos::className(), ['contratos_id' => 'cont_codcontrato']);
     }
 
     /**

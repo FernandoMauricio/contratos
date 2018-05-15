@@ -8,6 +8,7 @@ use app\models\contratos\Contratos;
 use app\models\contratos\ContratosSearch;
 use app\models\contratos\Tipocontrato;
 use app\models\contratos\pagamentos\Pagamentos;
+use app\models\contratos\aditivos\Aditivos;
 use app\models\base\unidades\Unidades;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
@@ -53,6 +54,25 @@ class ContratosController extends Controller
         ]);
     }
 
+    public function actionGerarAditivo($id)
+    {
+        $session = Yii::$app->session;
+        $model = new Aditivos();
+        $contratos = $this->findModel($id);
+
+        $model->adit_datacadastro = date('Y-m-d');
+        $model->adit_usuario = $session['sess_nomeusuario'];
+        $model->contratos_id = $id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['update', 'id' => $contratos->cont_codcontrato]);
+        } else {
+            return $this->renderAjax('gerar-aditivo', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Displays a single Contratos model.
      * @param string $id
@@ -96,6 +116,7 @@ class ContratosController extends Controller
     {
         $model = $this->findModel($id);
         $modelsPagamentos = $model->pagamentos;
+        $modelsAditivos = $model->aditivos;
 
         $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
         $tipoContrato = Tipocontrato::find()->all();
@@ -154,6 +175,7 @@ class ContratosController extends Controller
             'prestadores' => $prestadores,
             'naturezas' => $naturezas,
             'modelsPagamentos' => $modelsPagamentos,
+            'modelsAditivos' => $modelsAditivos,
         ]);
     }
 
