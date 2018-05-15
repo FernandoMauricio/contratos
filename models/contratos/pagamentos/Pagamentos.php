@@ -8,7 +8,7 @@ use app\models\contratos\Contratos;
 /**
  * This is the model class for table "pagamentos_pag".
  *
- * @property int $pag_codpagamento
+ * @property int $id
  * @property int $pag_codcontrato
  * @property string $pag_datavencimento
  * @property double $pag_valorpagar
@@ -49,7 +49,7 @@ class Pagamentos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pag_codpagamento' => 'Cód. Pagamento',
+            'id' => 'Cód. Pagamento',
             'pag_codcontrato' => 'Contrato',
             'pag_datavencimento' => 'Data do Vencimento',
             'pag_valorpagar' => 'Valor a Pagar',

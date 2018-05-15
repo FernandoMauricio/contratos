@@ -7,6 +7,7 @@ use app\models\MultipleModel as Model;
 use app\models\contratos\Contratos;
 use app\models\contratos\ContratosSearch;
 use app\models\contratos\Tipocontrato;
+use app\models\contratos\pagamentos\Pagamentos;
 use app\models\base\unidades\Unidades;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
@@ -109,7 +110,40 @@ class ContratosController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            return $this->redirect(['view', 'id' => $model->cont_codcontrato]);
+            //--------Pagamentos--------------
+            $oldIDsPagamentos = ArrayHelper::map($modelsPagamentos, 'id', 'id');
+            $modelsPagamentos = Model::createMultiple(Pagamentos::classname(), $modelsPagamentos);
+            Model::loadMultiple($modelsPagamentos, Yii::$app->request->post());
+            $deletedIDsPagamentos = array_diff($oldIDsPagamentos, array_filter(ArrayHelper::map($modelsPagamentos, 'id', 'id')));
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($modelsPagamentos) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (!empty($deletedIDsPagamentos)) {
+                            Pagamentos::deleteAll(['id' => $deletedIDsPagamentos]);
+                        }
+                        foreach ($modelsPagamentos as $modelPagamento) {
+                            $modelPagamento->pag_codcontrato = $model->cont_codcontrato;
+                            if (! ($flag = $modelPagamento->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', '<b>SUCESSO! </b> Contrato atualizado!</b>');
+                        return $this->redirect(['view', 'id' => $model->cont_codcontrato]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('update', [

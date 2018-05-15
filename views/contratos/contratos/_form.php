@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 use wbraganca\dynamicform\DynamicFormWidget;
 use kartik\datecontrol\DateControl;
 use kartik\widgets\DatePicker;
+use kartik\number\NumberControl;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\contratos\Contratos */
@@ -169,7 +170,7 @@ use kartik\widgets\DatePicker;
                         'model' => $modelsPagamentos[0],
                         'formId' => 'dynamic-form',
                         'formFields' => [
-                            'pag_codpagamento',
+                            'id',
                             'pag_codcontrato',
                             'pag_datavencimento',
                             'pag_valorpagar',
@@ -196,13 +197,42 @@ use kartik\widgets\DatePicker;
                                     <?php
                                         // necessary for update action.
                                         if (!$modelPagamento->isNewRecord) {
-                                            echo Html::activeHiddenInput($modelPagamento, "[{$index}]pag_codpagamento");
+                                            echo Html::activeHiddenInput($modelPagamento, "[{$index}]id");
                                         }
                                     ?>
                                     <div class="row">
-                                        <div class="col-sm-3"><?= $form->field($modelPagamento, "[{$index}]pag_datavencimento")->textInput(['maxlength' => true]) ?></div>
-                                        
-                                        <div class="col-sm-2"><?= $form->field($modelPagamento, "[{$index}]pag_valorpagar")->textInput(['maxlength' => true]) ?></div>
+                                        <div class="col-sm-2">
+                                            <?php
+                                                echo $form->field($modelPagamento, "[{$index}]pag_datavencimento")->widget(DateControl::classname(), [
+                                                    'type'=>DateControl::FORMAT_DATE,
+                                                    'ajaxConversion'=>false,
+                                                    'widgetOptions' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                        ],
+                                                        'removeButton' => false,
+                                                    ]
+                                                ]); 
+                                            ?>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <?php 
+                                                echo $form->field($modelPagamento, "[{$index}]pag_valorpagar")->widget(NumberControl::classname(), [
+                                                    'maskedInputOptions' => [
+                                                        'prefix' => 'R$ ',
+                                                        'alias' => 'currency',
+                                                        'digits' => 2,
+                                                        'digitsOptional' => false,
+                                                        'groupSeparator' => '.',
+                                                        'radixPoint' => ',',
+                                                        'autoGroup' => true,
+                                                        'autoUnmask' => true,
+                                                        'unmaskAsNumber' => true,
+                                                    ],
+                                                ])                
+                                            ?>
+                                        </div>
 
                                         <div class="col-sm-2">
                                             <?php
@@ -211,15 +241,32 @@ use kartik\widgets\DatePicker;
                                                     'ajaxConversion'=>false,
                                                     'widgetOptions' => [
                                                         'pluginOptions' => [
-                                                            'autoclose' => true
-                                                        ]
+                                                            'autoclose' => true,
+                                                        ],
+                                                        'removeButton' => false,
                                                     ]
                                                 ]); 
                                             ?>
                                         </div>
 
-                                        <div class="col-sm-2"><?= $form->field($modelPagamento, "[{$index}]pag_valorpago")->textInput(['maxlength' => true]) ?></div>
-
+                                        <div class="col-sm-2">
+                                            <?php 
+                                                echo $form->field($modelPagamento, "[{$index}]pag_valorpago")->widget(NumberControl::classname(), [
+                                                    'maskedInputOptions' => [
+                                                        'prefix' => 'R$ ',
+                                                        'alias' => 'currency',
+                                                        'digits' => 2,
+                                                        'digitsOptional' => false,
+                                                        'groupSeparator' => '.',
+                                                        'radixPoint' => ',',
+                                                        'autoGroup' => true,
+                                                        'autoUnmask' => true,
+                                                        'unmaskAsNumber' => true,
+                                                    ],
+                                                ])                
+                                            ?>
+                                        </div>
+                                        
                                         <div class="col-sm-3"><?= $form->field($modelPagamento, "[{$index}]pag_situacao")->radioList(['Pendente' => 'Pendente', 'Baixado' => 'Baixado']) ?></div>
                                     </div><!-- end:row -->
                                 </div>
