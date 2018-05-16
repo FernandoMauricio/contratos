@@ -44,7 +44,6 @@ use yii\bootstrap\Modal;
         <table class="table table-condensed table-hover">
           <thead>
                 <tr class="warning"><th colspan="12">Listagem de Pagamentos do <code>Aditivo <?= $index + 1 ?></code></th></tr>
-                    <?php foreach ($modelsAditivos[$index]['aditivosPagamentos'] as $modelAditivoPagamento): ?>
             <tr>
               <th>Data do Vencimento</th>
               <th>Valor a Pagar</th>
@@ -54,6 +53,8 @@ use yii\bootstrap\Modal;
             </tr>
           </thead>
           <tbody>
+                    <?php foreach ($modelsAditivos[$index]['aditivosPagamentos'] as $modelAditivoPagamento): ?>
+            
           <tr>
                 <td><?= date('d/m/Y', strtotime($modelAditivoPagamento->adipa_datavencimento)); ?></td>
                 <td><?= 'R$ ' . number_format($modelAditivoPagamento->adipa_valorpagar, 2, ',', '.'); ?></td>

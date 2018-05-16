@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="prestadores-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= $model->tipoprestador_cod == 1 ?  Html::encode($this->title) . '<small> Pessoa Física</small>' : Html::encode($this->title) . '<small> Pessoa Jurídica</small>'; ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
