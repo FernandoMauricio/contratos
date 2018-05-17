@@ -35,7 +35,7 @@ class Pagamentos extends \yii\db\ActiveRecord
     {
         return [
             [['pag_codcontrato', 'pag_datavencimento', 'pag_valorpagar'], 'required'],
-            [['pag_codcontrato'], 'integer'],
+            [['pag_codcontrato', 'id'], 'integer'],
             [['pag_datavencimento', 'pag_databaixado'], 'safe'],
             [['pag_valorpagar', 'pag_valorpago'], 'number'],
             [['pag_situacao'], 'string', 'max' => 45],

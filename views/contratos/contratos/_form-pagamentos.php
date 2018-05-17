@@ -46,7 +46,7 @@ use yii\bootstrap\Modal;
          <div class="clearfix"></div>
      </div>
      <div class="panel-body container-items"><!-- widgetContainer -->
-         <?php foreach ($modelsPagamentos as $index => $modelPagamento): ?>
+            <?php foreach ($modelsPagamentos as $index => $modelPagamento): ?>
               <?= $modelPagamento->pag_situacao == 'Baixado' ? '<div class="item panel panel-success">': '<div class="item panel panel-danger">'; ?><!-- widgetBody -->
                  <div class="panel-heading">
                      <span class="panel-title-pagamento">Pagamento: <?= ($index + 1) ?></span>
@@ -136,3 +136,22 @@ use yii\bootstrap\Modal;
  </div>
  <?php DynamicFormWidget::end(); ?>
  </div>
+ 
+<?php
+$js = '
+jQuery(".dynamicform_pagamentos").on("afterInsert", function(e, item) {
+    jQuery(".dynamicform_pagamentos .panel-title-pagamento").each(function(index) {
+        jQuery(this).html("pagamento: " + (index + 1))
+    });
+});
+
+jQuery(".dynamicform_pagamentos").on("afterDelete", function(e) {
+    jQuery(".dynamicform_pagamentos .panel-title-pagamento").each(function(index) {
+        jQuery(this).html("Telefone: " + (index + 1))
+    });
+});
+
+';
+
+$this->registerJs($js);
+?>

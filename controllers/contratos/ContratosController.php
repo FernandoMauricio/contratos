@@ -81,8 +81,14 @@ class ContratosController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $modelsPagamentos = $model->pagamentos;
+        $modelsAditivos = $model->aditivos;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'modelsPagamentos' => $modelsPagamentos,
+            'modelsAditivos' => $modelsAditivos,
         ]);
     }
 
@@ -131,15 +137,21 @@ class ContratosController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+            //--------Pagamentos dos Aditivos--------------
+
+
             //--------Pagamentos--------------
             $oldIDsPagamentos = ArrayHelper::map($modelsPagamentos, 'id', 'id');
             $modelsPagamentos = Model::createMultiple(Pagamentos::classname(), $modelsPagamentos);
             Model::loadMultiple($modelsPagamentos, Yii::$app->request->post());
             $deletedIDsPagamentos = array_diff($oldIDsPagamentos, array_filter(ArrayHelper::map($modelsPagamentos, 'id', 'id')));
 
-            // validate all models
+            // validate Adtivos e Pagamentos dos Aditivos
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsPagamentos) && $valid;
+
+
+
 
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
@@ -155,6 +167,9 @@ class ContratosController extends Controller
                                 break;
                             }
                         }
+
+
+
                     }
                     if ($flag) {
                         $transaction->commit();

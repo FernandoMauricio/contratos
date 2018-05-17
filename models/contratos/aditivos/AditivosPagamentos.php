@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "aditivos_pag".
  *
- * @property int $adipa_codpamento
+ * @property int $id
  * @property int $aditivos_id
  * @property string $adipa_datavencimento
  * @property double $adipa_valorpagar
@@ -33,8 +33,8 @@ class AditivosPagamentos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['aditivos_id', 'adipa_datavencimento', 'adipa_valorpagar'], 'required'],
-            [['aditivos_id'], 'integer'],
+            //['aditivos_id', 'adipa_datavencimento', 'adipa_valorpagar'], 'required'],
+            [['aditivos_id', 'id'], 'integer'],
             [['adipa_datavencimento', 'adipa_databaixado'], 'safe'],
             [['adipa_valorpagar', 'adipa_valorpago'], 'number'],
             [['adipa_situacao'], 'string', 'max' => 45],
@@ -48,13 +48,13 @@ class AditivosPagamentos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'adipa_codpamento' => 'Adipa Codpamento',
+            'id' => 'Codpamento',
             'aditivos_id' => 'Aditivos ID',
-            'adipa_datavencimento' => 'Adipa Datavencimento',
-            'adipa_valorpagar' => 'Adipa Valorpagar',
-            'adipa_databaixado' => 'Adipa Databaixado',
-            'adipa_valorpago' => 'Adipa Valorpago',
-            'adipa_situacao' => 'Adipa Situacao',
+            'adipa_datavencimento' => 'Data do Vencimento',
+            'adipa_valorpagar' => 'Valor a Pagar',
+            'adipa_databaixado' => 'Data da Baixa',
+            'adipa_valorpago' => 'Valor Pago',
+            'adipa_situacao' => 'Situação',
         ];
     }
 

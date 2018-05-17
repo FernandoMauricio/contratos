@@ -87,24 +87,6 @@ use yii\bootstrap\Modal;
     <?php ActiveForm::end(); ?>
 
 </div>
-<?php
-$js = '
-jQuery(".dynamicform_pagamentos").on("afterInsert", function(e, item) {
-    jQuery(".dynamicform_pagamentos .panel-title-pagamento").each(function(index) {
-        jQuery(this).html("pagamento: " + (index + 1))
-    });
-});
-
-jQuery(".dynamicform_pagamentos").on("afterDelete", function(e) {
-    jQuery(".dynamicform_pagamentos .panel-title-pagamento").each(function(index) {
-        jQuery(this).html("Telefone: " + (index + 1))
-    });
-});
-
-';
-
-$this->registerJs($js);
-?>
             <!--          JS etapas dos formularios            -->
 <?php
 $script = <<< JS
