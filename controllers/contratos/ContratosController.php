@@ -74,6 +74,9 @@ class ContratosController extends Controller
         }
     }
 
+    public function actionExcluirAditivo(){
+
+    }
     /**
      * Displays a single Contratos model.
      * @param string $id
