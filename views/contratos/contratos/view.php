@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div id="rootwizard" class="tabbable tabs-left">
             <ul>
-                <li><a href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Informações</a></li>
+                <li><a href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-file"></span> Informações</a></li>
                 <li><a href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-th-list"></span> Pagamentos</a></li>
                 <li><a href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Aditivos</a></li>
             </ul>
@@ -82,9 +82,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="tab-pane" id="tab3">
-                    <?php foreach ($modelsAditivos as $index => $modelAditivo): ?>
+                    <?php foreach ($modelsAditivos as $indexAditivo => $modelAditivo): ?>
                     <div class="panel-body">
-                        <div class="row"><p class="bg-info" style="font-size: 20px;text-align: center"> Aditivo <?= $index + 1 ?></p></div>
+                        <div class="row"><p class="bg-info" style="font-size: 20px;text-align: center"> Aditivo <?= $indexAditivo + 1 ?></p></div>
 
                         <div class="row">
                             <div class="col-sm-2"><b>Início da Vigência:</b></div>
@@ -107,30 +107,46 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                             <table class="table table-condensed table-hover">
                                 <thead>
-                                    <tr class="warning"><th colspan="12">Listagem de Pagamentos do <code>Aditivo <?= $index + 1 ?></code></th></tr>
+                                    <tr class="active"><th colspan="12">Listagem de Pagamentos do <code>Aditivo <?= $indexAditivo + 1 ?></code></th></tr>
                                     <tr>
-                                      <th>Data do Vencimento</th>
-                                      <th>Valor a Pagar</th>
-                                      <th>Data da Baixa</th>
-                                      <th>Valor Pago</th>
-                                      <th>Situação</th>
+                                       <th>#</th>
+                                       <th>Data do Vencimento</th>
+                                       <th>Valor a Pagar</th>
+                                       <th>Data da Baixa</th>
+                                       <th>Valor Pago</th>
+                                       <th>Situação</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($modelsAditivos[$index]['aditivosPagamentos'] as $modelAditivoPagamento): ?>
+                                    <?php 
+                                        $valorTotalPagar = 0;
+                                        $valorTotalPago = 0; 
+                                    ?>
+                                    <?php foreach ($modelAditivo->aditivosPagamentos as $index => $modelAditivoPagamento): ?>
                                     <?= $modelAditivoPagamento->adipa_situacao == 'Baixado' ? '<tr class="success">': '<tr class="danger">'; ?>
+                                        <td><?= $index + 1; ?></td>
                                         <td><?= date('d/m/Y', strtotime($modelAditivoPagamento->adipa_datavencimento)); ?></td>
                                         <td><?= 'R$ ' . number_format($modelAditivoPagamento->adipa_valorpagar, 2, ',', '.'); ?></td>
                                         <td><?= date('d/m/Y', strtotime($modelAditivoPagamento->adipa_databaixado)); ?></td>
                                         <td><?= 'R$ ' . number_format($modelAditivoPagamento->adipa_valorpago, 2, ',', '.'); ?></td>
                                         <td><?= $modelAditivoPagamento->adipa_situacao; ?></td>
                                     </tr>
+                                    <?php 
+                                        $valorTotalPagar += $modelAditivoPagamento->adipa_valorpagar; // Somatório dos Valores A PAGAR
+                                        $valorTotalPago += $modelAditivoPagamento->adipa_valorpago; //Somatório dos Valores Pagos
+                                    ?> 
                                     <?php endforeach; ?>
                                 </tbody>
+                                <tfoot>
+                                    <tr class="warning">
+                                       <th colspan="2">TOTAL</th>
+                                       <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPagar, 2, ',', '.') ?></th>
+                                       <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPago, 2, ',', '.') ?></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                     <?php endforeach; ?>
                 </div>
-
 
 
             </div>

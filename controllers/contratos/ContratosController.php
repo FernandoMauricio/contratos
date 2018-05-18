@@ -9,6 +9,7 @@ use app\models\contratos\ContratosSearch;
 use app\models\contratos\Tipocontrato;
 use app\models\contratos\pagamentos\Pagamentos;
 use app\models\contratos\aditivos\Aditivos;
+use app\models\contratos\aditivos\AditivosPagamentos;
 use app\models\base\unidades\Unidades;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
@@ -123,6 +124,7 @@ class ContratosController extends Controller
         $model = $this->findModel($id);
         $modelsPagamentos = $model->pagamentos;
         $modelsAditivos = $model->aditivos;
+        $oldAditivosPagamentos = [];
 
         $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
         $tipoContrato = Tipocontrato::find()->all();
@@ -137,9 +139,6 @@ class ContratosController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            //--------Pagamentos dos Aditivos--------------
-
-
             //--------Pagamentos--------------
             $oldIDsPagamentos = ArrayHelper::map($modelsPagamentos, 'id', 'id');
             $modelsPagamentos = Model::createMultiple(Pagamentos::classname(), $modelsPagamentos);
@@ -149,9 +148,6 @@ class ContratosController extends Controller
             // validate Adtivos e Pagamentos dos Aditivos
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsPagamentos) && $valid;
-
-
-
 
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
@@ -168,19 +164,37 @@ class ContratosController extends Controller
                             }
                         }
 
-
-
-                    }
+                        //Busca os Pagamentos dos Aditivos
+                        foreach ($modelsAditivos as $indexAditivo => $modelAditivo) {
+                                foreach ($modelAditivo->aditivosPagamentos as $indexAditivosPagamentos => $modelAditivoPagamento) {
+                                    $modelAditivoPagamento->aditivos_id = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['aditivos_id'];
+                                    $modelAditivoPagamento->adipa_datavencimento = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_datavencimento'];
+                                    $modelAditivoPagamento->adipa_valorpagar = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_valorpagar'];
+                                    $modelAditivoPagamento->adipa_databaixado = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_databaixado'];
+                                    $modelAditivoPagamento->adipa_valorpago = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_valorpago'];
+                                    $modelAditivoPagamento->adipa_situacao = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_situacao'];
+                                if (! ($flag = $modelAditivoPagamento->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                    }
+                                }
+                            }
+                        }
                     if ($flag) {
                         $transaction->commit();
                         Yii::$app->session->setFlash('success', '<b>SUCESSO! </b> Contrato atualizado!</b>');
                         return $this->redirect(['view', 'id' => $model->cont_codcontrato]);
+                    } else {
+                        $transaction->rollBack();
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
                 }
             }
         }
+
+
+
 
         return $this->render('update', [
             'model' => $model,

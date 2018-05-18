@@ -20,21 +20,9 @@ use yii\bootstrap\Modal;
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
-    <p>
-        <?= Html::button('Inserir Aditivo', ['value'=> Url::to(['contratos/contratos/gerar-aditivo', 'id' => $model->cont_codcontrato]), 'class' => 'btn btn-info', 'id'=>'modalButton']) ?>
-    </p>
-
-    <?php
-        Modal::begin([
-            'header' => '<h4>Inserir Aditivo</h4>',
-            'id' => 'modal',
-            'size' => 'modal-lg',
-            ]);
-
-        echo "<div id='modalContent'></div>";
-
-        Modal::end();
-    ?>
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -44,8 +32,8 @@ use yii\bootstrap\Modal;
     <div id="rootwizard" class="tabbable tabs-left">
         <ul>
             <li><a href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-book"></span> Informações</a></li>
-            <li><a href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-credit-card"></span> Pagamentos</a></li>
-            <li><a href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-credit-card"></span> Aditivos</a></li>
+            <li><a href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-th-list"></span> Pagamentos</a></li>
+            <li><a href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Aditivos</a></li>
             <li><a href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-transfer"></span> Tramitações</a></li>
         </ul>
         <div class="tab-content">
@@ -71,6 +59,7 @@ use yii\bootstrap\Modal;
             <div class="tab-pane" id="tab3">
                 <?= $this->render('_form-adtivos-pagamentos', [
                     'form' => $form,
+                    'model' => $model,
                     'modelsAditivos' => $modelsAditivos,
                 ]) ?>
             </div>
@@ -79,11 +68,6 @@ use yii\bootstrap\Modal;
         </div>
     </div>
 </div>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

@@ -16,8 +16,6 @@ use yii\bootstrap\Modal;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-
-
  <div class="panel-body">
      <?php DynamicFormWidget::begin([
          'widgetContainer' => 'dynamicform_pagamentos', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
