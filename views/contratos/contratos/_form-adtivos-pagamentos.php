@@ -19,7 +19,7 @@ use yii\bootstrap\Modal;
     <p>
         <?= Html::button('Inserir Aditivo', ['value'=> Url::to(['contratos/contratos/gerar-aditivo', 'id' => $model->cont_codcontrato]), 'class' => 'btn btn-info', 'id'=>'modalButton']) ?>
         
-        <?= Html::button('Excluir Aditivo', ['value'=> Url::to(['contratos/contratos/excluir-aditivo', 'id' => $model->cont_codcontrato]), 'class' => 'btn btn-danger pull-right', 'id'=>'modalButton2']) ?>
+        <?= Html::button('Deletar Aditivo', ['value'=> Url::to(['contratos/contratos/deletar-aditivo', 'id' => $model->cont_codcontrato]), 'class' => 'btn btn-danger pull-right', 'id'=>'modalButton2']) ?>
     </p>
 
     <?php
@@ -36,12 +36,12 @@ use yii\bootstrap\Modal;
 
     <?php
         Modal::begin([
-            'header' => '<h4>Inserir Aditivo</h4>',
-            'id' => 'modal',
+            'header' => '<h4>Deletar Aditivo</h4>',
+            'id' => 'modal2',
             'size' => 'modal-lg',
             ]);
 
-        echo "<div id='modalContent'></div>";
+        echo "<div id='modalContent2'></div>";
 
         Modal::end();
     ?>
@@ -95,57 +95,24 @@ use yii\bootstrap\Modal;
          <i class="fa fa-envelope"></i> Listagem de Pagamentos do <b>Aditivo <?= $indexAditivo + 1 ?></b>
          <div class="clearfix"></div>
      </div>
-     <div class="panel-body container-items"><!-- widgetContainer -->
-         <?php foreach ($modelAditivo->aditivosPagamentos as $indexAditivosPagamentos => $modelAditivoPagamento): ?>
-              <?= $modelAditivoPagamento->adipa_situacao == 'Baixado' ? '<div class="item-aditivospagamentos panel panel-success">': '<div class="item-aditivospagamentos panel panel-danger">'; ?><!-- widgetBody -->
-                 <div class="panel-heading">
-                     <span class="panel-title-aditivospagamentos">Pagamento: <?= ($indexAditivosPagamentos + 1) ?></span>
-                     <div class="clearfix"></div>
-                 </div>
-                 <div class="panel-body">
-                     <?php
-                         // necessary for update action.
-                         if (!$modelAditivoPagamento->isNewRecord) {
-                             echo Html::activeHiddenInput($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]id");
-                         }
-                     ?>
-                     <div class="row">
-                        <div class="col-sm-2">
-                            <?php
-                                echo $form->field($modelAditivoPagamento,"[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_datavencimento")->widget(DateControl::classname(), [
-                                    'type'=>DateControl::FORMAT_DATE,
-                                    'ajaxConversion'=>false,
-                                    'widgetOptions' => [
-                                        'pluginOptions' => [
-                                            'autoclose' => true,
-                                        ],
-                                        'removeButton' => false,
-                                    ]
-                                ]); 
-                            ?>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <?php 
-                                echo $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_valorpagar")->widget(NumberControl::classname(), [
-                                    'maskedInputOptions' => [
-                                        'prefix' => 'R$ ',
-                                        'alias' => 'currency',
-                                        'digits' => 2,
-                                        'digitsOptional' => false,
-                                        'groupSeparator' => '.',
-                                        'radixPoint' => ',',
-                                        'autoGroup' => true,
-                                        'autoUnmask' => true,
-                                        'unmaskAsNumber' => true,
-                                    ],
-                                ])                
-                            ?>
-                        </div>
-
-                        <div class="col-sm-2">
+        <div class="panel-body container-items"><!-- widgetContainer -->
+            <?php foreach ($modelAditivo->aditivosPagamentos as $indexAditivosPagamentos => $modelAditivoPagamento): ?>
+                <?= $modelAditivoPagamento->adipa_situacao == 'Baixado' ? '<div class="item-aditivospagamentos panel panel-success">': '<div class="item-aditivospagamentos panel panel-danger">'; ?><!-- widgetBody -->
+                    <div class="panel-heading">
+                        <span class="panel-title-aditivospagamentos">Pagamento: <?= ($indexAditivosPagamentos + 1) ?></span>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+                             // necessary for update action.
+                             if (!$modelAditivoPagamento->isNewRecord) {
+                                 echo Html::activeHiddenInput($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]id");
+                             }
+                        ?>
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <?php
-                                    echo $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_databaixado")->widget(DateControl::classname(), [
+                                    echo $form->field($modelAditivoPagamento,"[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_datavencimento")->widget(DateControl::classname(), [
                                         'type'=>DateControl::FORMAT_DATE,
                                         'ajaxConversion'=>false,
                                         'widgetOptions' => [
@@ -156,40 +123,71 @@ use yii\bootstrap\Modal;
                                         ]
                                     ]); 
                                 ?>
-                        </div>
+                            </div>
 
-                        <div class="col-sm-2">
-                            <?php 
-                                echo $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_valorpago")->widget(NumberControl::classname(), [
-                                    'maskedInputOptions' => [
-                                        'prefix' => 'R$ ',
-                                        'alias' => 'currency',
-                                        'digits' => 2,
-                                        'digitsOptional' => false,
-                                        'groupSeparator' => '.',
-                                        'radixPoint' => ',',
-                                        'autoGroup' => true,
-                                        'autoUnmask' => true,
-                                        'unmaskAsNumber' => true,
-                                    ],
-                                ])                
-                            ?>
-                        </div>
-                        
-                        <div class="col-sm-3"><?= $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_situacao")->radioList(['Pendente' => 'Pendente', 'Baixado' => 'Baixado']) ?></div>
+                            <div class="col-sm-2">
+                                <?php 
+                                    echo $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_valorpagar")->widget(NumberControl::classname(), [
+                                        'maskedInputOptions' => [
+                                            'prefix' => 'R$ ',
+                                            'alias' => 'currency',
+                                            'digits' => 2,
+                                            'digitsOptional' => false,
+                                            'groupSeparator' => '.',
+                                            'radixPoint' => ',',
+                                            'autoGroup' => true,
+                                            'autoUnmask' => true,
+                                            'unmaskAsNumber' => true,
+                                        ],
+                                    ])                
+                                ?>
+                            </div>
 
-                        <div class="col-sm-1"><?= $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]aditivos_id")->hiddenInput()->label(false); ?></div>
-                     </div><!-- end:row -->
-                 </div>
-             </div>
-         <?php endforeach; ?>
-     </div>
- </div>
- <?php DynamicFormWidget::end(); ?>
- </div>
- <?php endforeach; ?>
+                            <div class="col-sm-2">
+                                    <?php
+                                        echo $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_databaixado")->widget(DateControl::classname(), [
+                                            'type'=>DateControl::FORMAT_DATE,
+                                            'ajaxConversion'=>false,
+                                            'widgetOptions' => [
+                                                'pluginOptions' => [
+                                                    'autoclose' => true,
+                                                ],
+                                                'removeButton' => false,
+                                            ]
+                                        ]); 
+                                    ?>
+                            </div>
 
+                            <div class="col-sm-2">
+                                <?php 
+                                    echo $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_valorpago")->widget(NumberControl::classname(), [
+                                        'maskedInputOptions' => [
+                                            'prefix' => 'R$ ',
+                                            'alias' => 'currency',
+                                            'digits' => 2,
+                                            'digitsOptional' => false,
+                                            'groupSeparator' => '.',
+                                            'radixPoint' => ',',
+                                            'autoGroup' => true,
+                                            'autoUnmask' => true,
+                                            'unmaskAsNumber' => true,
+                                        ],
+                                    ])                
+                                ?>
+                            </div>
+                            
+                            <div class="col-sm-3"><?= $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_situacao")->radioList(['Pendente' => 'Pendente', 'Baixado' => 'Baixado']) ?></div>
 
+                            <div class="col-sm-1"><?= $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]aditivos_id")->hiddenInput()->label(false); ?></div>
+                        </div><!-- end:row -->
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php DynamicFormWidget::end(); ?>
+</div>
+<?php endforeach; ?>
 
 <?php
 $js = '

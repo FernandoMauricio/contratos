@@ -74,8 +74,25 @@ class ContratosController extends Controller
         }
     }
 
-    public function actionExcluirAditivo(){
+    public function actionDeletarAditivo($id)
+    {
+        $model = new Aditivos();
+        $aditivos = Aditivos::find()->where(['contratos_id' => $_GET['id']])->all();
 
+        if ($model->load(Yii::$app->request->post())) {
+        $modelAditivo = $this->findModelAditivo($model->aditivo);
+        //Exclusão de todos os pagamentos relacionados ao aditivo 
+        AditivosPagamentos::deleteAll('aditivos_id = "'.$model->aditivo.'"');
+        $modelAditivo->delete(); //Exclui o Aditivo
+        Yii::$app->session->setFlash('success', '<strong>SUCESSO! </strong> Aditivo de código: ' . '<strong>' .$model->aditivo. '</strong>' . ' excluído!');
+
+            return $this->redirect(['update', 'id' => $_GET['id']]);
+        } else {
+            return $this->renderAjax('deletar-aditivo', [
+                'model' => $model,
+                'aditivos' => $aditivos,
+            ]);
+        }
     }
     /**
      * Displays a single Contratos model.
@@ -88,9 +105,21 @@ class ContratosController extends Controller
         $model = $this->findModel($id);
         $modelsPagamentos = $model->pagamentos;
         $modelsAditivos = $model->aditivos;
+        $oldAditivosPagamentos = [];
+
+        $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
+        $tipoContrato = Tipocontrato::find()->all();
+        $instrumentos = Instrumentos::find()->all();
+        $prestadores = Prestadores::find()->all();
+        $naturezas = Naturezas::find()->all();
 
         return $this->render('view', [
             'model' => $model,
+            'unidades' => $unidades,
+            'tipoContrato' => $tipoContrato,
+            'instrumentos' => $instrumentos,
+            'prestadores' => $prestadores,
+            'naturezas' => $naturezas,
             'modelsPagamentos' => $modelsPagamentos,
             'modelsAditivos' => $modelsAditivos,
         ]);
@@ -196,9 +225,6 @@ class ContratosController extends Controller
             }
         }
 
-
-
-
         return $this->render('update', [
             'model' => $model,
             'unidades' => $unidades,
@@ -240,4 +266,21 @@ class ContratosController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    /**
+     * Finds the Contratos model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return Contratos the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelAditivo($aditivo)
+    {
+        if (($modelAditivo = Aditivos::findOne($aditivo)) !== null) {
+            return $modelAditivo;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
 }

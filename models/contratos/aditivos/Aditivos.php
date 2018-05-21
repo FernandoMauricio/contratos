@@ -21,6 +21,8 @@ use app\models\contratos\Contratos;
  */
 class Aditivos extends \yii\db\ActiveRecord
 {
+    public $aditivo;
+
     /**
      * @inheritdoc
      */
@@ -36,6 +38,7 @@ class Aditivos extends \yii\db\ActiveRecord
     {
         return [
             [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'contratos_id'], 'required'],
+            [['aditivo'], 'integer'],
             [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'adit_datacadastro'], 'safe'],
             [['adit_observacao'], 'string'],
             [['contratos_id'], 'integer'],
@@ -57,6 +60,7 @@ class Aditivos extends \yii\db\ActiveRecord
             'adit_usuario' => 'Usuario',
             'adit_datacadastro' => 'Datacadastro',
             'contratos_id' => 'Contratos ID',
+            'aditivo' => 'Aditivo',
         ];
     }
 

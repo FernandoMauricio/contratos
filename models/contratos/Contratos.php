@@ -39,7 +39,6 @@ use app\models\contratos\aditivos\Aditivos;
 class Contratos extends \yii\db\ActiveRecord
 {
     public $naturezasContrato;
-
     /**
      * @inheritdoc
      */
