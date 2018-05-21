@@ -3,6 +3,7 @@
 namespace app\controllers\contratos;
 
 use Yii;
+use DateTime;
 use app\models\MultipleModel as Model;
 use app\models\contratos\Contratos;
 use app\models\contratos\ContratosSearch;
@@ -59,13 +60,37 @@ class ContratosController extends Controller
     {
         $session = Yii::$app->session;
         $model = new Aditivos();
+        $AditivosPagamentos = new AditivosPagamentos;
         $contratos = $this->findModel($id);
 
         $model->adit_datacadastro = date('Y-m-d');
         $model->adit_usuario = $session['sess_nomeusuario'];
         $model->contratos_id = $id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+
+        $model->save();
+
+        $datainicial = new DateTime( $model->adit_data_ini_vigencia );
+        $datafinal   = new DateTime( $model->adit_data_fim_vigencia );
+
+        foreach ($AditivosPagamentos as $AditivoPagamento) {
+            for($i = $datainicial; $i <= $datafinal; $i->modify('+1 month')) {
+            $date = $i->format("Y-m-d");
+                //Inclui as informações dos candidatos classificados
+                    Yii::$app->db->createCommand()
+                        ->insert('aditivos_pag',
+                    [
+                        'aditivos_id' => $model->adit_codaditivo, 
+                        'adipa_datavencimento' => $date, //Contador dos meses a partir da data de vigência
+                        'adipa_valorpagar' => 0,    
+                        'adipa_databaixado' => NULL, 
+                        'adipa_valorpago' => 0, 
+                        'adipa_situacao' => 'Pendente' 
+                    ])
+                ->execute();
+            }
+        }
             return $this->redirect(['update', 'id' => $contratos->cont_codcontrato]);
         } else {
             return $this->renderAjax('gerar-aditivo', [
