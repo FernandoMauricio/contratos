@@ -127,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?= $index + 1; ?></td>
                                         <td><?= date('d/m/Y', strtotime($modelAditivoPagamento->adipa_datavencimento)); ?></td>
                                         <td><?= 'R$ ' . number_format($modelAditivoPagamento->adipa_valorpagar, 2, ',', '.'); ?></td>
-                                        <td><?= date('d/m/Y', strtotime($modelAditivoPagamento->adipa_databaixado)); ?></td>
+                                        <td><?= $modelAditivoPagamento->adipa_databaixado != NULL ? date('d/m/Y', strtotime($modelAditivoPagamento->adipa_databaixado)) : ''; ?></td>
                                         <td><?= 'R$ ' . number_format($modelAditivoPagamento->adipa_valorpago, 2, ',', '.'); ?></td>
                                         <td><?= $modelAditivoPagamento->adipa_situacao; ?></td>
                                     </tr>
