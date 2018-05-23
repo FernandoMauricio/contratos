@@ -21,8 +21,8 @@ $this->params['breadcrumbs'][] = 'Atualizar';
         'instrumentos' => $instrumentos,
         'prestadores' => $prestadores,
         'naturezas' => $naturezas,
-        'modelsPagamentos' => $modelsPagamentos,
-        'modelsAditivos' => $modelsAditivos,
+        'modelsPagamentos' => (empty($modelsPagamentos)) ? [new Pagamentos] : $modelsPagamentos,
+        'modelsAditivos' => (empty($modelsAditivos)) ? [new Aditivos] : $modelsAditivos,
     ]) ?>
 
 </div>

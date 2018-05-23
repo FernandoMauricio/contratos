@@ -45,43 +45,47 @@ use yii\bootstrap\Modal;
 
         Modal::end();
     ?>
-    
+<?php if (!isset($modelsAditivos)): ?> <!-- corrigi erro no create -->
 <?php foreach ($modelsAditivos as $indexAditivo => $modelAditivo): ?>
 
     <div class="row"><p class="bg-info" style="font-size: 20px;text-align: center"> Aditivo <?= $indexAditivo + 1 ?></p></div>
 
     <div class="row">
-        <div class="col-sm-2"><b>Início da Vigência:</b></div>
-        <div class="col-sm-2"><?= date('d/m/Y', strtotime($modelAditivo->adit_data_ini_vigencia)) ?></div>
-        <div class="col-sm-2"><b>Fim da Vigência:</b></div>
-        <div class="col-sm-2"><?= date('d/m/Y', strtotime($modelAditivo->adit_data_fim_vigencia)) ?></div>
-    </div>
+        <div class="col-sm-2"><b>Aditivo:</b><br />
+            <?= $modelAditivo->adit_numeroaditivo ?>
+        </div>
+        <div class="col-sm-2"><b>Início da Vigência:</b><br />
+            <?= date('d/m/Y', strtotime($modelAditivo->adit_data_ini_vigencia)) ?>
+        </div>
+        <div class="col-sm-2"><b>Fim da Vigência:</b><br />
+            <?= date('d/m/Y', strtotime($modelAditivo->adit_data_fim_vigencia)) ?>
+        </div>
+        <div class="col-sm-2"><b>Cadastrado por:</b><br />
+            <?= $modelAditivo->adit_usuario ?>
+        </div>
+        <div class="col-sm-2"><b>Data do Cadastro:</b><br />
+            <?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?>
+        </div>
+    </div><br />
 
     <div class="row">
-        <div class="col-sm-2"><b>Observação:</b></div>
-        <div class="col-sm-2"><?= $modelAditivo->adit_observacao ?></div>
+        <div class="col-sm-2"><b>Observação:</b><br/ >
+            <?= $modelAditivo->adit_observacao ?>
+        </div>
     </div>
-
-    <div class="row">
-        <div class="col-sm-2"><b>Usuário Cadastrado:</b></div>
-        <div class="col-sm-2"><?= $modelAditivo->adit_usuario ?></div>
-        <div class="col-sm-2"><b>Data:</b></div>
-        <div class="col-sm-2"><?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?></div>
-    </div>                  
 </div>
-
- <div class="panel-body">
-     <?php DynamicFormWidget::begin([
-         'widgetContainer' => 'dynamicform_aditivospagamentos', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-         'widgetBody' => '.container-items', // required: css class selector
-         'widgetItem' => '.item-aditivospagamentos', // required: css class
-         'limit' => 4, // the maximum times, an element can be cloned (default 999)
-         'min' => 0, // 0 or 1 (default 1)
-         'insertButton' => '.add-item', // css class
-         'deleteButton' => '.remove-item', // css class
-         'model' => $modelAditivo->aditivosPagamentos[0],
-         'formId' => 'dynamic-form',
-         'formFields' => [
+<div class="panel-body">
+    <?php DynamicFormWidget::begin([
+        'widgetContainer' => 'dynamicform_aditivospagamentos', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+        'widgetBody' => '.container-items', // required: css class selector
+        'widgetItem' => '.item-aditivospagamentos', // required: css class
+        'limit' => 999, // the maximum times, an element can be cloned (default 999)
+        'min' => 0, // 0 or 1 (default 1)
+        'insertButton' => '.add-item', // css class
+        'deleteButton' => '.remove-item', // css class
+        'model' => $modelAditivo->aditivosPagamentos[0],
+        'formId' => 'dynamic-form',
+        'formFields' => [
             'id',
             'adipa_datavencimento',
             'adipa_valorpagar',
@@ -90,11 +94,11 @@ use yii\bootstrap\Modal;
             'adipa_situacao',
          ],
      ]); ?>
- <div class="panel panel-default">
-     <div class="panel-heading">
-         <i class="fa fa-envelope"></i> Listagem de Pagamentos do <b>Aditivo <?= $indexAditivo + 1 ?></b>
-         <div class="clearfix"></div>
-     </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-envelope"></i> Listagem de Pagamentos do <b>Aditivo <?= $indexAditivo + 1 ?></b>
+        <div class="clearfix"></div>
+    </div>
         <div class="panel-body container-items"><!-- widgetContainer -->
             <?php foreach ($modelAditivo->aditivosPagamentos as $indexAditivosPagamentos => $modelAditivoPagamento): ?>
                 <?= $modelAditivoPagamento->adipa_situacao == 'Baixado' ? '<div class="item-aditivospagamentos panel panel-success">': '<div class="item-aditivospagamentos panel panel-danger">'; ?><!-- widgetBody -->
@@ -188,6 +192,8 @@ use yii\bootstrap\Modal;
     <?php DynamicFormWidget::end(); ?>
 </div>
 <?php endforeach; ?>
+<?php endif; ?>
+
 
 <?php
 $js = '

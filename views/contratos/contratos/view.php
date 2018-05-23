@@ -85,25 +85,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php foreach ($modelsAditivos as $indexAditivo => $modelAditivo): ?>
                     <div class="panel-body">
                         <div class="row"><p class="bg-info" style="font-size: 20px;text-align: center"> Aditivo <?= $indexAditivo + 1 ?></p></div>
-
                         <div class="row">
-                            <div class="col-sm-2"><b>Início da Vigência:</b></div>
-                            <div class="col-sm-2"><?= date('d/m/Y', strtotime($modelAditivo->adit_data_ini_vigencia)) ?></div>
-                            <div class="col-sm-2"><b>Fim da Vigência:</b></div>
-                            <div class="col-sm-2"><?= date('d/m/Y', strtotime($modelAditivo->adit_data_fim_vigencia)) ?></div>
-                        </div>
-
+                            <div class="col-sm-2"><b>Aditivo:</b><br />
+                                <?= $modelAditivo->adit_numeroaditivo ?>
+                            </div>
+                            <div class="col-sm-2"><b>Início da Vigência:</b><br />
+                                <?= date('d/m/Y', strtotime($modelAditivo->adit_data_ini_vigencia)) ?>
+                            </div>
+                            <div class="col-sm-2"><b>Fim da Vigência:</b><br />
+                                <?= date('d/m/Y', strtotime($modelAditivo->adit_data_fim_vigencia)) ?>
+                            </div>
+                            <div class="col-sm-2"><b>Cadastrado por:</b><br />
+                                <?= $modelAditivo->adit_usuario ?>
+                            </div>
+                            <div class="col-sm-2"><b>Data do Cadastro:</b><br />
+                                <?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?>
+                            </div>
+                        </div><br />
                         <div class="row">
-                            <div class="col-sm-2"><b>Observação:</b></div>
-                            <div class="col-sm-2"><?= $modelAditivo->adit_observacao ?></div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-2"><b>Usuário Cadastrado:</b></div>
-                            <div class="col-sm-2"><?= $modelAditivo->adit_usuario ?></div>
-                            <div class="col-sm-2"><b>Data:</b></div>
-                            <div class="col-sm-2"><?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?></div>
-                        </div>                  
+                            <div class="col-sm-2"><b>Observação:</b><br/ >
+                                <?= $modelAditivo->adit_observacao ?>
+                            </div>
+                        </div>                 
                     </div>
                             <table class="table table-condensed table-hover">
                                 <thead>

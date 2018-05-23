@@ -21,7 +21,7 @@ use yii\bootstrap\Modal;
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
 <div class="panel panel-primary">

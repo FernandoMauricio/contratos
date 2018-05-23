@@ -21,7 +21,7 @@ use yii\bootstrap\Modal;
          'widgetContainer' => 'dynamicform_pagamentos', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
          'widgetBody' => '.container-items', // required: css class selector
          'widgetItem' => '.item', // required: css class
-         'limit' => 4, // the maximum times, an element can be cloned (default 999)
+         'limit' => 999, // the maximum times, an element can be cloned (default 999)
          'min' => 0, // 0 or 1 (default 1)
          'insertButton' => '.add-item', // css class
          'deleteButton' => '.remove-item', // css class
