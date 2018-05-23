@@ -61,6 +61,7 @@ use yii\bootstrap\Modal;
                     'form' => $form,
                     'model' => $model,
                     'modelsAditivos' => $modelsAditivos,
+                    'countAditivos' => $countAditivos,
                 ]) ?>
             </div>
 

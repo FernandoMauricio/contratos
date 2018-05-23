@@ -45,7 +45,8 @@ use yii\bootstrap\Modal;
 
         Modal::end();
     ?>
-<?php if (!isset($modelsAditivos)): ?> <!-- corrigi erro no create -->
+
+<?php if ($countAditivos > 0): ?> <!-- corrigi erro no create -->
 <?php foreach ($modelsAditivos as $indexAditivo => $modelAditivo): ?>
 
     <div class="row"><p class="bg-info" style="font-size: 20px;text-align: center"> Aditivo <?= $indexAditivo + 1 ?></p></div>

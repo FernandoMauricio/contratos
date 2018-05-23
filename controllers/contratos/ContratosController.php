@@ -103,12 +103,14 @@ class ContratosController extends Controller
         $aditivos = Aditivos::find()->where(['contratos_id' => $_GET['id']])->all();
 
         if ($model->load(Yii::$app->request->post())) {
+
         $modelAditivo = $this->findModelAditivo($model->aditivo);
+
         //Exclusão de todos os pagamentos relacionados ao aditivo 
         AditivosPagamentos::deleteAll('aditivos_id = "'.$model->aditivo.'"');
         $modelAditivo->delete(); //Exclui o Aditivo
-        Yii::$app->session->setFlash('success', '<strong>SUCESSO! </strong> Aditivo de código: ' . '<strong>' .$model->aditivo. '</strong>' . ' excluído!');
 
+        Yii::$app->session->setFlash('success', '<strong>SUCESSO! </strong> Aditivo de código: ' . '<strong>' .$model->aditivo. '</strong>' . ' excluído!');
             return $this->redirect(['update', 'id' => $_GET['id']]);
         } else {
             return $this->renderAjax('deletar-aditivo', [
@@ -193,13 +195,13 @@ class ContratosController extends Controller
         $model = $this->findModel($id);
         $modelsPagamentos = $model->pagamentos;
         $modelsAditivos = $model->aditivos;
-        $oldAditivosPagamentos = [];
 
         $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
         $tipoContrato = Tipocontrato::find()->all();
         $instrumentos = Instrumentos::find()->all();
         $prestadores = Prestadores::find()->all();
         $naturezas = Naturezas::find()->all();
+        $countAditivos = Aditivos::find()->where(['contratos_id' => $model->cont_codcontrato])->count();
 
         $model->naturezasContrato = \yii\helpers\ArrayHelper::getColumn(
             $model->getNaturezaContrato()->asArray()->all(),
@@ -269,6 +271,7 @@ class ContratosController extends Controller
             'instrumentos' => $instrumentos,
             'prestadores' => $prestadores,
             'naturezas' => $naturezas,
+            'countAditivos' => $countAditivos,
             'modelsPagamentos' => (empty($modelsPagamentos)) ? [new Pagamentos] : $modelsPagamentos,
             'modelsAditivos' => (empty($modelsAditivos)) ? [new Aditivos] : $modelsAditivos,
         ]);
