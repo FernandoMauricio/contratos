@@ -16,35 +16,32 @@ use yii\bootstrap\Modal;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="panel-body">
+    
     <p>
         <?= Html::button('Inserir Aditivo', ['value'=> Url::to(['contratos/contratos/gerar-aditivo', 'id' => $model->cont_codcontrato]), 'class' => 'btn btn-info', 'id'=>'modalButton']) ?>
         
         <?= Html::button('Deletar Aditivo', ['value'=> Url::to(['contratos/contratos/deletar-aditivo', 'id' => $model->cont_codcontrato]), 'class' => 'btn btn-danger pull-right', 'id'=>'modalButton2']) ?>
     </p>
 
-    <?php
-        Modal::begin([
-            'header' => '<h4>Inserir Aditivo</h4>',
-            'id' => 'modal',
-            'size' => 'modal-lg',
-            ]);
+ <?php
+    Modal::begin([
+        'header' => '<h4>Inserir Aditivo</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+        ]);
+    echo "<div id='modalContent'></div>";
+    Modal::end();
+?>
 
-        echo "<div id='modalContent'></div>";
-
-        Modal::end();
-    ?>
-
-    <?php
-        Modal::begin([
-            'header' => '<h4>Deletar Aditivo</h4>',
-            'id' => 'modal2',
-            'size' => 'modal-lg',
-            ]);
-
-        echo "<div id='modalContent2'></div>";
-
-        Modal::end();
-    ?>
+<?php
+    Modal::begin([
+       'header' => '<h4>Deletar Aditivo</h4>',
+       'id' => 'modal2',
+       'size' => 'modal-lg',
+       ]);
+    echo "<div id='modalContent2'></div>";
+    Modal::end();
+?>
 
 <?php if ($countAditivos > 0): ?> <!-- corrigi erro no create -->
 <?php foreach ($modelsAditivos as $indexAditivo => $modelAditivo): ?>

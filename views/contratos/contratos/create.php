@@ -14,13 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render('gerar-contrato', [
         'model' => $model,
         'unidades' => $unidades,
         'tipoContrato' => $tipoContrato,
         'instrumentos' => $instrumentos,
         'prestadores' => $prestadores,
         'naturezas' => $naturezas,
+        'countAditivos' => $countAditivos,
         'modelsPagamentos' => (empty($modelsPagamentos)) ? [new Pagamentos] : $modelsPagamentos,
         'modelsAditivos' => (empty($modelsAditivos)) ? [new Aditivos] : $modelsAditivos,
     ]) ?>

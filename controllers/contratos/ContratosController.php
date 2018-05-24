@@ -166,18 +166,20 @@ class ContratosController extends Controller
         $instrumentos = Instrumentos::find()->all();
         $prestadores = Prestadores::find()->all();
         $naturezas = Naturezas::find()->all();
+        $countAditivos = Aditivos::find()->where(['contratos_id' => $model->cont_codcontrato])->count();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->cont_codcontrato]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('gerar-contrato', [
             'model' => $model,
             'unidades' => $unidades,
             'tipoContrato' => $tipoContrato,
             'instrumentos' => $instrumentos,
             'prestadores' => $prestadores,
             'naturezas' => $naturezas,
+            'countAditivos' => $countAditivos,
             'modelsPagamentos' => (empty($modelsPagamentos)) ? [new Pagamentos] : $modelsPagamentos,
             'modelsAditivos' => (empty($modelsAditivos)) ? [new Aditivos] : $modelsAditivos,
         ]);

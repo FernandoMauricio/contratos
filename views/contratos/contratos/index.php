@@ -5,6 +5,9 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\contratos\ContratosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,8 +21,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
+        <?= Html::button('Novo Contrato', ['value'=> Url::to(['create']), 'class' => 'btn btn-success', 'id'=>'modalButton']) ?>
         <?= Html::a('Novo Contrato', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+ <?php
+    Modal::begin([
+        'header' => '<h4>Novo Contrato</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+        ]);
+    echo "<div id='modalContent'></div>";
+    Modal::end();
+?>
 
 <?php
     $gridColumns = [
@@ -71,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\ActionColumn'],
 
         ];
- ?>
+?>
     <?php Pjax::begin(); ?>
 
 <?php 
