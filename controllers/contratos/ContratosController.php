@@ -159,7 +159,6 @@ class ContratosController extends Controller
     {
         $model = new Contratos();
         $modelsPagamentos = [new Pagamentos];
-        $modelsAditivos = [new Aditivos];
 
         $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
         $tipoContrato = Tipocontrato::find()->all();
@@ -168,8 +167,40 @@ class ContratosController extends Controller
         $naturezas = Naturezas::find()->all();
         $countAditivos = Aditivos::find()->where(['contratos_id' => $model->cont_codcontrato])->count();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->cont_codcontrato]);
+        if ($model->load(Yii::$app->request->post())) {
+
+        $model->save();
+
+        $datainicial = new DateTime($model->cont_data_ini_vigencia);
+        $datafinal   = new DateTime($model->cont_data_fim_vigencia);
+        $index = 0;
+        $valorTotalPagar = 0;
+        $valorRateio = 0;
+        foreach ($modelsPagamentos as $index => $modelPagamento) {
+            for($i = $datainicial; $i <= $datafinal; $i->modify('+1 month')) {
+                $date = $i->format("Y-m-d");
+                //Inclui as informações dos candidatos classificados
+                    Yii::$app->db->createCommand()->insert('pagamentos_pag',
+                        [
+                            'pag_codcontrato' => $model->cont_codcontrato, 
+                            'pag_datavencimento' => $date, //Contador dos meses a partir da data de vigência
+                            'pag_valorpagar' => $model->cont_valor,    
+                            'pag_databaixado' => NULL, 
+                            'pag_valorpago' => 0, 
+                            'pag_situacao' => 'Pendente' 
+                        ])->execute();
+                $index++;
+            }
+            //Busca o valor que será reateado no período escolhido
+           $valorRateio = $model->cont_valor / $index;
+        }
+        //Atualiza os pagamentos com o valor Rateado
+        foreach ($modelsPagamentos as $modelPagamento) {
+                Yii::$app->db->createCommand()->update('pagamentos_pag',
+                    ['pag_valorpagar' => $valorRateio], 
+                    ['pag_codcontrato' => $model->cont_codcontrato])->execute();
+        }
+            return $this->redirect(['update', 'id' => $model->cont_codcontrato]);
         }
 
         return $this->renderAjax('gerar-contrato', [
@@ -181,7 +212,6 @@ class ContratosController extends Controller
             'naturezas' => $naturezas,
             'countAditivos' => $countAditivos,
             'modelsPagamentos' => (empty($modelsPagamentos)) ? [new Pagamentos] : $modelsPagamentos,
-            'modelsAditivos' => (empty($modelsAditivos)) ? [new Aditivos] : $modelsAditivos,
         ]);
     }
 

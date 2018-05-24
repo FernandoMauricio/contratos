@@ -111,6 +111,15 @@ class Contratos extends \yii\db\ActiveRecord
         }
     }
 
+    public function getNaturezas()
+    {
+        $naturezas = [];
+        foreach($this->naturezaContrato as $descr) {
+            $naturezas[] = $descr->tiponatureza->tipna_natureza;
+        }
+        return implode(" | ", $naturezas);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -122,9 +131,9 @@ class Contratos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContCodinstrumento()
+    public function getInstrumentos()
     {
-        return $this->hasOne(InstrumentoInst::className(), ['inst_codinstrumento' => 'cont_codinstrumento']);
+        return $this->hasOne(Instrumentos::className(), ['inst_codinstrumento' => 'cont_codinstrumento']);
     }
 
     /**
@@ -138,9 +147,9 @@ class Contratos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContCodtipo()
+    public function getTipocontrato()
     {
-        return $this->hasOne(TipocontratoTico::className(), ['tico_codtipo' => 'cont_codtipo']);
+        return $this->hasOne(Tipocontrato::className(), ['tico_codtipo' => 'cont_codtipo']);
     }
 
     /**

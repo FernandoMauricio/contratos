@@ -40,7 +40,6 @@ use yii\bootstrap\Modal;
  <div class="panel panel-default">
      <div class="panel-heading">
          <i class="fa fa-envelope"></i> Listagem de Pagamentos
-         <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Adicionar Pagamento</button>
          <div class="clearfix"></div>
      </div>
      <div class="panel-body container-items"><!-- widgetContainer -->
@@ -48,7 +47,6 @@ use yii\bootstrap\Modal;
               <?= $modelPagamento->pag_situacao == 'Baixado' ? '<div class="item panel panel-success">': '<div class="item panel panel-danger">'; ?><!-- widgetBody -->
                  <div class="panel-heading">
                      <span class="panel-title-pagamento">Pagamento: <?= ($index + 1) ?></span>
-                     <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
                      <div class="clearfix"></div>
                  </div>
                  <div class="panel-body">

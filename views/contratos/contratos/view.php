@@ -46,8 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'cont_valor',
                             'cont_arquivocontrato',
                             'cont_contatoinformacoes',
-                            'cont_codtipo',
-                            'cont_codinstrumento',
+                            'tipocontrato.tico_descricao',
+                            'instrumentos.inst_descricao',
+                            [
+                                'attribute' => 'naturezasContrato',
+                                'value' => $model->getNaturezas(),
+                            ],
                             'cont_observacao:ntext',
                             'cont_localizacaofisica',
                             'cont_localizacaogestor',
@@ -60,25 +64,42 @@ $this->params['breadcrumbs'][] = $this->title;
                         <thead>
                             <tr class="info"><th colspan="12">Listagem de Pagamentos</th></tr>
                             <tr>
-                              <th>Data do Vencimento</th>
-                              <th>Valor a Pagar</th>
-                              <th>Data da Baixa</th>
-                              <th>Valor Pago</th>
-                              <th>Situação</th>
+                                <th>#</th>
+                                <th>Data do Vencimento</th>
+                                <th>Valor a Pagar</th>
+                                <th>Data da Baixa</th>
+                                <th>Valor Pago</th>
+                                <th>Situação</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php 
+                                $valorTotalPagar = 0;
+                                $valorTotalPago = 0; 
+                            ?>
                             <?php foreach ($modelsPagamentos as $index => $modelPagamento): ?>
                                 <?= $modelPagamento->pag_situacao == 'Baixado' ? '<tr class="success">': '<tr class="danger">'; ?>
+                                    <td><?= $index + 1; ?></td>
                                     <td><?= date('d/m/Y', strtotime($modelPagamento->pag_datavencimento)); ?></td>
                                     <td><?= 'R$ ' . number_format($modelPagamento->pag_valorpagar, 2, ',', '.'); ?></td>
-                                    <td><?= date('d/m/Y', strtotime($modelPagamento->pag_databaixado)); ?></td>
+                                    <td><?= $modelPagamento->pag_databaixado != NULL ? date('d/m/Y', strtotime($modelPagamento->pag_databaixado)) : ''; ?></td>
                                     <td><?= 'R$ ' . number_format($modelPagamento->pag_valorpago, 2, ',', '.'); ?></td>
                                     <td><?= $modelPagamento->pag_situacao; ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                                    </tr>
+                                    <?php 
+                                        $valorTotalPagar += $modelPagamento->pag_valorpagar; // Somatório dos Valores A PAGAR
+                                        $valorTotalPago += $modelPagamento->pag_valorpago; //Somatório dos Valores Pagos
+                                    ?> 
+                                    <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="warning">
+                                       <th colspan="2">TOTAL</th>
+                                       <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPagar, 2, ',', '.') ?></th>
+                                       <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPago, 2, ',', '.') ?></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                 </div>
 
                 <div class="tab-pane" id="tab3">
@@ -112,12 +133,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <thead>
                                     <tr class="active"><th colspan="12">Listagem de Pagamentos do <code>Aditivo <?= $indexAditivo + 1 ?></code></th></tr>
                                     <tr>
-                                       <th>#</th>
-                                       <th>Data do Vencimento</th>
-                                       <th>Valor a Pagar</th>
-                                       <th>Data da Baixa</th>
-                                       <th>Valor Pago</th>
-                                       <th>Situação</th>
+                                        <th>#</th>
+                                        <th>Data do Vencimento</th>
+                                        <th>Valor a Pagar</th>
+                                        <th>Data da Baixa</th>
+                                        <th>Valor Pago</th>
+                                        <th>Situação</th>
                                     </tr>
                                 </thead>
                                 <tbody>

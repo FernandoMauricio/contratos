@@ -61,8 +61,8 @@ class NaturezaContrato extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNatCodtipo()
+    public function getTiponatureza()
     {
-        return $this->hasOne(TiponaturezaTipna::className(), ['tipna_codtipo' => 'nat_codtipo']);
+        return $this->hasOne(Naturezas::className(), ['tipna_codtipo' => 'nat_codtipo']);
     }
 }
