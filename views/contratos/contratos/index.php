@@ -22,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::button('Novo Contrato', ['value'=> Url::to(['create']), 'class' => 'btn btn-success', 'id'=>'modalButton']) ?>
-        <?= Html::a('Novo Contrato', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
  <?php

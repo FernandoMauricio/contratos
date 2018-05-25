@@ -33,6 +33,13 @@ class PrestadoresController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        return [
+            'addressSearch' => 'yiibr\correios\CepAction'
+        ];
+    }
+    
     /**
      * Lists all Prestadores models.
      * @return mixed

@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
+use yiibr\correios\CepInput;
 use wbraganca\dynamicform\DynamicFormWidget;
 
 /* @var $this yii\web\View */
@@ -32,11 +34,28 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
                         <?= $model->tipoprestador_cod == 1 ? '' : '<div class="col-md-5">'.$form->field($model, 'pres_razaosocial')->textInput(['maxlength' => true]).'</div>'; ?>
 
-                        <div class="col-md-2"><?= $model->tipoprestador_cod == 1 ? $form->field($model, 'pres_cpf')->textInput(['maxlength' => true]) : $form->field($model, 'pres_cnpj')->textInput(['maxlength' => true]) ?> </div>
+                        <div class="col-md-2">
+                            <?= $model->tipoprestador_cod == 1 ? 
+                            $form->field($model, 'pres_cpf')->widget(\yii\widgets\MaskedInput::className(), [
+                            'mask' => '999.999.999.99']) 
+                            : 
+                            $form->field($model, 'pres_cnpj')->widget(\yii\widgets\MaskedInput::className(), [
+                            'mask' => '99.999.999/9999-99'])  ?> 
+                        </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"><?= $form->field($model, 'pres_cep')->textInput(['maxlength' => true]) ?></div>
+                        <div class="col-md-2"><?= $form->field($model, 'pres_cep')->widget('yiibr\correios\CepInput', [
+                                    'action' => ['addressSearch'],
+                                    'fields' => [
+                                        'location' => 'prestadores-pres_logradouro',
+                                        'district' => 'prestadores-pres_bairro',
+                                        'city' => 'prestadores-pres_cidade',
+                                        'state' => 'prestadores-pres_estado',
+                                        'cep' => 'prestadores-pres_cep',
+                                    ],
+                                ]) ?>
+                        </div>
 
                         <div class="col-md-4"><?= $form->field($model, 'pres_logradouro')->textInput(['maxlength' => true]) ?></div>
 

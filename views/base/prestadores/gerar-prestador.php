@@ -20,7 +20,7 @@ use faryshta\widgets\JqueryTagsInput;
 <div class="panel-body">
 	<div class="row">
 		<div class="col-md-12">
-			<?= $form->field($model, 'tipoprestador_cod')->radioList(['1' => 'Pessoa Física', '2' => 'Pessoa Jurídica']) ?>
+			<?= $form->field($model, 'tipoprestador_cod')->radioList(['1' => 'Pessoa Jurídica', '2' => 'Pessoa Física' ]) ?>
 		</div>
 	</div>
 </div>

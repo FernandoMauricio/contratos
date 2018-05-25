@@ -3,6 +3,8 @@
 namespace app\models\base\Prestadores;
 
 use Yii;
+use yiibr\brvalidator\CpfValidator;
+use yiibr\brvalidator\CnpjValidator;
 
 /**
  * This is the model class for table "prestadores_pres".
@@ -43,12 +45,14 @@ class Prestadores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            //[['pres_nome', 'tipoprestador_cod'], 'required'],
+            [['pres_nome', 'tipoprestador_cod'], 'required'],
             [['tipoprestador_cod'], 'integer'],
+            ['pres_cpf', CpfValidator::className()],
+            ['pres_cnpj', CnpjValidator::className()],
             [['tipoprestador'], 'safe'],
             [['pres_nome', 'pres_logradouro'], 'string', 'max' => 60],
             [['pres_razaosocial'], 'string', 'max' => 50],
-            [['pres_cpf', 'pres_cidade', 'pres_estado'], 'string', 'max' => 45],
+            [['pres_cpf', 'pres_cidade', 'pres_numero', 'pres_estado'], 'string', 'max' => 45],
             [['pres_cnpj'], 'string', 'max' => 20],
             [['pres_cep'], 'string', 'max' => 15],
             [['pres_bairro', 'pres_complemento'], 'string', 'max' => 40],
@@ -64,13 +68,14 @@ class Prestadores extends \yii\db\ActiveRecord
         return [
             'pres_codprestador' => 'Código',
             'tipoprestador' => 'Tipo de Prestador',
-            'pres_nome' => 'Nome',
+            'pres_nome' => $this->tipoprestador_cod == 1 ? 'Nome Fantasia' : 'Nome',
             'pres_razaosocial' => 'Razão Social',
             'pres_cpf' => 'CPF',
             'pres_cnpj' => 'CNPJ',
             'pres_cep' => 'CEP',
             'pres_logradouro' => 'Logradouro',
             'pres_bairro' => 'Bairro',
+            'pres_numero' => 'Número',
             'pres_complemento' => 'Complemento',
             'pres_cidade' => 'Cidade',
             'pres_estado' => 'Estado',

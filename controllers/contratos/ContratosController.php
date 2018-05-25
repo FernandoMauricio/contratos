@@ -163,7 +163,7 @@ class ContratosController extends Controller
         $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
         $tipoContrato = Tipocontrato::find()->all();
         $instrumentos = Instrumentos::find()->all();
-        $prestadores = Prestadores::find()->all();
+        $prestadores = Prestadores::find()->select([new \yii\db\Expression("pres_codprestador, IF(tipoprestador_cod = 1, CONCAT('(Pessoa Jurídica) - ', `pres_nome`), CONCAT('(Pessoa Física) - ', `pres_nome`)) as pres_nome")])->all();
         $naturezas = Naturezas::find()->all();
         $countAditivos = Aditivos::find()->where(['contratos_id' => $model->cont_codcontrato])->count();
 
@@ -231,7 +231,7 @@ class ContratosController extends Controller
         $unidades = Unidades::find()->where(['uni_codsituacao' => 1])->orderBy('uni_nomeabreviado')->all();
         $tipoContrato = Tipocontrato::find()->all();
         $instrumentos = Instrumentos::find()->all();
-        $prestadores = Prestadores::find()->all();
+        $prestadores = Prestadores::find()->select([new \yii\db\Expression("pres_codprestador, IF(tipoprestador_cod = 1, CONCAT('(Pessoa Jurídica) - ', `pres_nome`), CONCAT('(Pessoa Física) - ', `pres_nome`)) as pres_nome")])->all();
         $naturezas = Naturezas::find()->all();
         $countAditivos = Aditivos::find()->where(['contratos_id' => $model->cont_codcontrato])->count();
 
