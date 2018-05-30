@@ -28,6 +28,7 @@ use yii\bootstrap\Modal;
         'header' => '<h4>Inserir Aditivo</h4>',
         'id' => 'modal',
         'size' => 'modal-lg',
+        'clientOptions' => ['backdrop' => 'static', 'keyboard' => true],
         ]);
     echo "<div id='modalContent'></div>";
     Modal::end();
@@ -197,13 +198,13 @@ use yii\bootstrap\Modal;
 $js = '
 jQuery(".dynamicform_aditivospagamentos").on("afterInsert", function(e, item) {
     jQuery(".dynamicform_aditivospagamentos .panel-title-aditivopagamentos").each(function(index) {
-        jQuery(this).html("aditivopagamentos: " + (index + 1))
+        jQuery(this).html("Pagamento: " + (index + 1))
     });
 });
 
 jQuery(".dynamicform_aditivospagamentos").on("afterDelete", function(e) {
     jQuery(".dynamicform_aditivospagamentos .panel-title-aditivopagamentos").each(function(index) {
-        jQuery(this).html("Telefone: " + (index + 1))
+        jQuery(this).html("Pagamento: " + (index + 1))
     });
 });
 

@@ -60,7 +60,7 @@ class ContratosController extends Controller
     {
         $session = Yii::$app->session;
         $model = new Aditivos();
-        $aditivosPagamentos = new AditivosPagamentos;
+        $aditivosPagamentos = [new AditivosPagamentos];
         $contratos = $this->findModel($id);
 
         $model->adit_datacadastro = date('Y-m-d');

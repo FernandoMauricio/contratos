@@ -37,6 +37,20 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
     $gridColumns = [
 
+        [
+            'class'=>'kartik\grid\ExpandRowColumn',
+            'width'=>'50px',
+            'format' => 'raw',
+            'value'=>function ($model, $key, $index, $column) {
+                return GridView::ROW_COLLAPSED;
+            },
+            'detail'=>function ($model, $key, $index, $column) {
+                return Yii::$app->controller->renderPartial('view-expand', ['model'=>$model, 'modelsPagamentos' => $model->pagamentos, 'modelsAditivos' => $model->aditivos]);
+            },
+            'headerOptions'=>['class'=>'kartik-sheet-style'], 
+            'expandOneOnly'=>true
+        ],
+
         'cont_codcontrato',
         'cont_numerocontrato',
         [

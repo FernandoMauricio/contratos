@@ -19,11 +19,49 @@ use yii\bootstrap\Modal;
     <div class="row">
         <div class="col-md-4"><?= $form->field($model, 'cont_numerocontrato')->textInput(['maxlength' => true]) ?></div>
 
-        <div class="col-md-2"><?= $form->field($model, 'cont_data_ini_vigencia')->textInput() ?></div>
+        <div class="col-md-2"><?= $form->field($model, 'cont_data_ini_vigencia')->widget(DateControl::classname(), [
+                        'type'=>DateControl::FORMAT_DATE,
+                        'ajaxConversion'=>false,
+                        'widgetOptions' => [
+                            'removeButton' => false,
+                            'pluginOptions' => [
+                                'autoclose' => true
+                            ],
+                        ]
+                    ]); 
+                ?>
+        </div>
 
-        <div class="col-md-2"><?= $form->field($model, 'cont_data_fim_vigencia')->textInput() ?></div>
+        <div class="col-md-2"><?= $form->field($model, 'cont_data_fim_vigencia')->widget(DateControl::classname(), [
+                        'type'=>DateControl::FORMAT_DATE,
+                        'ajaxConversion'=>false,
+                        'widgetOptions' => [
+                            'removeButton' => false,
+                            'pluginOptions' => [
+                                'autoclose' => true
+                            ],
+                        ]
+                    ]); 
+                ?>
+        </div>
 
-        <div class="col-md-2"><?= $form->field($model, 'cont_valor')->textInput() ?></div>
+        <div class="col-md-2">
+            <?php 
+                echo $form->field($model, 'cont_valor')->widget(NumberControl::classname(), [
+                    'maskedInputOptions' => [
+                        'prefix' => 'R$ ',
+                        'alias' => 'currency',
+                        'digits' => 2,
+                        'digitsOptional' => false,
+                        'groupSeparator' => '.',
+                        'radixPoint' => ',',
+                        'autoGroup' => true,
+                        'autoUnmask' => true,
+                        'unmaskAsNumber' => true,
+                    ],
+                ])                
+            ?>
+        </div>
 
         <div class="col-md-2">
             <?php
