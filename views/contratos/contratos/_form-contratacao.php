@@ -174,4 +174,5 @@ use yii\bootstrap\Modal;
     <div class="row">
         <div class="col-md-12"><?= $form->field($model, 'cont_arquivocontrato')->textInput() ?></div>
     </div> 
+    
 </div>

@@ -16,7 +16,6 @@ use yii\bootstrap\Modal;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="panel-body">
-    
     <p>
         <?= Html::button('Inserir Aditivo', ['value'=> Url::to(['contratos/contratos/gerar-aditivo', 'id' => $model->cont_codcontrato]), 'class' => 'btn btn-info', 'id'=>'modalButton']) ?>
         
@@ -72,7 +71,7 @@ use yii\bootstrap\Modal;
             <?= $modelAditivo->adit_observacao ?>
         </div>
     </div>
-</div>
+
 <div class="panel-body">
     <?php DynamicFormWidget::begin([
         'widgetContainer' => 'dynamicform_aditivospagamentos', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -189,10 +188,10 @@ use yii\bootstrap\Modal;
         </div>
     </div>
     <?php DynamicFormWidget::end(); ?>
+    </div>
+    <?php endforeach; ?>
+    <?php endif; ?>
 </div>
-<?php endforeach; ?>
-<?php endif; ?>
-
 
 <?php
 $js = '

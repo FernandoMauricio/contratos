@@ -17,7 +17,7 @@ use kartik\number\NumberControl;
 
 <div class="gerar-aditivo-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'aditivo-form', 'enableAjaxValidation' => true]); ?>
 
   <div class="panel-body">
       <div class="row">
@@ -76,8 +76,6 @@ use kartik\number\NumberControl;
         <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
     
-  </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>
