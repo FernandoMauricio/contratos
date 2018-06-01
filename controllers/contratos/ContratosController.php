@@ -67,17 +67,19 @@ class ContratosController extends Controller
         $model->adit_usuario = $session['sess_nomeusuario'];
         $model->contratos_id = $id;
 
-        if ($model->load(Yii::$app->request->post()) ) {
-
+        if ($model->load(Yii::$app->request->post())) {
+            //Validação para que o Fim da vigência não seja menor que o Início da Vigência
+            if ($model->adit_data_fim_vigencia <= $model->adit_data_ini_vigencia)
+            {
+                Yii::$app->session->setFlash('danger', '<strong>ERRO! </strong>  Fim da Vigência não pode ser menor que a data de Início da Vigência!');
+                return $this->redirect(['update', 'id' => $contratos->cont_codcontrato]);
+            }
         $model->save();
-
-        $datainicial = new DateTime($model->adit_data_ini_vigencia);
-        $datafinal   = new DateTime($model->adit_data_fim_vigencia);
         $index = 0;
         $valorTotalPagar = 0;
         $valorRateio = 0;
         foreach ($aditivosPagamentos as $index => $AditivoPagamento) {
-            for($i = $datainicial; $i <= $datafinal; $i->modify('+1 month')) {
+            for($i = new DateTime($model->adit_data_ini_vigencia); $i <= new DateTime($model->adit_data_fim_vigencia); $i->modify('+1 month')) {
                 $date = $i->format("Y-m-d");
                 //Inclui as informações dos candidatos classificados
                     Yii::$app->db->createCommand()->insert('aditivos_pag',
@@ -178,17 +180,13 @@ class ContratosController extends Controller
         $naturezas = Naturezas::find()->all();
         $countAditivos = Aditivos::find()->where(['contratos_id' => $model->cont_codcontrato])->count();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
 
-        $model->save();
-
-        $datainicial = new DateTime($model->cont_data_ini_vigencia);
-        $datafinal   = new DateTime($model->cont_data_fim_vigencia);
         $index = 0;
         $valorTotalPagar = 0;
         $valorRateio = 0;
         foreach ($modelsPagamentos as $index => $modelPagamento) {
-            for($i = $datainicial; $i <= $datafinal; $i->modify('+1 month')) {
+            for($i = new DateTime($model->cont_data_ini_vigencia); $i <= new DateTime($model->cont_data_fim_vigencia); $i->modify('+1 month')) {
                 $date = $i->format("Y-m-d");
                 //Inclui as informações dos candidatos classificados
                     Yii::$app->db->createCommand()->insert('pagamentos_pag',

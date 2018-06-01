@@ -34,7 +34,6 @@ use yii\bootstrap\Modal;
             <li><a href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-book"></span> Informações</a></li>
             <li><a href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-th-list"></span> Pagamentos</a></li>
             <li><a href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Aditivos</a></li>
-            <li><a href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-transfer"></span> Tramitações</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane" id="tab1">

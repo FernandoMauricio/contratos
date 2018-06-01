@@ -17,7 +17,7 @@ use kartik\number\NumberControl;
 
 <div class="gerar-aditivo-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'aditivo-form', 'enableAjaxValidation' => true]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
   <div class="panel-body">
       <div class="row">
