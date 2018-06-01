@@ -38,12 +38,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attributes' => [
                             'cont_codcontrato',
                             'cont_numerocontrato',
-                            'cont_data_ini_vigencia',
-                            'cont_data_fim_vigencia',
+                            [
+                                'attribute' => 'cont_data_ini_vigencia',
+                                'format' => ['date', 'php:d/m/Y']
+                            ],
+                            [
+                                'attribute' => 'cont_data_fim_vigencia',
+                                'format' => ['date', 'php:d/m/Y']
+                            ],
                             'cont_codunidadecontrato',
-                            'cont_codprestador',
+                            'prestadores.pres_nome',
                             'cont_objeto:ntext',
-                            'cont_valor',
+                            [
+                                'attribute' =>'cont_valor',
+                                'format'=>['decimal',2],
+                            ],
                             'cont_arquivocontrato',
                             'cont_contatoinformacoes',
                             'tipocontrato.tico_descricao',

@@ -139,9 +139,9 @@ class Contratos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContCodprestador()
+    public function getPrestadores()
     {
-        return $this->hasOne(PrestadoresPres::className(), ['pres_codprestador' => 'cont_codprestador']);
+        return $this->hasOne(Prestadores::className(), ['pres_codprestador' => 'cont_codprestador']);
     }
 
     /**

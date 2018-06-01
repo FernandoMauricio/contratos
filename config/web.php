@@ -71,6 +71,12 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'HmiPLdIFR6jnVj_NOP4rO6hMozb67M5N',
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\formatter',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => '.',
+            'currencyCode' => 'R$',
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
