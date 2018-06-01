@@ -10,6 +10,7 @@ use kartik\widgets\DatePicker;
 use kartik\number\NumberControl;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\contratos\Contratos */
@@ -172,7 +173,18 @@ use yii\bootstrap\Modal;
     </div>
 
     <div class="row">
-        <div class="col-md-12"><?= $form->field($model, 'cont_arquivocontrato')->textInput() ?></div>
+        <div class="col-md-12">
+            <?= $form->field($model, 'file')->widget(FileInput::classname(), [
+                    'options' => ['accept' => '.pdf, .jpg, .png'],
+                    'language' => 'pt',
+                    'pluginOptions' => [
+                    'showRemove'=> false,
+                    'showUpload'=> false,
+                    'initialCaption'=>$model->cont_arquivocontrato,
+                    ],
+                ]);
+            ?>
+        </div>
     </div> 
     
 </div>

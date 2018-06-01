@@ -20,6 +20,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+use yii\web\UploadedFile;
 
 /**
  * ContratosController implements the CRUD actions for Contratos model.
@@ -250,6 +252,20 @@ class ContratosController extends Controller
         );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            //Inserindo o arquivo do Contrato
+            $image = UploadedFile::getInstance($model, 'file');
+                if (!is_null($image)) {
+                    $model->cont_arquivocontrato = $image->name;
+                    $ext = end((explode(".", $image->name)));
+                    // generate a unique file name to prevent duplicate filenames
+                    $model->cont_src_arquivocontrato = Yii::$app->security->generateRandomString().".{$ext}";
+                    // the path to save file, you can set an uploadPath
+                    // in Yii::$app->params (as used in example below)                       
+                    Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/web/uploads/contratos/';
+                    $path = Yii::$app->params['uploadPath'] . $model->cont_src_arquivocontrato;
+                    $image->saveAs($path);
+                }
 
             //--------Pagamentos--------------
             $oldIDsPagamentos = ArrayHelper::map($modelsPagamentos, 'id', 'id');

@@ -39,6 +39,8 @@ use app\models\contratos\aditivos\Aditivos;
 class Contratos extends \yii\db\ActiveRecord
 {
     public $naturezasContrato;
+    public $file;
+    
     /**
      * @inheritdoc
      */
@@ -59,11 +61,12 @@ class Contratos extends \yii\db\ActiveRecord
             [['cont_objeto', 'cont_observacao'], 'string'],
             [['cont_valor'], 'number'],
             [['cont_numerocontrato'], 'string', 'max' => 20],
-            [['cont_arquivocontrato'], 'string', 'max' => 255],
+            [['cont_arquivocontrato', 'cont_src_arquivocontrato'], 'string', 'max' => 255],
             [['cont_contatoinformacoes'], 'string', 'max' => 50],
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
             [['cont_codtipo'], 'exist', 'skipOnError' => true, 'targetClass' => Tipocontrato::className(), 'targetAttribute' => ['cont_codtipo' => 'tico_codtipo']],
+            [['file'], 'file', 'extensions' => 'pdf', 'maxSize' => 1024 * 1024 * 16, 'tooBig' => 'O arquivo é grande demais. Seu tamanho não pode exceder 16MB.'],
         ];
     }
 
@@ -89,6 +92,7 @@ class Contratos extends \yii\db\ActiveRecord
             'cont_localizacaofisica' => 'Localização Física',
             'cont_localizacaogestor' => 'Gestor do Contrato',
             'naturezasContrato' => 'Naturezas do Contrato',
+            'file' => 'Arquivo',
         ];
     }
 

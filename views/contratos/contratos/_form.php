@@ -18,7 +18,7 @@ use yii\bootstrap\Modal;
 
 <div class="contratos-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+    <?php $form = ActiveForm::begin(['options' => ['id' => 'dynamic-form', 'enctype' => 'multipart/form-data']]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
