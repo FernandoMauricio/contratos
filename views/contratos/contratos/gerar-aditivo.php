@@ -24,7 +24,7 @@ use kartik\number\NumberControl;
           <div class="col-md-4"><?= $form->field($model, 'adit_numeroaditivo')->textInput(['maxlength' => true]) ?></div>
 
           <div class="col-md-2">
-            <?= $form->field($model, 'valorPagar')->widget(NumberControl::classname(), [
+            <?= $form->field($model, 'adit_valor')->widget(NumberControl::classname(), [
                         'maskedInputOptions' => [
                         'prefix' => 'R$ ',
                         'alias' => 'currency',

@@ -52,6 +52,9 @@ use yii\bootstrap\Modal;
         <div class="col-sm-2"><b>Aditivo:</b><br />
             <?= $modelAditivo->adit_numeroaditivo ?>
         </div>
+        <div class="col-sm-2"><b>Valor:</b><br />
+            <?= $modelAditivo->adit_valor ?>
+        </div>
         <div class="col-sm-2"><b>Início da Vigência:</b><br />
             <?= date('d/m/Y', strtotime($modelAditivo->adit_data_ini_vigencia)) ?>
         </div>
