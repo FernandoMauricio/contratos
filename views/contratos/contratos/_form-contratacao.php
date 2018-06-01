@@ -175,12 +175,11 @@ use kartik\file\FileInput;
     <div class="row">
         <div class="col-md-12">
             <?= $form->field($model, 'file')->widget(FileInput::classname(), [
-                    'options' => ['accept' => '.pdf, .jpg, .png'],
-                    'language' => 'pt',
+                    'options' => ['accept' => '.pdf'],
                     'pluginOptions' => [
-                    'showRemove'=> false,
-                    'showUpload'=> false,
-                    'initialCaption'=>$model->cont_arquivocontrato,
+                        'language' => 'pt-BR',
+                        'showRemove'=> false,
+                        'showUpload'=> false,
                     ],
                 ]);
             ?>
