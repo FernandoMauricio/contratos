@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use kartik\nav\NavX;
 
 AppAsset::register($this);
 ?>
@@ -35,18 +36,37 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
+    echo NavX::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Parâmetros', 'items' => [
-            '<li class="dropdown-header">Administração dos Parâmetros</li>',
+            ['label' => 'Contratos', 'items' => [
+            '<li class="dropdown-header">Administração dos Contratos</li>',
                 ['label' => 'Cadastro de Contratos', 'url' => ['/contratos/contratos']],
-                ['label' => 'Cadastro de Prestadores', 'url' => ['/base/prestadores']],
-                ['label' => 'Tipos de Instrumento', 'url' => ['/base/instrumentos']],
-                ['label' => 'Tipos de Natureza', 'url' => ['/base/naturezas']],
+                ['label' => 'Parâmetros', 'items' => [
+                '<li class="dropdown-header">Administração dos Parâmetros</li>',
+                    ['label' => 'Cadastro de Prestadores', 'url' => ['/base/prestadores']],
+                    ['label' => 'Tipos de Instrumento', 'url' => ['/base/instrumentos']],
+                    ['label' => 'Tipos de Natureza', 'url' => ['/base/naturezas']],
+                ]]
 
-            ]],
+            ]
+            // [
+            // 'label' => 'Plano de Ação',
+            // 'items' => [
+            //              ['label' => 'Cadastro do Plano', 'url' => ['/planos/planodeacao/index']],
+            //                          '<li class="divider"></li>',
+            //                 ['label' => 'Cadastros', 'items' => [
+            //                     ['label' => 'Material do Aluno', 'url' => ['/cadastros/materialaluno/index']],
+            //                     ['label' => 'Equipamentos / Utensílios', 'url' => ['/cadastros/estruturafisica/index']],
+            //                     '<li class="divider"></li>',
+            //                     ['label' => 'Material de Consumo', 'url' => ['/cadastros/materialconsumo/index']],
+
+            //                 ]],
+
+            //          ],
+            // ],
+        ],
         ],
     ]);
     NavBar::end();

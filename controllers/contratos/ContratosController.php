@@ -16,6 +16,7 @@ use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
 use app\models\base\naturezas\NaturezaContrato;
 use app\models\base\naturezas\Naturezas;
+use app\models\base\email\Email;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,6 +42,58 @@ class ContratosController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionPrazoVigencia() 
+    {
+        $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 3 MONTH';
+        $models = Contratos::findBySql($sql)->all();
+        foreach ($models as $model) {
+            $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
+            $email_solicitacao = Email::findBySql($sql_email)->all(); 
+            foreach ($email_solicitacao as $email) {
+                $email_gerente  = $email["emus_email"];
+                    Yii::$app->mailer->compose()
+                    ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
+                    ->setTo($email_gerente)
+                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 3 meses')
+                    ->setTextBody('A solicitação de contratação de código:')
+                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br>Existe um contrato de <b style="color: #337ab7"">código: </b> com status de . <br> Por favor, não responda esse e-mail. Acesse http://portalsenac.am.senac.br para ANALISAR a solicitação de contratação. <br><br> Atenciosamente, <br> Contratação de Pessoal - Senac AM.</h4>')
+                    ->send();
+                } 
+        }
+        $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 2 MONTH';
+        $models = Contratos::findBySql($sql)->all();
+        foreach ($models as $model) {
+            $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
+            $email_solicitacao = Email::findBySql($sql_email)->all(); 
+            foreach ($email_solicitacao as $email) {
+                $email_gerente  = $email["emus_email"];
+                    Yii::$app->mailer->compose()
+                    ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
+                    ->setTo($email_gerente)
+                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 2 meses')
+                    ->setTextBody('A solicitação de contratação de código:')
+                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br>Existe um contrato de <b style="color: #337ab7"">código: </b> com status de . <br> Por favor, não responda esse e-mail. Acesse http://portalsenac.am.senac.br para ANALISAR a solicitação de contratação. <br><br> Atenciosamente, <br> Contratação de Pessoal - Senac AM.</h4>')
+                    ->send();
+                } 
+        }
+        $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 1 MONTH';
+        $models = Contratos::findBySql($sql)->all();
+        foreach ($models as $model) {
+            $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
+            $email_solicitacao = Email::findBySql($sql_email)->all(); 
+            foreach ($email_solicitacao as $email) {
+                $email_gerente  = $email["emus_email"];
+                    Yii::$app->mailer->compose()
+                    ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
+                    ->setTo($email_gerente)
+                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 1 mês')
+                    ->setTextBody('A solicitação de contratação de código:')
+                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br>Existe um contrato de <b style="color: #337ab7"">código: </b> com status de . <br> Por favor, não responda esse e-mail. Acesse http://portalsenac.am.senac.br para ANALISAR a solicitação de contratação. <br><br> Atenciosamente, <br> Contratação de Pessoal - Senac AM.</h4>')
+                    ->send();
+            } 
+        }
     }
 
     /**
@@ -73,7 +126,7 @@ class ContratosController extends Controller
             //Validação para que o Fim da vigência não seja menor que o Início da Vigência
             if ($model->adit_data_fim_vigencia <= $model->adit_data_ini_vigencia)
             {
-                Yii::$app->session->setFlash('danger', '<strong>ERRO! </strong>  Fim da Vigência não pode ser menor que a data de Início da Vigência!');
+                Yii::$app->session->setFlash('danger', '<b>ERRO! </b>  Fim da Vigência não pode ser menor que a data de Início da Vigência!');
                 return $this->redirect(['update', 'id' => $contratos->cont_codcontrato]);
             }
         $model->save();
@@ -125,7 +178,7 @@ class ContratosController extends Controller
         AditivosPagamentos::deleteAll('aditivos_id = "'.$model->aditivo.'"');
         $modelAditivo->delete(); //Exclui o Aditivo
 
-        Yii::$app->session->setFlash('success', '<strong>SUCESSO! </strong> Aditivo de código: ' . '<strong>' .$model->aditivo. '</strong>' . ' excluído!');
+        Yii::$app->session->setFlash('success', '<b>SUCESSO! </b> Aditivo de código: ' . '<b>' .$model->aditivo. '</b>' . ' excluído!');
             return $this->redirect(['update', 'id' => $_GET['id']]);
         } else {
             return $this->renderAjax('deletar-aditivo', [
