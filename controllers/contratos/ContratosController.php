@@ -44,7 +44,7 @@ class ContratosController extends Controller
         ];
     }
 
-    public function actionPrazoVigencia() 
+    public function actionPrazoVigencia()//Envia emails automáticos para o responsável pelo contrato
     {
         $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 3 MONTH';
         $models = Contratos::findBySql($sql)->all();
@@ -354,6 +354,7 @@ class ContratosController extends Controller
                                     $modelAditivoPagamento->adipa_databaixado = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_databaixado'];
                                     $modelAditivoPagamento->adipa_valorpago = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_valorpago'];
                                     $modelAditivoPagamento->adipa_situacao = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_situacao'];
+                                    $modelAditivoPagamento->adipa_observacao = $_POST['AditivosPagamentos'][$indexAditivo][$indexAditivosPagamentos]['adipa_observacao'];
                                 if (! ($flag = $modelAditivoPagamento->save(false))) {
                                     $transaction->rollBack();
                                     break;

@@ -53,7 +53,7 @@ use yii\bootstrap\Modal;
             <?= $modelAditivo->adit_numeroaditivo ?>
         </div>
         <div class="col-sm-2"><b>Valor:</b><br />
-            <?= $modelAditivo->adit_valor ?>
+            <?= 'R$ ' . number_format($modelAditivo->adit_valor, 2, ',', '.'); ?>
         </div>
         <div class="col-sm-2"><b>Início da Vigência:</b><br />
             <?= date('d/m/Y', strtotime($modelAditivo->adit_data_ini_vigencia)) ?>
@@ -184,6 +184,8 @@ use yii\bootstrap\Modal;
                             <div class="col-sm-3"><?= $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_situacao")->radioList(['Pendente' => 'Pendente', 'Baixado' => 'Baixado']) ?></div>
 
                             <div class="col-sm-1"><?= $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]aditivos_id")->hiddenInput()->label(false); ?></div>
+
+                            <div class="col-sm-12"><?= $form->field($modelAditivoPagamento, "[{$indexAditivo}][{$indexAditivosPagamentos}]adipa_observacao")->textInput(['maxlength' => true]) ?></div>
                         </div><!-- end:row -->
                     </div>
                 </div>

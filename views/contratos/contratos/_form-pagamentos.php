@@ -57,9 +57,9 @@ use yii\bootstrap\Modal;
                          }
                      ?>
                      <div class="row">
-                         <div class="col-sm-2">
-                             <?php
-                                 echo $form->field($modelPagamento, "[{$index}]pag_datavencimento")->widget(DateControl::classname(), [
+                        <div class="col-sm-2">
+                            <?php
+                                echo $form->field($modelPagamento, "[{$index}]pag_datavencimento")->widget(DateControl::classname(), [
                                      'type'=>DateControl::FORMAT_DATE,
                                      'ajaxConversion'=>false,
                                      'widgetOptions' => [
@@ -69,69 +69,71 @@ use yii\bootstrap\Modal;
                                          'removeButton' => false,
                                      ]
                                  ]); 
-                             ?>
-                         </div>
+                            ?>
+                        </div>
 
-                         <div class="col-sm-2">
-                             <?php 
-                                 echo $form->field($modelPagamento, "[{$index}]pag_valorpagar")->widget(NumberControl::classname(), [
-                                     'maskedInputOptions' => [
-                                         'prefix' => 'R$ ',
-                                         'alias' => 'currency',
-                                         'digits' => 2,
-                                         'digitsOptional' => false,
-                                         'groupSeparator' => '.',
-                                         'radixPoint' => ',',
-                                         'autoGroup' => true,
-                                         'autoUnmask' => true,
-                                         'unmaskAsNumber' => true,
-                                     ],
-                                 ])                
-                             ?>
-                         </div>
+                        <div class="col-sm-2">
+                            <?php 
+                                echo $form->field($modelPagamento, "[{$index}]pag_valorpagar")->widget(NumberControl::classname(), [
+                                    'maskedInputOptions' => [
+                                        'prefix' => 'R$ ',
+                                        'alias' => 'currency',
+                                        'digits' => 2,
+                                        'digitsOptional' => false,
+                                        'groupSeparator' => '.',
+                                        'radixPoint' => ',',
+                                        'autoGroup' => true,
+                                        'autoUnmask' => true,
+                                        'unmaskAsNumber' => true,
+                                    ],
+                                ])                
+                            ?>
+                        </div>
 
-                         <div class="col-sm-2">
-                                 <?php
-                                     echo $form->field($modelPagamento, "[{$index}]pag_databaixado")->widget(DateControl::classname(), [
-                                         'type'=>DateControl::FORMAT_DATE,
-                                         'ajaxConversion'=>false,
-                                         'widgetOptions' => [
-                                             'pluginOptions' => [
-                                                 'autoclose' => true,
+                        <div class="col-sm-2">
+                                <?php
+                                    echo $form->field($modelPagamento, "[{$index}]pag_databaixado")->widget(DateControl::classname(), [
+                                        'type'=>DateControl::FORMAT_DATE,
+                                        'ajaxConversion'=>false,
+                                        'widgetOptions' => [
+                                            'pluginOptions' => [
+                                                'autoclose' => true,
                                              ],
-                                             'removeButton' => false,
+                                            'removeButton' => false,
                                          ]
                                      ]); 
-                                 ?>
-                         </div>
+                                ?>
+                        </div>
 
-                         <div class="col-sm-2">
-                             <?php 
-                                 echo $form->field($modelPagamento, "[{$index}]pag_valorpago")->widget(NumberControl::classname(), [
-                                     'maskedInputOptions' => [
-                                         'prefix' => 'R$ ',
-                                         'alias' => 'currency',
-                                         'digits' => 2,
-                                         'digitsOptional' => false,
-                                         'groupSeparator' => '.',
-                                         'radixPoint' => ',',
-                                         'autoGroup' => true,
-                                         'autoUnmask' => true,
-                                         'unmaskAsNumber' => true,
-                                     ],
-                                 ])                
-                             ?>
-                         </div>
-                         
-                         <div class="col-sm-3"><?= $form->field($modelPagamento, "[{$index}]pag_situacao")->radioList(['Pendente' => 'Pendente', 'Baixado' => 'Baixado']) ?></div>
-                     </div><!-- end:row -->
-                 </div>
-             </div>
-         <?php endforeach; ?>
-     </div>
- </div>
- <?php DynamicFormWidget::end(); ?>
- </div>
+                        <div class="col-sm-2">
+                            <?php 
+                                echo $form->field($modelPagamento, "[{$index}]pag_valorpago")->widget(NumberControl::classname(), [
+                                    'maskedInputOptions' => [
+                                        'prefix' => 'R$ ',
+                                        'alias' => 'currency',
+                                        'digits' => 2,
+                                        'digitsOptional' => false,
+                                        'groupSeparator' => '.',
+                                        'radixPoint' => ',',
+                                        'autoGroup' => true,
+                                        'autoUnmask' => true,
+                                        'unmaskAsNumber' => true,
+                                    ],
+                                ])                
+                            ?>
+                        </div>
+
+                        <div class="col-sm-3"><?= $form->field($modelPagamento, "[{$index}]pag_situacao")->radioList(['Pendente' => 'Pendente', 'Baixado' => 'Baixado']) ?></div>
+                        
+                        <div class="col-sm-12"><?= $form->field($modelPagamento, "[{$index}]pag_observacao")->textInput(['maxlength' => true]) ?></div>
+                    </div><!-- end:row -->
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php DynamicFormWidget::end(); ?>
+</div>
  
 <?php
 $js = '

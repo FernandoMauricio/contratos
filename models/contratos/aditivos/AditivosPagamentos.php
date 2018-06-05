@@ -37,6 +37,7 @@ class AditivosPagamentos extends \yii\db\ActiveRecord
             [['aditivos_id', 'id'], 'integer'],
             [['adipa_datavencimento', 'adipa_databaixado'], 'safe'],
             [['adipa_valorpagar', 'adipa_valorpago'], 'number'],
+            [['adit_observacao'], 'string', 'max' => 255],
             [['adipa_situacao'], 'string', 'max' => 45],
             [['aditivos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Aditivos::className(), 'targetAttribute' => ['aditivos_id' => 'adit_codaditivo']],
         ];
@@ -55,6 +56,7 @@ class AditivosPagamentos extends \yii\db\ActiveRecord
             'adipa_databaixado' => 'Data da Baixa',
             'adipa_valorpago' => 'Valor Pago',
             'adipa_situacao' => 'Situação',
+            'adipa_observacao' => 'Observação',
         ];
     }
 

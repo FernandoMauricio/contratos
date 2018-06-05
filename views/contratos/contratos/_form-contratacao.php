@@ -145,7 +145,7 @@ use kartik\file\FileInput;
     </div>  
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?php
                 $data_unidades = ArrayHelper::map($unidades, 'uni_codunidade', 'uni_nomeabreviado');
                 echo $form->field($model, 'cont_localizacaofisica')->widget(Select2::classname(), [
@@ -158,7 +158,7 @@ use kartik\file\FileInput;
             ?>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?php
                 $data_unidades = ArrayHelper::map($unidades, 'uni_codunidade', 'uni_nomeabreviado');
                 echo $form->field($model, 'cont_localizacaogestor')->widget(Select2::classname(), [
@@ -170,6 +170,8 @@ use kartik\file\FileInput;
                     ]); 
             ?>
         </div>
+
+        <div class="col-md-4"><?= $form->field($model, 'cont_nomeacao')->textInput(['maxlength' => true]) ?></div>
     </div>
 
     <div class="row">

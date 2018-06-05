@@ -71,7 +71,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'cont_observacao:ntext',
                             'cont_localizacaofisica',
-                            'cont_localizacaogestor',
+                            [
+                                'attribute' => 'cont_localizacaogestor',
+                                'value' => $model->unidades->uni_nomeabreviado,
+                            ],
+                            'cont_nomeacao',
                         ],
                     ]) ?>
                 </div>
@@ -87,6 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th>Data da Baixa</th>
                                 <th>Valor Pago</th>
                                 <th>Situação</th>
+                                <th>Observação</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,6 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= $modelPagamento->pag_databaixado != NULL ? date('d/m/Y', strtotime($modelPagamento->pag_databaixado)) : ''; ?></td>
                                     <td><?= 'R$ ' . number_format($modelPagamento->pag_valorpago, 2, ',', '.'); ?></td>
                                     <td><?= $modelPagamento->pag_situacao; ?></td>
+                                    <td><?=$modelPagamento->pag_observacao; ?></td>
                                     </tr>
                                     <?php 
                                         $valorTotalPagar += $modelPagamento->pag_valorpagar; // Somatório dos Valores A PAGAR
@@ -113,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tr class="warning">
                                        <th colspan="2">TOTAL</th>
                                        <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPagar, 2, ',', '.') ?></th>
-                                       <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPago, 2, ',', '.') ?></th>
+                                       <th colspan="3" style="color:red"><?= 'R$ ' . number_format($valorTotalPago, 2, ',', '.') ?></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -159,6 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <th>Data da Baixa</th>
                                         <th>Valor Pago</th>
                                         <th>Situação</th>
+                                        <th>Observação</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -174,6 +181,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?= $modelAditivoPagamento->adipa_databaixado != NULL ? date('d/m/Y', strtotime($modelAditivoPagamento->adipa_databaixado)) : ''; ?></td>
                                         <td><?= 'R$ ' . number_format($modelAditivoPagamento->adipa_valorpago, 2, ',', '.'); ?></td>
                                         <td><?= $modelAditivoPagamento->adipa_situacao; ?></td>
+                                        <td><?= $modelAditivoPagamento->adipa_observacao; ?></td>
                                     </tr>
                                     <?php 
                                         $valorTotalPagar += $modelAditivoPagamento->adipa_valorpagar; // Somatório dos Valores A PAGAR
@@ -185,7 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tr class="warning">
                                        <th colspan="2">TOTAL</th>
                                        <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPagar, 2, ',', '.') ?></th>
-                                       <th colspan="2" style="color:red"><?= 'R$ ' . number_format($valorTotalPago, 2, ',', '.') ?></th>
+                                       <th colspan="3" style="color:red"><?= 'R$ ' . number_format($valorTotalPago, 2, ',', '.') ?></th>
                                     </tr>
                                 </tfoot>
                             </table>

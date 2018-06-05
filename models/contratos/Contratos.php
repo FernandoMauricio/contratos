@@ -6,6 +6,7 @@ use Yii;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
 use app\models\base\naturezas\NaturezaContrato;
+use app\models\base\unidades\Unidades;
 use app\models\contratos\pagamentos\Pagamentos;
 use app\models\contratos\aditivos\Aditivos;
 
@@ -61,7 +62,7 @@ class Contratos extends \yii\db\ActiveRecord
             [['cont_objeto', 'cont_observacao'], 'string'],
             [['cont_valor'], 'number'],
             [['cont_numerocontrato'], 'string', 'max' => 20],
-            [['cont_arquivocontrato', 'cont_src_arquivocontrato'], 'string', 'max' => 255],
+            [['cont_arquivocontrato', 'cont_src_arquivocontrato', 'cont_nomeacao'], 'string', 'max' => 255],
             [['cont_contatoinformacoes'], 'string', 'max' => 50],
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
@@ -91,6 +92,7 @@ class Contratos extends \yii\db\ActiveRecord
             'cont_observacao' => 'Observação',
             'cont_localizacaofisica' => 'Localização Física',
             'cont_localizacaogestor' => 'Gestor do Contrato',
+            'cont_nomeacao' => 'Portaria de Nomeação',
             'naturezasContrato' => 'Naturezas do Contrato',
             'file' => 'Arquivo',
         ];
@@ -171,4 +173,13 @@ class Contratos extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Pagamentos::className(), ['pag_codcontrato' => 'cont_codcontrato']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUnidades()
+    {
+        return $this->hasOne(Unidades::className(), ['uni_codunidade' => 'cont_localizacaogestor']);
+    }
+
 }

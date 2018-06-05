@@ -38,6 +38,7 @@ class Pagamentos extends \yii\db\ActiveRecord
             [['pag_codcontrato', 'id'], 'integer'],
             [['pag_datavencimento', 'pag_databaixado'], 'safe'],
             [['pag_valorpagar', 'pag_valorpago'], 'number'],
+            [['pag_observacao'], 'string', 'max' => 255],
             [['pag_situacao'], 'string', 'max' => 45],
             [['pag_codcontrato'], 'exist', 'skipOnError' => true, 'targetClass' => Contratos::className(), 'targetAttribute' => ['pag_codcontrato' => 'cont_codcontrato']],
         ];
@@ -55,6 +56,7 @@ class Pagamentos extends \yii\db\ActiveRecord
             'pag_valorpagar' => 'Valor a Pagar',
             'pag_databaixado' => 'Data da Baixa',
             'pag_valorpago' => 'Valor Pago',
+            'pag_observacao' => 'Observação',
             'pag_situacao' => 'Situação',
         ];
     }
