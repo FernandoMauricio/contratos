@@ -18,7 +18,7 @@ class ContratosSearch extends Contratos
     public function rules()
     {
         return [
-            [['cont_codcontrato', 'cont_codunidadecontrato', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor'], 'integer'],
+            [['cont_codcontrato', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor'], 'integer'],
             [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_objeto', 'cont_arquivocontrato', 'cont_contatoinformacoes', 'cont_observacao'], 'safe'],
             [['cont_valor'], 'number'],
         ];
@@ -63,7 +63,6 @@ class ContratosSearch extends Contratos
             'cont_codcontrato' => $this->cont_codcontrato,
             'cont_data_ini_vigencia' => $this->cont_data_ini_vigencia,
             'cont_data_fim_vigencia' => $this->cont_data_fim_vigencia,
-            'cont_codunidadecontrato' => $this->cont_codunidadecontrato,
             'cont_codprestador' => $this->cont_codprestador,
             'cont_valor' => $this->cont_valor,
             'cont_codtipo' => $this->cont_codtipo,
