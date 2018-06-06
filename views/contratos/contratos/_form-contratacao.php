@@ -110,9 +110,9 @@ use kartik\file\FileInput;
         <div class="col-md-4">
             <?php
                 $data_unidades = ArrayHelper::map($unidades, 'uni_codunidade', 'uni_nomeabreviado');
-                echo $form->field($model, 'cont_codunidadecontrato')->widget(Select2::classname(), [
+                echo $form->field($model, 'unidadesAtendidas')->widget(Select2::classname(), [
                     'data' =>  $data_unidades,
-                    'options' => ['placeholder' => 'Selecione a Unidade...'],
+                    'options' => ['placeholder' => 'Selecione as Unidades...', 'multiple'=>true],
                     'pluginOptions' => [
                             'allowClear' => true
                         ],

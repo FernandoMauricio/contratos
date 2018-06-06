@@ -9,6 +9,7 @@ use app\models\base\naturezas\NaturezaContrato;
 use app\models\base\unidades\Unidades;
 use app\models\contratos\pagamentos\Pagamentos;
 use app\models\contratos\aditivos\Aditivos;
+use app\models\contratos\UnidadesAtendidas;
 
 /**
  * This is the model class for table "contratos_cont".
@@ -18,7 +19,6 @@ use app\models\contratos\aditivos\Aditivos;
  * @property string $cont_codunidade
  * @property string $cont_data_ini_vigencia
  * @property string $cont_data_fim_vigencia
- * @property int $cont_codunidadecontrato
  * @property string $cont_codprestador
  * @property string $cont_objeto
  * @property double $cont_valor
@@ -40,6 +40,7 @@ use app\models\contratos\aditivos\Aditivos;
 class Contratos extends \yii\db\ActiveRecord
 {
     public $naturezasContrato;
+    public $unidadesAtendidas;
     public $diaPagamento;
     public $file;
     
@@ -57,13 +58,12 @@ class Contratos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codunidadecontrato', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'diaPagamento'], 'required'],
-            [['cont_codunidadecontrato', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'diaPagamento'], 'integer'],
+            [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'unidadesAtendidas'], 'required'],
+            [['cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'diaPagamento'], 'integer'],
             [['cont_data_ini_vigencia', 'cont_data_fim_vigencia'], 'safe'],
             [['cont_objeto', 'cont_observacao'], 'string'],
             [['cont_valor'], 'number'],
-            [['cont_numerocontrato'], 'string', 'max' => 20],
-            [['cont_arquivocontrato', 'cont_src_arquivocontrato', 'cont_nomeacao'], 'string', 'max' => 255],
+            [['cont_numerocontrato', 'cont_arquivocontrato', 'cont_src_arquivocontrato', 'cont_nomeacao'], 'string', 'max' => 255],
             [['cont_contatoinformacoes'], 'string', 'max' => 50],
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
@@ -83,7 +83,6 @@ class Contratos extends \yii\db\ActiveRecord
             'diaPagamento' => 'Pagamento',
             'cont_data_ini_vigencia' => 'Início da Vigência',
             'cont_data_fim_vigencia' => 'Fim da Vigência',
-            'cont_codunidadecontrato' => 'Unidade Atendida',
             'cont_codprestador' => 'Prestador de Serviço',
             'cont_objeto' => 'Objeto',
             'cont_valor' => 'Valor',
@@ -100,14 +99,6 @@ class Contratos extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getNaturezaContrato()
-    {
-        return $this->hasMany(NaturezaContrato::className(), ['nat_codcontrato' => 'cont_codcontrato']);
-    }
-    
     public function afterSave($insert, $changedAttributes){
         //Naturezas do Contrato
         \Yii::$app->db->createCommand()->delete('naturezacontrato_nat', 'nat_codcontrato = '.(int) $this->cont_codcontrato)->execute(); //Delete existing value
@@ -115,6 +106,15 @@ class Contratos extends \yii\db\ActiveRecord
             $tc = new NaturezaContrato();
             $tc->nat_codcontrato = $this->cont_codcontrato;
             $tc->nat_codtipo = $id;
+            $tc->save(false);
+        }
+
+        //Unidades Atendidas do Contrato
+        \Yii::$app->db->createCommand()->delete('unidades_atendidas', 'contratos_id = '.(int) $this->cont_codcontrato)->execute(); //Delete existing value
+        foreach ($this->unidadesAtendidas as $id) { //Write new values
+            $tc = new UnidadesAtendidas();
+            $tc->contratos_id = $this->cont_codcontrato;
+            $tc->cod_unidade = $id;
             $tc->save(false);
         }
     }
@@ -126,6 +126,32 @@ class Contratos extends \yii\db\ActiveRecord
             $naturezas[] = $descr->tiponatureza->tipna_natureza;
         }
         return implode(" | ", $naturezas);
+    }
+
+
+    public function getUnidades()
+    {
+        $unidades = [];
+        foreach($this->unidadeAtendida as $descr) {
+            $unidades[] = $descr->unidades->uni_nomeabreviado;
+        }
+        return implode(" | ", $unidades);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNaturezaContrato()
+    {
+        return $this->hasMany(NaturezaContrato::className(), ['nat_codcontrato' => 'cont_codcontrato']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUnidadeAtendida()
+    {
+        return $this->hasMany(UnidadesAtendidas::className(), ['contratos_id' => 'cont_codcontrato']);
     }
 
     /**

@@ -23,8 +23,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'cont_data_fim_vigencia') ?>
 
-    <?php // echo $form->field($model, 'cont_codunidadecontrato') ?>
-
     <?php // echo $form->field($model, 'cont_codprestador') ?>
 
     <?php // echo $form->field($model, 'cont_objeto') ?>

@@ -24,7 +24,10 @@ use yii\widgets\DetailView;
                             'cont_numerocontrato',
                             'cont_data_ini_vigencia',
                             'cont_data_fim_vigencia',
-                            'cont_codunidadecontrato',
+                            [
+                                'attribute' => 'unidadesAtendidas',
+                                'value' => $model->getUnidades(),
+                            ],
                             'cont_codprestador',
                             'cont_objeto:ntext',
                             'cont_valor',

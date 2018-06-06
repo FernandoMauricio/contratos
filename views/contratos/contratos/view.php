@@ -47,7 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'cont_data_fim_vigencia',
                                 'format' => ['date', 'php:d/m/Y']
                             ],
-                            'cont_codunidadecontrato',
+                            [
+                                'attribute' => 'unidadesAtendidas',
+                                'value' => $model->getUnidades(),
+                            ],
                             'prestadores.pres_nome',
                             'cont_objeto:ntext',
                             [

@@ -44,6 +44,7 @@ class Aditivos extends \yii\db\ActiveRecord
             [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'adit_datacadastro'], 'safe'],
             [['adit_observacao'], 'string'],
             [['contratos_id'], 'integer'],
+            [['adit_numeroaditivo'], 'string', 'max' => 255],
             [['adit_usuario'], 'string', 'max' => 45],
             [['contratos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contratos::className(), 'targetAttribute' => ['contratos_id' => 'cont_codcontrato']],
         ];
