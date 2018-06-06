@@ -26,6 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
  <?php
     Modal::begin([
+        'options' => ['tabindex' => false ], // important for Select2 to work properly
+        'clientOptions' => ['backdrop' => 'static', 'keyboard' => true],
         'header' => '<h4>Novo Contrato</h4>',
         'id' => 'modal',
         'size' => 'modal-lg',
