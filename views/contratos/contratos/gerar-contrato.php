@@ -52,6 +52,20 @@ use kartik\number\NumberControl;
         </div>
 
         <div class="col-md-2">
+            <?php
+                echo $form->field($model, 'diaPagamento')->widget(Select2::classname(), [
+                    'data' =>  [7 => 7, 17 => 17, 27 => 27 ],
+                    'options' => ['placeholder' => 'Selecione o dia de Pagamento...'],
+                    'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); 
+            ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
             <?= $form->field($model, 'cont_valor')->widget(NumberControl::classname(), [
                     'maskedInputOptions' => [
                         'prefix' => 'R$ ',
@@ -67,9 +81,7 @@ use kartik\number\NumberControl;
                 ])                
             ?>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-2">
             <?php
                 $data_tipoContrato = ArrayHelper::map($tipoContrato, 'tico_codtipo', 'tico_descricao');
@@ -83,7 +95,7 @@ use kartik\number\NumberControl;
             ?>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-4">
             <?php
                 $data_instrumento = ArrayHelper::map($instrumentos, 'inst_codinstrumento', 'inst_descricao');
                 echo $form->field($model, 'cont_codinstrumento')->widget(Select2::classname(), [
@@ -96,7 +108,7 @@ use kartik\number\NumberControl;
             ?>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-4">
             <?php
                 $data_naturezas = ArrayHelper::map($naturezas, 'tipna_codtipo', 'tipna_natureza');
                        echo $form->field($model, 'naturezasContrato')->widget(Select2::classname(), [

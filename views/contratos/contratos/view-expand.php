@@ -37,8 +37,14 @@ use yii\widgets\DetailView;
                                 'value' => $model->getNaturezas(),
                             ],
                             'cont_observacao:ntext',
-                            'cont_localizacaofisica',
-                            'cont_localizacaogestor',
+                            [
+                                'attribute' => 'cont_localizacaofisica',
+                                'value' => isset($model->localizacaoFisica->uni_nomeabreviado) ? $model->localizacaoFisica->uni_nomeabreviado : '',
+                            ],
+                            [
+                                'attribute' => 'cont_localizacaogestor',
+                                'value' => isset($model->localizacaoGestor->uni_nomeabreviado) ? $model->localizacaoGestor->uni_nomeabreviado : '',
+                            ],
                             'cont_nomeacao',
                         ],
                     ]) ?>

@@ -242,7 +242,7 @@ class ContratosController extends Controller
         $valorRateio = 0;
         foreach ($modelsPagamentos as $index => $modelPagamento) {
             for($i = new DateTime($model->cont_data_ini_vigencia); $i <= new DateTime($model->cont_data_fim_vigencia); $i->modify('+1 month')) {
-                $date = $i->format("Y-m-d");
+                $date = $i->format('Y-m-'.$model->diaPagamento.'');
                 //Inclui as informações dos candidatos classificados
                     Yii::$app->db->createCommand()->insert('pagamentos_pag',
                         [
@@ -250,7 +250,7 @@ class ContratosController extends Controller
                             'pag_datavencimento' => $date, //Contador dos meses a partir da data de vigência
                             'pag_valorpagar' => $model->cont_valor,    
                             'pag_databaixado' => NULL, 
-                            'pag_valorpago' => 0, 
+                            'pag_valorpago' => 0,
                             'pag_situacao' => 'Pendente' 
                         ])->execute();
                 $index++;

@@ -40,6 +40,7 @@ use app\models\contratos\aditivos\Aditivos;
 class Contratos extends \yii\db\ActiveRecord
 {
     public $naturezasContrato;
+    public $diaPagamento;
     public $file;
     
     /**
@@ -57,7 +58,7 @@ class Contratos extends \yii\db\ActiveRecord
     {
         return [
             [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codunidadecontrato', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato'], 'required'],
-            [['cont_codunidadecontrato', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor'], 'integer'],
+            [['cont_codunidadecontrato', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'diaPagamento'], 'integer'],
             [['cont_data_ini_vigencia', 'cont_data_fim_vigencia'], 'safe'],
             [['cont_objeto', 'cont_observacao'], 'string'],
             [['cont_valor'], 'number'],
@@ -79,6 +80,7 @@ class Contratos extends \yii\db\ActiveRecord
         return [
             'cont_codcontrato' => 'Cód.',
             'cont_numerocontrato' => 'Contrato',
+            'diaPagamento' => 'Pagamento',
             'cont_data_ini_vigencia' => 'Início da Vigência',
             'cont_data_fim_vigencia' => 'Fim da Vigência',
             'cont_codunidadecontrato' => 'Unidade Atendida',
@@ -177,7 +179,15 @@ class Contratos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUnidades()
+    public function getLocalizacaoFisica()
+    {
+        return $this->hasOne(Unidades::className(), ['uni_codunidade' => 'cont_localizacaofisica']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocalizacaoGestor()
     {
         return $this->hasOne(Unidades::className(), ['uni_codunidade' => 'cont_localizacaogestor']);
     }

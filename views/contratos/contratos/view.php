@@ -70,10 +70,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => $model->getNaturezas(),
                             ],
                             'cont_observacao:ntext',
-                            'cont_localizacaofisica',
+                            [
+                                'attribute' => 'cont_localizacaofisica',
+                                'value' => isset($model->localizacaoFisica->uni_nomeabreviado) ? $model->localizacaoFisica->uni_nomeabreviado : '',
+                            ],
                             [
                                 'attribute' => 'cont_localizacaogestor',
-                                'value' => $model->unidades->uni_nomeabreviado,
+                                'value' => isset($model->localizacaoGestor->uni_nomeabreviado) ? $model->localizacaoGestor->uni_nomeabreviado : '',
                             ],
                             'cont_nomeacao',
                         ],
