@@ -21,9 +21,9 @@ use kartik\number\NumberControl;
 
   <div class="panel-body">
       <div class="row">
-          <div class="col-md-4"><?= $form->field($model, 'adit_numeroaditivo')->textInput(['maxlength' => true]) ?></div>
+          <div class="col-md-6"><?= $form->field($model, 'adit_numeroaditivo')->textInput(['maxlength' => true]) ?></div>
 
-          <div class="col-md-2">
+          <div class="col-md-3">
             <?= $form->field($model, 'adit_valor')->widget(NumberControl::classname(), [
                         'maskedInputOptions' => [
                         'prefix' => 'R$ ',
@@ -38,9 +38,23 @@ use kartik\number\NumberControl;
                     ],
                 ])                
             ?>
-            </div>
+          </div>
 
           <div class="col-md-3">
+              <?php
+                  echo $form->field($model, 'diaPagamento')->widget(Select2::classname(), [
+                      'data' =>  [7 => 7, 17 => 17, 27 => 27 ],
+                      'options' => ['placeholder' => 'Selecione o dia de Pagamento...'],
+                      'pluginOptions' => [
+                              'allowClear' => true
+                          ],
+                      ]); 
+              ?>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-6">
             <?= $form->field($model, 'adit_data_ini_vigencia')->widget(DateControl::classname(), [
                   'type'=>DateControl::FORMAT_DATE,
                   'ajaxConversion'=>false,
@@ -48,12 +62,13 @@ use kartik\number\NumberControl;
                       'pluginOptions' => [
                           'autoclose' => true,
                       ],
+                  'removeButton' => false,
                   ]
               ]); 
             ?>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-6">
             <?= $form->field($model, 'adit_data_fim_vigencia')->widget(DateControl::classname(), [
                   'type'=>DateControl::FORMAT_DATE,
                   'ajaxConversion'=>false,
@@ -61,6 +76,7 @@ use kartik\number\NumberControl;
                       'pluginOptions' => [
                           'autoclose' => true,
                       ],
+                  'removeButton' => false,
                   ]
               ]); 
             ?>

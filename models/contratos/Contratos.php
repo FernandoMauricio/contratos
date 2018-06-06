@@ -57,7 +57,7 @@ class Contratos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codunidadecontrato', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato'], 'required'],
+            [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codunidadecontrato', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'diaPagamento'], 'required'],
             [['cont_codunidadecontrato', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'diaPagamento'], 'integer'],
             [['cont_data_ini_vigencia', 'cont_data_fim_vigencia'], 'safe'],
             [['cont_objeto', 'cont_observacao'], 'string'],

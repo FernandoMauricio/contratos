@@ -126,7 +126,7 @@ class ContratosController extends Controller
             //Validação para que o Fim da vigência não seja menor que o Início da Vigência
             if ($model->adit_data_fim_vigencia <= $model->adit_data_ini_vigencia)
             {
-                Yii::$app->session->setFlash('danger', '<b>ERRO! </b>  Fim da Vigência não pode ser menor que a data de Início da Vigência!');
+                Yii::$app->session->setFlash('danger', '<b>ERRO!</b>  <b>Fim da Vigência</b> não pode ser menor que a data de <b>Início da Vigência</b>!');
                 return $this->redirect(['update', 'id' => $contratos->cont_codcontrato]);
             }
         $model->save();
@@ -135,7 +135,7 @@ class ContratosController extends Controller
         $valorRateio = 0;
         foreach ($aditivosPagamentos as $index => $AditivoPagamento) {
             for($i = new DateTime($model->adit_data_ini_vigencia); $i <= new DateTime($model->adit_data_fim_vigencia); $i->modify('+1 month')) {
-                $date = $i->format("Y-m-d");
+                $date = $i->format('Y-m-'.$model->diaPagamento.'');
                 //Inclui as informações dos candidatos classificados
                     Yii::$app->db->createCommand()->insert('aditivos_pag',
                         [

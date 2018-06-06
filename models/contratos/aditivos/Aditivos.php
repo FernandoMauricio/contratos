@@ -22,6 +22,7 @@ use app\models\contratos\Contratos;
 class Aditivos extends \yii\db\ActiveRecord
 {
     public $aditivo;
+    public $diaPagamento;
 
     /**
      * @inheritdoc
@@ -37,7 +38,7 @@ class Aditivos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['adit_numeroaditivo', 'adit_valor', 'adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'contratos_id'], 'required'],
+            [['adit_numeroaditivo', 'adit_valor', 'adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'contratos_id', 'diaPagamento'], 'required'],
             [['aditivo', 'adit_codaditivo'], 'integer'],
             [['adit_valor'], 'number'],
             [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'adit_datacadastro'], 'safe'],
@@ -56,6 +57,7 @@ class Aditivos extends \yii\db\ActiveRecord
         return [
             'adit_codaditivo' => 'Cód.',
             'adit_numeroaditivo' => 'Aditivo',
+            'diaPagamento' => 'Pagamento',
             'adit_data_ini_vigencia' => 'Início da Vigência',
             'adit_data_fim_vigencia' => 'Fim da Vigência',
             'adit_observacao' => 'Observação',
