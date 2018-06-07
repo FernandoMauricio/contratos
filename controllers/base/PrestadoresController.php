@@ -6,8 +6,8 @@ use Yii;
 use app\models\MultipleModel as Model;
 use app\models\base\prestadores\Prestadores;
 use app\models\base\prestadores\PrestadoresSearch;
-use app\models\base\Prestadores\Foneprestador;
-use app\models\base\Prestadores\Emailprestador;
+use app\models\base\prestadores\Foneprestador;
+use app\models\base\prestadores\Emailprestador;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -50,7 +50,7 @@ class PrestadoresController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $searchModel = new PrestadoresSearch();
@@ -72,7 +72,7 @@ class PrestadoresController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = $this->findModel($id);
@@ -90,7 +90,7 @@ class PrestadoresController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = new Prestadores();
@@ -112,7 +112,7 @@ class PrestadoresController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = new Prestadores();
@@ -183,7 +183,7 @@ class PrestadoresController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = $this->findModel($id);

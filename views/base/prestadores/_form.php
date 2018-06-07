@@ -32,10 +32,10 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     <div class="row">
                         <div class="col-md-5"><?= $form->field($model, 'pres_nome')->textInput(['maxlength' => true]) ?></div>
 
-                        <?= $model->tipoprestador_cod == 1 ? '' : '<div class="col-md-5">'.$form->field($model, 'pres_razaosocial')->textInput(['maxlength' => true]).'</div>'; ?>
+                        <?= $model->tipoprestador_cod != 1 ? '' : '<div class="col-md-5">'.$form->field($model, 'pres_razaosocial')->textInput(['maxlength' => true]).'</div>'; ?>
 
                         <div class="col-md-2">
-                            <?= $model->tipoprestador_cod == 1 ? 
+                            <?= $model->tipoprestador_cod != 1 ? 
                             $form->field($model, 'pres_cpf')->widget(\yii\widgets\MaskedInput::className(), [
                             'mask' => '999.999.999.99']) 
                             : 

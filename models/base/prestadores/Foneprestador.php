@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\base\Prestadores;
+namespace app\models\base\prestadores;
 
 use Yii;
 

@@ -106,7 +106,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $searchModel = new ContratosSearch();
@@ -122,7 +122,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $session = Yii::$app->session;
@@ -181,7 +181,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = new Aditivos();
@@ -214,7 +214,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = $this->findModel($id);
@@ -249,7 +249,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = new Contratos();
@@ -317,7 +317,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         $model = $this->findModel($id);
@@ -448,7 +448,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 27){
+        if($session['sess_codunidade'] != 53){
             return $this->AccessoAdministrador();
         }
         if (($model = Contratos::findOne($id)) !== null) {
