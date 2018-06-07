@@ -114,7 +114,7 @@ use kartik\file\FileInput;
                     'data' =>  $data_unidades,
                     'options' => ['placeholder' => 'Selecione as Unidades...', 'multiple'=>true],
                     'pluginOptions' => [
-                            'allowClear' => true
+                            'allowClear' => true,
                         ],
                     ]); 
             ?>
@@ -176,8 +176,8 @@ use kartik\file\FileInput;
 
     <div class="row">
         <div class="col-md-12">
-            <?= $form->field($model, 'file')->widget(FileInput::classname(), [
-                    'options' => ['accept' => '.pdf'],
+            <?= $form->field($model, 'file[]')->widget(FileInput::classname(), [
+                    'options' => ['multiple' => true, 'accept'=>'.pdf', '.zip', '.rar', '.doc', '.docx'],
                     'pluginOptions' => [
                         'language' => 'pt-BR',
                         'showRemove'=> false,

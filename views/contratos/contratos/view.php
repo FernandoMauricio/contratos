@@ -15,7 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-
     <p>
         <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span> Retornar', ['index'], ['class' => 'btn btn-default']) ?>
         <?= Html::a('<span class="glyphicon glyphicon-pencil"></span> Atualizar', ['update', 'id' => $model->cont_codcontrato], ['class' => 'btn btn-primary']) ?>  
@@ -84,6 +83,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             'cont_nomeacao',
                         ],
                     ]) ?>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr class="info"><th colspan="12">Anexos</th></tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Arquivo</th>
+                        </tr>
+                    </thead>
+                  <!-- GET ANEXOS -->
+                    <?php   if($files=\yii\helpers\FileHelper::findFiles('uploads/contratos/' . $model->cont_codcontrato,['recursive'=>FALSE])):
+                            if (isset($files[0])):
+                                foreach ($files as $index => $file):
+                                $nameFicheiro = substr($file, strrpos($file, '/') + 1); ?>
+                                <tbody>
+                                    <td><?= $index + 1; ?></td>
+                                    <td><?= Html::a($nameFicheiro, Url::base().'/uploads/contratos/'. $model->cont_codcontrato. '/' . $nameFicheiro, ['target'=>'_blank', 'data-pjax'=>"0"]); ?></td>
+                                </tbody>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                    <?php endif; ?>
+                </table>
                 </div>
 
                 <div class="tab-pane" id="tab2">

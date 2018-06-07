@@ -29,11 +29,13 @@ use yii\web\UploadedFile;
  */
 class ContratosController extends Controller
 {
-    /**
+ /**
      * @inheritdoc
      */
     public function behaviors()
     {
+        $this->AccessAllow(); //Irá ser verificado se o usuário está logado no sistema
+
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -304,21 +306,24 @@ class ContratosController extends Controller
             'nat_codtipo'
         );
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model->unidadesAtendidas = \yii\helpers\ArrayHelper::getColumn(
+            $model->getUnidadeAtendida()->asArray()->all(),
+            'cod_unidade'
+        );
 
-            //Inserindo o arquivo do Contrato
-            $image = UploadedFile::getInstance($model, 'file');
-                if (!is_null($image)) {
-                    $model->cont_arquivocontrato = $image->name;
-                    $ext = end((explode(".", $image->name)));
-                    // generate a unique file name to prevent duplicate filenames
-                    $model->cont_src_arquivocontrato = Yii::$app->security->generateRandomString().".{$ext}";
-                    // the path to save file, you can set an uploadPath
-                    // in Yii::$app->params (as used in example below)                       
-                    Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/web/uploads/contratos/';
-                    $path = Yii::$app->params['uploadPath'] . $model->cont_src_arquivocontrato;
-                    $image->saveAs($path);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            ///--------salva os anexos
+            $model->file = UploadedFile::getInstances($model, 'file');
+            $subdiretorio = "uploads/contratos/" . $model->cont_codcontrato;
+            if(!file_exists($subdiretorio)) {
+                if(!mkdir($subdiretorio, 0777, true));
                 }
+                    if ($model->file && $model->validate()) {
+                        foreach ($model->file as $file) {
+                            $file->saveAs($subdiretorio.'/'. $file->baseName . '.' . $file->extension);
+                            $model->save();
+                            }
+                    }
 
             //--------Pagamentos--------------
             $oldIDsPagamentos = ArrayHelper::map($modelsPagamentos, 'id', 'id');
@@ -434,4 +439,26 @@ class ContratosController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    public function AccessAllow()
+    {
+        $session = Yii::$app->session;
+        if (!isset($session['sess_codusuario']) 
+            && !isset($session['sess_codcolaborador']) 
+            && !isset($session['sess_codunidade']) 
+            && !isset($session['sess_nomeusuario']) 
+            && !isset($session['sess_coddepartamento']) 
+            && !isset($session['sess_codcargo']) 
+            && !isset($session['sess_cargo']) 
+            && !isset($session['sess_setor']) 
+            && !isset($session['sess_unidade']) 
+            && !isset($session['sess_responsavelsetor'])) 
+        {
+           return $this->redirect('http://portalsenac.am.senac.br');
+        }
+    }
+
+    public function AccessoAdministrador()
+    {
+        return $this->render('/site/acesso-negado');
+    }
 }

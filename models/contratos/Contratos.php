@@ -68,7 +68,7 @@ class Contratos extends \yii\db\ActiveRecord
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
             [['cont_codtipo'], 'exist', 'skipOnError' => true, 'targetClass' => Tipocontrato::className(), 'targetAttribute' => ['cont_codtipo' => 'tico_codtipo']],
-            [['file'], 'file', 'extensions' => 'pdf', 'maxSize' => 1024 * 1024 * 16, 'tooBig' => 'O arquivo é grande demais. Seu tamanho não pode exceder 16MB.'],
+            [['file'], 'file', 'maxFiles' => 10, 'extensions' => 'pdf', 'maxSize' => 1024 * 1024 * 16, 'tooBig' => 'O arquivo é grande demais. Seu tamanho não pode exceder 16MB.','checkExtensionByMimeType'=>false, 'extensions' => 'pdf, zip, rar, doc, docx'],
         ];
     }
 
@@ -95,6 +95,7 @@ class Contratos extends \yii\db\ActiveRecord
             'cont_localizacaogestor' => 'Gestor do Contrato',
             'cont_nomeacao' => 'Portaria de Nomeação',
             'naturezasContrato' => 'Naturezas do Contrato',
+            'unidadesAtendidas' => 'Unidades Atendidas',
             'file' => 'Arquivo',
         ];
     }

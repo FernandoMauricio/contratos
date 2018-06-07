@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\contratos\Contratos */
@@ -51,6 +52,27 @@ use yii\widgets\DetailView;
                             'cont_nomeacao',
                         ],
                     ]) ?>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr class="info"><th colspan="12">Anexos</th></tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Arquivo</th>
+                        </tr>
+                    </thead>
+                  <!-- GET ANEXOS -->
+                    <?php   if($files=\yii\helpers\FileHelper::findFiles('uploads/contratos/' . $model->cont_codcontrato,['recursive'=>FALSE])):
+                            if (isset($files[0])):
+                                foreach ($files as $index => $file):
+                                $nameFicheiro = substr($file, strrpos($file, '/') + 1); ?>
+                                <tbody>
+                                    <td><?= $index + 1; ?></td>
+                                    <td><?= Html::a($nameFicheiro, Url::base().'/uploads/contratos/'. $model->cont_codcontrato. '/' . $nameFicheiro, ['target'=>'_blank', 'data-pjax'=>"0"]); ?></td>
+                                </tbody>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                    <?php endif; ?>
+                </table>
                 </div>
 
                     <table class="table table-condensed table-hover">
