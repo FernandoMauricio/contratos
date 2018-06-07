@@ -29,8 +29,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'cont_valor') ?>
 
-    <?php // echo $form->field($model, 'cont_arquivocontrato') ?>
-
     <?php // echo $form->field($model, 'cont_contatoinformacoes') ?>
 
     <?php // echo $form->field($model, 'cont_codtipo') ?>

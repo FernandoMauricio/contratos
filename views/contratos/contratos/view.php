@@ -56,14 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' =>'cont_valor',
                                 'format'=>['decimal',2],
                             ],
-                            [
-                                'attribute'=>'cont_arquivocontrato',
-                                'format'=>'raw',
-                                'value' => function($model){
-                                    $url = Url::base() . '/uploads/contratos/' . $model->cont_src_arquivocontrato;
-                                    return Html::a($model->cont_arquivocontrato, $url, ['target'=> '_blank']); 
-                                }
-                            ],
                             'cont_contatoinformacoes',
                             'tipocontrato.tico_descricao',
                             'instrumentos.inst_descricao',

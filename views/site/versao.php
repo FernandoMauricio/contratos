@@ -6,7 +6,7 @@ use app\models\Comunicacaointerna;
 use app\models\Destinocomunicacao;
 use yii\helpers\ArrayHelper;
 
-$this->title = 'Processo Seletivo - Senac AM';
+$this->title = 'Controle de Contratos - Senac AM';
 
 ?>
 

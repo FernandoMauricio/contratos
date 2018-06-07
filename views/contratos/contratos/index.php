@@ -87,7 +87,6 @@ $this->params['breadcrumbs'][] = $this->title;
         //'cont_codprestador',
         //'cont_objeto:ntext',
         //'cont_valor',
-        //'cont_arquivocontrato',
         //'cont_contatoinformacoes',
         //'cont_codtipo',
         //'cont_codinstrumento',

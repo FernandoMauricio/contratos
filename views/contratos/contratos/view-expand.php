@@ -32,7 +32,6 @@ use yii\helpers\Url;
                             'cont_codprestador',
                             'cont_objeto:ntext',
                             'cont_valor',
-                            'cont_arquivocontrato',
                             'cont_contatoinformacoes',
                             'tipocontrato.tico_descricao',
                             'instrumentos.inst_descricao',

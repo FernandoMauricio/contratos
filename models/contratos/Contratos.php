@@ -22,7 +22,6 @@ use app\models\contratos\UnidadesAtendidas;
  * @property string $cont_codprestador
  * @property string $cont_objeto
  * @property double $cont_valor
- * @property string $cont_arquivocontrato
  * @property string $cont_contatoinformacoes
  * @property string $cont_codtipo
  * @property string $cont_codinstrumento
@@ -63,7 +62,7 @@ class Contratos extends \yii\db\ActiveRecord
             [['cont_data_ini_vigencia', 'cont_data_fim_vigencia'], 'safe'],
             [['cont_objeto', 'cont_observacao'], 'string'],
             [['cont_valor'], 'number'],
-            [['cont_numerocontrato', 'cont_arquivocontrato', 'cont_src_arquivocontrato', 'cont_nomeacao'], 'string', 'max' => 255],
+            [['cont_numerocontrato', 'cont_src_arquivocontrato', 'cont_nomeacao'], 'string', 'max' => 255],
             [['cont_contatoinformacoes'], 'string', 'max' => 50],
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
@@ -86,7 +85,6 @@ class Contratos extends \yii\db\ActiveRecord
             'cont_codprestador' => 'Prestador de Serviço',
             'cont_objeto' => 'Objeto',
             'cont_valor' => 'Valor',
-            'cont_arquivocontrato' => 'Arquivo',
             'cont_contatoinformacoes' => 'Contato p/ Informações',
             'cont_codtipo' => 'Tipo',
             'cont_codinstrumento' => 'Instrumento',
