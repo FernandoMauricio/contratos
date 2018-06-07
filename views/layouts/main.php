@@ -11,6 +11,8 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use kartik\nav\NavX;
 
+$session = Yii::$app->session;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -49,23 +51,15 @@ AppAsset::register($this);
                     ['label' => 'Tipos de Instrumento', 'url' => ['/base/instrumentos']],
                     ['label' => 'Tipos de Natureza', 'url' => ['/base/naturezas']],
                 ]]
-
-            ]
-            // [
-            // 'label' => 'Plano de Ação',
-            // 'items' => [
-            //              ['label' => 'Cadastro do Plano', 'url' => ['/planos/planodeacao/index']],
-            //                          '<li class="divider"></li>',
-            //                 ['label' => 'Cadastros', 'items' => [
-            //                     ['label' => 'Material do Aluno', 'url' => ['/cadastros/materialaluno/index']],
-            //                     ['label' => 'Equipamentos / Utensílios', 'url' => ['/cadastros/estruturafisica/index']],
-            //                     '<li class="divider"></li>',
-            //                     ['label' => 'Material de Consumo', 'url' => ['/cadastros/materialconsumo/index']],
-
-            //                 ]],
-
-            //          ],
-            // ],
+                ]
+            ],
+        ['label' => 'Usuário (' . utf8_encode(ucwords(strtolower($session['sess_nomeusuario']))) . ')',
+        'items' => [
+                    '<li class="dropdown-header">Área Usuário</li>',
+                        //['label' => 'Alterar Senha', 'url' => ['usuario-usu/update', 'id' => $sess_codusuario]],
+                        ['label' => 'Versões Anteriores', 'url' => ['/site/versao']],
+                        ['label' => 'Sair', 'url' => 'http://portalsenac.am.senac.br/portal_senac/control_base_vermodulos/control_base_vermodulos.php'],
+               ],
         ],
         ],
     ]);

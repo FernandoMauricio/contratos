@@ -48,6 +48,11 @@ class PrestadoresController extends Controller
      */
     public function actionIndex()
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $searchModel = new PrestadoresSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -65,6 +70,11 @@ class PrestadoresController extends Controller
      */
     public function actionView($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = $this->findModel($id);
         $modelsFones = $model->foneprestador;
         $modelsEmails = $model->emailprestador;
@@ -78,6 +88,11 @@ class PrestadoresController extends Controller
 
     public function actionGerarPrestador()
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = new Prestadores();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -95,6 +110,11 @@ class PrestadoresController extends Controller
      */
     public function actionCreate()
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = new Prestadores();
         $modelsFones = [new Foneprestador];
         $modelsEmails = [new Emailprestador];
@@ -161,6 +181,11 @@ class PrestadoresController extends Controller
      */
     public function actionUpdate($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = $this->findModel($id);
         $modelsFones = $model->foneprestador;
         $modelsEmails = $model->emailprestador;

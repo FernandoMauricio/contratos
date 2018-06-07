@@ -104,6 +104,11 @@ class ContratosController extends Controller
      */
     public function actionIndex()
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $searchModel = new ContratosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -115,6 +120,11 @@ class ContratosController extends Controller
 
     public function actionGerarAditivo($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $session = Yii::$app->session;
         $model = new Aditivos();
         $aditivosPagamentos = [new AditivosPagamentos];
@@ -169,6 +179,11 @@ class ContratosController extends Controller
 
     public function actionDeletarAditivo($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = new Aditivos();
         $aditivos = Aditivos::find()->where(['contratos_id' => $_GET['id']])->all();
 
@@ -197,6 +212,11 @@ class ContratosController extends Controller
      */
     public function actionView($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = $this->findModel($id);
         $modelsPagamentos = $model->pagamentos;
         $modelsAditivos = $model->aditivos;
@@ -227,6 +247,11 @@ class ContratosController extends Controller
      */
     public function actionCreate()
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = new Contratos();
         $modelsPagamentos = [new Pagamentos];
 
@@ -290,6 +315,11 @@ class ContratosController extends Controller
      */
     public function actionUpdate($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         $model = $this->findModel($id);
         $modelsPagamentos = $model->pagamentos;
         $modelsAditivos = $model->aditivos;
@@ -416,6 +446,11 @@ class ContratosController extends Controller
      */
     protected function findModel($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 27){
+            return $this->AccessoAdministrador();
+        }
         if (($model = Contratos::findOne($id)) !== null) {
             return $model;
         }

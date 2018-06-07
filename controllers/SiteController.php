@@ -125,4 +125,15 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    /**
+     * Displays Versões Anteriores page.
+     *
+     * @return string
+     */
+    public function actionVersao()
+    {
+        return $this->render('versao');
+    }
+
 }
