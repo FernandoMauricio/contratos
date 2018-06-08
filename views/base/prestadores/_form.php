@@ -12,9 +12,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
 ?>
 
 <div class="prestadores-form">
-
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
-
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> Cadastro de Prestadores</h3>
@@ -84,7 +82,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     'model' => $modelsFones[0],
                     'formId' => 'dynamic-form',
                     'formFields' => [
-                        'fopre_codprestador',
                         'fopre_numerofone',
                         'fopre_contato',
                     ],
@@ -96,10 +93,10 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body container-items"><!-- widgetContainer -->
-                        <?php foreach ($modelsFones as $index => $modelFone): ?>
+                        <?php foreach ($modelsFones as $indexFones => $modelFone): ?>
                             <div class="item panel panel-default"><!-- widgetBody -->
                                 <div class="panel-heading">
-                                    <span class="panel-title-telefone">Telefone: <?= ($index + 1) ?></span>
+                                    <span class="panel-title-telefone">Telefone: <?= ($indexFones + 1) ?></span>
                                     <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
                                     <div class="clearfix"></div>
                                 </div>
@@ -107,13 +104,13 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                     <?php
                                         // necessary for update action.
                                         if (!$modelFone->isNewRecord) {
-                                            echo Html::activeHiddenInput($modelFone, "[{$index}]fopre_codprestador");
+                                            echo Html::activeHiddenInput($modelFone, "[{$indexFones}]id");
                                         }
                                     ?>
                                     <div class="row">
-                                        <div class="col-sm-6"><?= $form->field($modelFone, "[{$index}]fopre_numerofone")->textInput(['maxlength' => true]) ?></div>
+                                        <div class="col-sm-6"><?= $form->field($modelFone, "[{$indexFones}]fopre_numerofone")->textInput(['maxlength' => true]) ?></div>
 
-                                        <div class="col-sm-6"><?= $form->field($modelFone, "[{$index}]fopre_contato")->textInput(['maxlength' => true]) ?></div>
+                                        <div class="col-sm-6"><?= $form->field($modelFone, "[{$indexFones}]fopre_contato")->textInput(['maxlength' => true]) ?></div>
                                     </div><!-- end:row -->
                                 </div>
                             </div>
@@ -126,12 +123,12 @@ use wbraganca\dynamicform\DynamicFormWidget;
             <div class="tab-pane" id="tab3">
                 <?php DynamicFormWidget::begin([
                     'widgetContainer' => 'dynamicform_email', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-                    'widgetBody' => '.container-items', // required: css class selector
-                    'widgetItem' => '.item', // required: css class
+                    'widgetBody' => '.container-items-email', // required: css class selector
+                    'widgetItem' => '.item-email', // required: css class
                     'limit' => 4, // the maximum times, an element can be cloned (default 999)
                     'min' => 0, // 0 or 1 (default 1)
-                    'insertButton' => '.add-item', // css class
-                    'deleteButton' => '.remove-item', // css class
+                    'insertButton' => '.add-item-email', // css class
+                    'deleteButton' => '.remove-item-email', // css class
                     'model' => $modelsEmails[0],
                     'formId' => 'dynamic-form',
                     'formFields' => [
@@ -142,28 +139,28 @@ use wbraganca\dynamicform\DynamicFormWidget;
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-envelope"></i> E-mails
-                        <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Adicionar Email</button>
+                        <button type="button" class="pull-right add-item-email btn btn-success btn-xs"><i class="fa fa-plus"></i> Adicionar Email</button>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="panel-body container-items"><!-- widgetContainer -->
-                        <?php foreach ($modelsEmails as $index => $modelEmail): ?>
-                            <div class="item panel panel-default"><!-- widgetBody -->
+                    <div class="panel-body container-items-email"><!-- widgetContainer -->
+                        <?php foreach ($modelsEmails as $indexEmails => $modelEmail): ?>
+                            <div class="item-email panel panel-default"><!-- widgetBody -->
                                 <div class="panel-heading">
-                                    <span class="panel-title-email">Email: <?= ($index + 1) ?></span>
-                                    <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
+                                    <span class="panel-title-email">Email: <?= ($indexEmails + 1) ?></span>
+                                    <button type="button" class="pull-right remove-item-email btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="panel-body">
                                     <?php
                                         // necessary for update action.
                                         if (!$modelEmail->isNewRecord) {
-                                            echo Html::activeHiddenInput($modelEmail, "[{$index}]empre_codprestador");
+                                            echo Html::activeHiddenInput($modelEmail, "[{$indexEmails}]id");
                                         }
                                     ?>
                                     <div class="row">
-                                        <div class="col-sm-6"><?= $form->field($modelEmail, "[{$index}]empre_email")->textInput(['maxlength' => true]) ?></div>
+                                        <div class="col-sm-6"><?= $form->field($modelEmail, "[{$indexEmails}]empre_email")->textInput(['maxlength' => true]) ?></div>
                                         
-                                        <div class="col-sm-6"><?= $form->field($modelEmail, "[{$index}]empre_contato")->textInput(['maxlength' => true]) ?></div>
+                                        <div class="col-sm-6"><?= $form->field($modelEmail, "[{$indexEmails}]empre_contato")->textInput(['maxlength' => true]) ?></div>
                                     </div><!-- end:row -->
                                 </div>
                             </div>
@@ -205,7 +202,7 @@ jQuery(".dynamicform_email").on("afterInsert", function(e, item) {
 
 jQuery(".dynamicform_email").on("afterDelete", function(e) {
     jQuery(".dynamicform_email .panel-title-email").each(function(index) {
-        jQuery(this).html("Telefone: " + (index + 1))
+        jQuery(this).html("Email: " + (index + 1))
     });
 });
 

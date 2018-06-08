@@ -190,7 +190,7 @@ class PrestadoresController extends Controller
         $modelsFones = $model->foneprestador;
         $modelsEmails = $model->emailprestador;
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             //--------Telefones--------------
             $oldIDsFones = ArrayHelper::map($modelsFones, 'id', 'id');
@@ -228,6 +228,7 @@ class PrestadoresController extends Controller
                         }
                         foreach ($modelsEmails as $modelEmail) {
                             $modelEmail->empre_codprestador = $model->pres_codprestador;
+                            $model->getErrors();
                             if (! ($flag = $modelEmail->save(false))) {
                                 $transaction->rollBack();
                                 break;

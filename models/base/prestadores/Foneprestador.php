@@ -29,7 +29,8 @@ class Foneprestador extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fopre_numerofone'], 'required'],
+            //[['fopre_codprestador'], 'required'],
+            [['fopre_codprestador'], 'integer'],
             [['fopre_numerofone'], 'string', 'max' => 15],
             [['fopre_contato'], 'string', 'max' => 45],
             [['fopre_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['fopre_codprestador' => 'pres_codprestador']],
@@ -42,6 +43,7 @@ class Foneprestador extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'fopre_codprestador' => 'Codprestador',
             'fopre_numerofone' => 'Telefone',
             'fopre_contato' => 'Contato',

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = 'Atualizar';
 
     <?= $this->render('_form', [
         'model' => $model,
-        'modelsFones' => (empty($modelsFones)) ? [new Address] : $modelsFones,
+        'modelsFones' => (empty($modelsFones)) ? [new Foneprestador] : $modelsFones,
         'modelsEmails' => (empty($modelsEmails)) ? [new Emailprestador] : $modelsEmails,
     ]) ?>
 
