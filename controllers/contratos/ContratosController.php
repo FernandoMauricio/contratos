@@ -263,7 +263,18 @@ class ContratosController extends Controller
         $countAditivos = Aditivos::find()->where(['contratos_id' => $model->cont_codcontrato])->count();
 
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
-
+            ///--------salva os anexos
+            $model->file = UploadedFile::getInstances($model, 'file');
+            $subdiretorio = "uploads/contratos/" . $model->cont_codcontrato;
+            if(!file_exists($subdiretorio)) {
+                if(!mkdir($subdiretorio, 0777, true));
+                }
+                    if ($model->file && $model->validate()) {
+                        foreach ($model->file as $file) {
+                            $file->saveAs($subdiretorio.'/'. $file->baseName . '.' . $file->extension);
+                            $model->save();
+                            }
+                    }
         $index = 0;
         $valorTotalPagar = 0;
         $valorRateio = 0;
@@ -354,7 +365,6 @@ class ContratosController extends Controller
                             $model->save();
                             }
                     }
-
             //--------Pagamentos--------------
             $oldIDsPagamentos = ArrayHelper::map($modelsPagamentos, 'id', 'id');
             $modelsPagamentos = Model::createMultiple(Pagamentos::classname(), $modelsPagamentos);

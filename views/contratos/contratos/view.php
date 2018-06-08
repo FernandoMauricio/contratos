@@ -50,7 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'unidadesAtendidas',
                                 'value' => $model->getUnidades(),
                             ],
-                            'prestadores.pres_nome',
+                            [
+                                'label' => 'Prestador de Serviço',
+                                'value' => $model->prestadores->pres_nome,
+                            ],
                             'cont_objeto:ntext',
                             [
                                 'attribute' =>'cont_valor',

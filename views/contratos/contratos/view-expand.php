@@ -29,7 +29,10 @@ use yii\helpers\Url;
                                 'attribute' => 'unidadesAtendidas',
                                 'value' => $model->getUnidades(),
                             ],
-                            'cont_codprestador',
+                            [
+                                'label' => 'Prestador de Serviço',
+                                'value' => $model->prestadores->pres_nome,
+                            ],
                             'cont_objeto:ntext',
                             'cont_valor',
                             'cont_contatoinformacoes',
