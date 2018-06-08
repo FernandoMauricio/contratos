@@ -11,7 +11,6 @@ use app\models\contratos\Tipocontrato;
 use app\models\contratos\pagamentos\Pagamentos;
 use app\models\contratos\aditivos\Aditivos;
 use app\models\contratos\aditivos\AditivosPagamentos;
-use app\models\contratos\aditivos\Tipoaditivo;
 use app\models\base\unidades\Unidades;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
@@ -131,19 +130,17 @@ class ContratosController extends Controller
         $aditivosPagamentos = [new AditivosPagamentos];
         $contratos = $this->findModel($id);
 
-        $modelTiposAditivos = Tipoaditivo::find()->all();
-
         $model->adit_datacadastro = date('Y-m-d');
         $model->adit_usuario = $session['sess_nomeusuario'];
         $model->contratos_id = $id;
 
         if ($model->load(Yii::$app->request->post())) {
             //Validação para que o Fim da vigência não seja menor que o Início da Vigência
-            if ($model->adit_data_fim_vigencia <= $model->adit_data_ini_vigencia)
-            {
+            if ($model->adit_data_fim_vigencia <= $model->adit_data_ini_vigencia) {
                 Yii::$app->session->setFlash('danger', '<b>ERRO!</b>  <b>Fim da Vigência</b> não pode ser menor que a data de <b>Início da Vigência</b>!');
                 return $this->redirect(['update', 'id' => $contratos->cont_codcontrato]);
             }
+        $model->adit_tipos = implode(', ', $model->adit_tipos);
         $model->save();
         $index = 0;
         $valorTotalPagar = 0;
@@ -176,7 +173,6 @@ class ContratosController extends Controller
         } else {
             return $this->renderAjax('gerar-aditivo', [
                 'model' => $model,
-                'modelTiposAditivos' => $modelTiposAditivos,
             ]);
         }
     }
@@ -189,6 +185,7 @@ class ContratosController extends Controller
             return $this->AccessoAdministrador();
         }
         $model = new Aditivos();
+        $aditivos = Aditivos::find()->where(['contratos_id' => $_GET['id']])->all();   
 
         if ($model->load(Yii::$app->request->post())) {
 

@@ -40,7 +40,6 @@ class Contratos extends \yii\db\ActiveRecord
 {
     public $naturezasContrato;
     public $unidadesAtendidas;
-    public $tiposAditivos;
     public $diaPagamento;
     public $file;
     
@@ -95,7 +94,6 @@ class Contratos extends \yii\db\ActiveRecord
             'cont_nomeacao' => 'Portaria de Nomeação',
             'naturezasContrato' => 'Naturezas do Contrato',
             'unidadesAtendidas' => 'Unidades Atendidas',
-            'tiposAditivos' => 'Tipo de Aditivo',
             'file' => 'Arquivo',
         ];
     }

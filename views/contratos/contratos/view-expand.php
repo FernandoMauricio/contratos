@@ -124,8 +124,11 @@ use yii\helpers\Url;
                             <div class="col-sm-2"><b>Aditivo:</b><br />
                                 <?= $modelAditivo->adit_numeroaditivo ?>
                             </div>
+                            <div class="col-sm-2"><b>Tipos do Aditivo:</b><br/ >
+                                <?= $modelAditivo->adit_tipos ?>
+                            </div>
                             <div class="col-sm-2"><b>Valor:</b><br />
-                                <?= 'R$ ' . number_format($modelAditivo->adit_valor, 2, ',', '.') ?>
+                                <?= 'R$ ' . number_format($modelAditivo->adit_valor, 2, ',', '.'); ?>
                             </div>
                             <div class="col-sm-2"><b>Início da Vigência:</b><br />
                                 <?= date('d/m/Y', strtotime($modelAditivo->adit_data_ini_vigencia)) ?>
@@ -133,18 +136,22 @@ use yii\helpers\Url;
                             <div class="col-sm-2"><b>Fim da Vigência:</b><br />
                                 <?= date('d/m/Y', strtotime($modelAditivo->adit_data_fim_vigencia)) ?>
                             </div>
-                            <div class="col-sm-2"><b>Cadastrado por:</b><br />
-                                <?= $modelAditivo->adit_usuario ?>
-                            </div>
-                            <div class="col-sm-2"><b>Data do Cadastro:</b><br />
-                                <?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?>
-                            </div>
                         </div><br />
+
                         <div class="row">
-                            <div class="col-sm-2"><b>Observação:</b><br/ >
+                            <div class="col-sm-12"><b>Observação:</b><br/ >
                                 <?= $modelAditivo->adit_observacao ?>
                             </div>
-                        </div>                 
+                        </div><br />
+
+                        <div class="row">
+                            <div class="col-sm-4"><b>Cadastrado por:</b><br />
+                                <?= $modelAditivo->adit_usuario ?>
+                            </div>
+                            <div class="col-sm-4"><b>Data do Cadastro:</b><br />
+                                <?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?>
+                            </div>
+                        </div><br />                
                     </div>
                             <table class="table table-condensed table-hover">
                                 <thead>

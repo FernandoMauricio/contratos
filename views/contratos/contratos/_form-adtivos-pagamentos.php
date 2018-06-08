@@ -43,7 +43,7 @@ use yii\bootstrap\Modal;
     Modal::end();
 ?>
 
-<?php if ($countAditivos > 0): ?> <!-- corrigi erro no create -->
+<?php if ($countAditivos > 0): ?> <!-- corrige erro no create -->
 <?php foreach ($modelsAditivos as $indexAditivo => $modelAditivo): ?>
 
     <div class="row"><p class="bg-info" style="font-size: 20px;text-align: center"> Aditivo <?= $indexAditivo + 1 ?></p></div>
@@ -51,6 +51,9 @@ use yii\bootstrap\Modal;
     <div class="row">
         <div class="col-sm-2"><b>Aditivo:</b><br />
             <?= $modelAditivo->adit_numeroaditivo ?>
+        </div>
+        <div class="col-sm-2"><b>Tipos do Aditivo:</b><br/ >
+            <?= $modelAditivo->adit_tipos ?>
         </div>
         <div class="col-sm-2"><b>Valor:</b><br />
             <?= 'R$ ' . number_format($modelAditivo->adit_valor, 2, ',', '.'); ?>
@@ -61,19 +64,22 @@ use yii\bootstrap\Modal;
         <div class="col-sm-2"><b>Fim da Vigência:</b><br />
             <?= date('d/m/Y', strtotime($modelAditivo->adit_data_fim_vigencia)) ?>
         </div>
-        <div class="col-sm-2"><b>Cadastrado por:</b><br />
-            <?= $modelAditivo->adit_usuario ?>
-        </div>
-        <div class="col-sm-2"><b>Data do Cadastro:</b><br />
-            <?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?>
+    </div><br />
+
+    <div class="row">
+        <div class="col-sm-12"><b>Observação:</b><br/ >
+            <?= $modelAditivo->adit_observacao ?>
         </div>
     </div><br />
 
     <div class="row">
-        <div class="col-sm-2"><b>Observação:</b><br/ >
-            <?= $modelAditivo->adit_observacao ?>
+        <div class="col-sm-4"><b>Cadastrado por:</b><br />
+            <?= $modelAditivo->adit_usuario ?>
         </div>
-    </div>
+        <div class="col-sm-4"><b>Data do Cadastro:</b><br />
+            <?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?>
+        </div>
+    </div><br />
 
 <div class="panel-body">
     <?php DynamicFormWidget::begin([

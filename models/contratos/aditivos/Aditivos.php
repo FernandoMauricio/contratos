@@ -39,10 +39,10 @@ class Aditivos extends \yii\db\ActiveRecord
     {
         return [
             [['adit_numeroaditivo', 'adit_valor', 'adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'contratos_id', 'diaPagamento'], 'required'],
+            [['adit_tipos', 'adit_observacao'], 'string'],
             [['aditivo', 'adit_codaditivo'], 'integer'],
             [['adit_valor'], 'number'],
-            [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'adit_datacadastro'], 'safe'],
-            [['adit_observacao'], 'string'],
+            [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'adit_datacadastro', 'tiposAditivos'], 'safe'],
             [['contratos_id'], 'integer'],
             [['adit_numeroaditivo'], 'string', 'max' => 255],
             [['adit_usuario'], 'string', 'max' => 45],
@@ -67,6 +67,7 @@ class Aditivos extends \yii\db\ActiveRecord
             'contratos_id' => 'Cód. Contrato',
             'aditivo' => 'Aditivo',
             'adit_valor' => 'Valor a Pagar',
+            'adit_tipos' => 'Tipo de Aditivo',
         ];
     }
 
@@ -84,13 +85,5 @@ class Aditivos extends \yii\db\ActiveRecord
     public function getAditivosPagamentos()
     {
         return $this->hasMany(AditivosPagamentos::className(), ['aditivos_id' => 'adit_codaditivo']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTiposAditivos()
-    {
-        return $this->hasMany(Tiposaditivos::className(), ['tipa_codaditivo' => 'adit_codaditivo']);
     }
 }

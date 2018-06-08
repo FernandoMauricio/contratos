@@ -25,9 +25,8 @@ use kartik\number\NumberControl;
 
           <div class="col-md-3">
               <?php
-                  $data_tiposAditivos = ArrayHelper::map($modelTiposAditivos, 'tipad_codtipo', 'tipad_descricao');
-                  echo $form->field($model, 'tiposAditivos')->widget(Select2::classname(), [
-                      'data' =>  $data_tiposAditivos,
+                  echo $form->field($model, 'adit_tipos')->widget(Select2::classname(), [
+                      'data' =>  ['Prazo' => 'Prazo', 'Valor' => 'Valor', 'Cláusulas' => 'Cláusulas'],
                       'options' => ['placeholder' => 'Selecione o tipo...', 'multiple'=>true],
                       'pluginOptions' => [
                               'allowClear' => true
