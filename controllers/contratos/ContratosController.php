@@ -8,6 +8,7 @@ use app\models\MultipleModel as Model;
 use app\models\contratos\Contratos;
 use app\models\contratos\ContratosSearch;
 use app\models\contratos\Tipocontrato;
+use app\models\contratos\UnidadesAtendidas;
 use app\models\contratos\pagamentos\Pagamentos;
 use app\models\contratos\aditivos\Aditivos;
 use app\models\contratos\aditivos\AditivosPagamentos;
@@ -442,7 +443,15 @@ class ContratosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        //Exclusão de todas as tabelas relacionadas com a planilha
+        Pagamentos::deleteAll('pag_codcontrato = "'.$id.'"');
+        NaturezaContrato::deleteAll('nat_codcontrato = "'.$id.'"');
+        UnidadesAtendidas::deleteAll('contratos_id = "'.$id.'"');
+        Aditivos::deleteAll('contratos_id = "'.$id.'"');
+        $model->delete(); //Exclui a planilha
+
+        Yii::$app->session->setFlash('success', '<strong>SUCESSO! </strong> Planilha de Curso de código: ' . '<strong>' .$id. '</strong>' . ' excluída!');
 
         return $this->redirect(['index']);
     }
