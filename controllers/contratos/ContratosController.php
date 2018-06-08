@@ -60,8 +60,8 @@ class ContratosController extends Controller
                     ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
                     ->setTo($email_gerente)
                     ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 3 meses')
-                    ->setTextBody('A solicitação de contratação de código:')
-                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br>Existe um contrato de <b style="color: #337ab7"">código: </b> com status de . <br> Por favor, não responda esse e-mail. Acesse http://portalsenac.am.senac.br para ANALISAR a solicitação de contratação. <br><br> Atenciosamente, <br> Contratação de Pessoal - Senac AM.</h4>')
+                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em 3 meses')
+                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br> O contrato com a empresa '.$model->prestadores->pres_nome.' vencerá em 3 meses. Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br> Controle de Contratos - Senac AM.</h4>')
                     ->send();
                 } 
         }
@@ -76,8 +76,8 @@ class ContratosController extends Controller
                     ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
                     ->setTo($email_gerente)
                     ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 2 meses')
-                    ->setTextBody('A solicitação de contratação de código:')
-                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br>Existe um contrato de <b style="color: #337ab7"">código: </b> com status de . <br> Por favor, não responda esse e-mail. Acesse http://portalsenac.am.senac.br para ANALISAR a solicitação de contratação. <br><br> Atenciosamente, <br> Contratação de Pessoal - Senac AM.</h4>')
+                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em 2 meses')
+                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br> O contrato com a empresa '.$model->prestadores->pres_nome.' vencerá em 2 meses. <br> Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br> Controle de Contratos - Senac AM.</h4>')
                     ->send();
                 } 
         }
@@ -92,8 +92,8 @@ class ContratosController extends Controller
                     ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
                     ->setTo($email_gerente)
                     ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 1 mês')
-                    ->setTextBody('A solicitação de contratação de código:')
-                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br>Existe um contrato de <b style="color: #337ab7"">código: </b> com status de . <br> Por favor, não responda esse e-mail. Acesse http://portalsenac.am.senac.br para ANALISAR a solicitação de contratação. <br><br> Atenciosamente, <br> Contratação de Pessoal - Senac AM.</h4>')
+                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em 1 mês')
+                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br> O contrato com a empresa '.$model->prestadores->pres_nome.' vencerá em 1 mês. <br> Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br> Controle de Contratos - Senac AM.</h4>')
                     ->send();
             } 
         }

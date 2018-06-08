@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'beforeHeader'=>[
         [
             'columns'=>[
-                ['content'=>'Detalhes dos Contratos', 'options'=>['colspan'=>5, 'class'=>'text-center warning']], 
+                ['content'=>'Detalhes dos Contratos', 'options'=>['colspan'=>6, 'class'=>'text-center warning']], 
                 ['content'=>'Área de Ações', 'options'=>['colspan'=>1, 'class'=>'text-center warning']], 
             ],
         ]
