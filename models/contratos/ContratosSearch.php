@@ -19,7 +19,7 @@ class ContratosSearch extends Contratos
     {
         return [
             [['cont_codcontrato', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor'], 'integer'],
-            [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_objeto', 'cont_contatoinformacoes', 'cont_observacao'], 'safe'],
+            [['cont_numerocontrato', 'cont_origem', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_objeto', 'cont_contatoinformacoes', 'cont_observacao'], 'safe'],
             [['cont_valor'], 'number'],
         ];
     }
@@ -72,6 +72,7 @@ class ContratosSearch extends Contratos
         ]);
 
         $query->andFilterWhere(['like', 'cont_numerocontrato', $this->cont_numerocontrato])
+            ->andFilterWhere(['like', 'cont_origem', $this->cont_origem])
             ->andFilterWhere(['like', 'cont_objeto', $this->cont_objeto])
             ->andFilterWhere(['like', 'cont_contatoinformacoes', $this->cont_contatoinformacoes])
             ->andFilterWhere(['like', 'cont_observacao', $this->cont_observacao]);

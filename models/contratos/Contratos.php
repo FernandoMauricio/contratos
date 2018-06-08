@@ -57,12 +57,13 @@ class Contratos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cont_numerocontrato', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'unidadesAtendidas'], 'required'],
+            [['cont_numerocontrato', 'cont_origem', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'unidadesAtendidas'], 'required'],
             [['cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'diaPagamento'], 'integer'],
             [['cont_data_ini_vigencia', 'cont_data_fim_vigencia'], 'safe'],
             [['cont_objeto', 'cont_observacao'], 'string'],
             [['cont_valor'], 'number'],
             [['cont_numerocontrato', 'cont_src_arquivocontrato', 'cont_nomeacao'], 'string', 'max' => 255],
+            [['cont_origem'], 'string', 'max' => 45],
             [['cont_contatoinformacoes'], 'string', 'max' => 50],
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
@@ -79,6 +80,7 @@ class Contratos extends \yii\db\ActiveRecord
         return [
             'cont_codcontrato' => 'Cód.',
             'cont_numerocontrato' => 'Contrato',
+            'cont_origem' => 'Origem',
             'diaPagamento' => 'Pagamento',
             'cont_data_ini_vigencia' => 'Início da Vigência',
             'cont_data_fim_vigencia' => 'Fim da Vigência',

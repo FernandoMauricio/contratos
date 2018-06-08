@@ -23,6 +23,18 @@ use kartik\number\NumberControl;
     <div class="row">
         <div class="col-md-4"><?= $form->field($model, 'cont_numerocontrato')->textInput(['maxlength' => true]) ?></div>
 
+        <div class="col-md-2">
+            <?php
+                echo $form->field($model, 'cont_origem')->widget(Select2::classname(), [
+                    'data' =>  ['SENAC' => 'SENAC', 'EXTERNO' => 'EXTERNO'],
+                    'options' => ['placeholder' => 'Selecione a origem...'],
+                    'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); 
+            ?>
+        </div>
+
         <div class="col-md-3">
             <?= $form->field($model, 'cont_data_ini_vigencia')->widget(DateControl::classname(), [
                     'type'=>DateControl::FORMAT_DATE,
@@ -50,18 +62,6 @@ use kartik\number\NumberControl;
                 ]); 
             ?>
         </div>
-
-        <div class="col-md-2">
-            <?php
-                echo $form->field($model, 'diaPagamento')->widget(Select2::classname(), [
-                    'data' =>  [7 => 7, 17 => 17, 27 => 27 ],
-                    'options' => ['placeholder' => 'Selecione o dia de Pagamento...'],
-                    'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]); 
-            ?>
-        </div>
     </div>
 
     <div class="row">
@@ -81,6 +81,17 @@ use kartik\number\NumberControl;
                 ])                
             ?>
         </div>
+        <div class="col-md-2">
+            <?php
+                echo $form->field($model, 'diaPagamento')->widget(Select2::classname(), [
+                    'data' =>  [7 => 7, 17 => 17, 27 => 27 ],
+                    'options' => ['placeholder' => 'Selecione o dia de Pagamento...'],
+                    'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); 
+            ?>
+        </div>
 
         <div class="col-md-2">
             <?php
@@ -95,7 +106,7 @@ use kartik\number\NumberControl;
             ?>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?php
                 $data_instrumento = ArrayHelper::map($instrumentos, 'inst_codinstrumento', 'inst_descricao');
                 echo $form->field($model, 'cont_codinstrumento')->widget(Select2::classname(), [
@@ -108,7 +119,7 @@ use kartik\number\NumberControl;
             ?>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?php
                 $data_naturezas = ArrayHelper::map($naturezas, 'tipna_codtipo', 'tipna_natureza');
                        echo $form->field($model, 'naturezasContrato')->widget(Select2::classname(), [

@@ -23,8 +23,15 @@ use yii\helpers\Url;
                         'attributes' => [
                             'cont_codcontrato',
                             'cont_numerocontrato',
-                            'cont_data_ini_vigencia',
-                            'cont_data_fim_vigencia',
+                            'cont_origem',
+                            [
+                                'attribute' => 'cont_data_ini_vigencia',
+                                'format' => ['date', 'php:d/m/Y']
+                            ],
+                            [
+                                'attribute' => 'cont_data_fim_vigencia',
+                                'format' => ['date', 'php:d/m/Y']
+                            ],
                             [
                                 'attribute' => 'unidadesAtendidas',
                                 'value' => $model->getUnidades(),

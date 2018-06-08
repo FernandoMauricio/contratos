@@ -20,6 +20,18 @@ use kartik\file\FileInput;
     <div class="row">
         <div class="col-md-4"><?= $form->field($model, 'cont_numerocontrato')->textInput(['maxlength' => true]) ?></div>
 
+        <div class="col-md-2">
+            <?php
+                echo $form->field($model, 'cont_origem')->widget(Select2::classname(), [
+                    'data' =>  ['SENAC' => 'SENAC', 'EXTERNO' => 'EXTERNO'],
+                    'options' => ['placeholder' => 'Selecione a origem...'],
+                    'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); 
+            ?>
+        </div>
+
         <div class="col-md-2"><?= $form->field($model, 'cont_data_ini_vigencia')->widget(DateControl::classname(), [
                         'type'=>DateControl::FORMAT_DATE,
                         'ajaxConversion'=>false,
@@ -63,7 +75,9 @@ use kartik\file\FileInput;
                 ])                
             ?>
         </div>
+    </div>
 
+    <div class="row">
         <div class="col-md-2">
             <?php
                 $data_tipoContrato = ArrayHelper::map($tipoContrato, 'tico_codtipo', 'tico_descricao');
@@ -76,10 +90,7 @@ use kartik\file\FileInput;
                     ]); 
             ?>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <?php
                 $data_instrumento = ArrayHelper::map($instrumentos, 'inst_codinstrumento', 'inst_descricao');
                 echo $form->field($model, 'cont_codinstrumento')->widget(Select2::classname(), [
@@ -92,7 +103,7 @@ use kartik\file\FileInput;
             ?>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-5">
             <?php
                 $data_naturezas = ArrayHelper::map($naturezas, 'tipna_codtipo', 'tipna_natureza');
                        echo $form->field($model, 'naturezasContrato')->widget(Select2::classname(), [

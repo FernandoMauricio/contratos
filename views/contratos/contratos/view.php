@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attributes' => [
                             'cont_codcontrato',
                             'cont_numerocontrato',
+                            'cont_origem',
                             [
                                 'attribute' => 'cont_data_ini_vigencia',
                                 'format' => ['date', 'php:d/m/Y']
