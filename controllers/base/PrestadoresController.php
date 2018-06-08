@@ -228,7 +228,6 @@ class PrestadoresController extends Controller
                         }
                         foreach ($modelsEmails as $modelEmail) {
                             $modelEmail->empre_codprestador = $model->pres_codprestador;
-                            $model->getErrors();
                             if (! ($flag = $modelEmail->save(false))) {
                                 $transaction->rollBack();
                                 break;

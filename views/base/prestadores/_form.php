@@ -108,7 +108,8 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                         }
                                     ?>
                                     <div class="row">
-                                        <div class="col-sm-6"><?= $form->field($modelFone, "[{$indexFones}]fopre_numerofone")->textInput(['maxlength' => true]) ?></div>
+                                        <div class="col-sm-6"><?= $form->field($modelFone, "[{$indexFones}]fopre_numerofone")->widget(\yii\widgets\MaskedInput::className(), [ 'mask' => '(99)99999999[9]']) ?>
+                                        </div>
 
                                         <div class="col-sm-6"><?= $form->field($modelFone, "[{$indexFones}]fopre_contato")->textInput(['maxlength' => true]) ?></div>
                                     </div><!-- end:row -->

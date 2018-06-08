@@ -31,6 +31,7 @@ class Emailprestador extends \yii\db\ActiveRecord
         return [
             //[['empre_codprestador'], 'required'],
             [['empre_codprestador'], 'integer'],
+            [['empre_email'], 'email'],
             [['empre_email', 'empre_contato'], 'string', 'max' => 45],
             [['empre_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['empre_codprestador' => 'pres_codprestador']],
         ];
