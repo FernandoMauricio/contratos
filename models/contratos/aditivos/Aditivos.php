@@ -85,4 +85,12 @@ class Aditivos extends \yii\db\ActiveRecord
     {
         return $this->hasMany(AditivosPagamentos::className(), ['aditivos_id' => 'adit_codaditivo']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTiposAditivos()
+    {
+        return $this->hasMany(Tiposaditivos::className(), ['tipa_codaditivo' => 'adit_codaditivo']);
+    }
 }

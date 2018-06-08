@@ -11,6 +11,7 @@ use app\models\contratos\Tipocontrato;
 use app\models\contratos\pagamentos\Pagamentos;
 use app\models\contratos\aditivos\Aditivos;
 use app\models\contratos\aditivos\AditivosPagamentos;
+use app\models\contratos\aditivos\Tipoaditivo;
 use app\models\base\unidades\Unidades;
 use app\models\base\instrumentos\Instrumentos;
 use app\models\base\prestadores\Prestadores;
@@ -130,6 +131,8 @@ class ContratosController extends Controller
         $aditivosPagamentos = [new AditivosPagamentos];
         $contratos = $this->findModel($id);
 
+        $modelTiposAditivos = Tipoaditivo::find()->all();
+
         $model->adit_datacadastro = date('Y-m-d');
         $model->adit_usuario = $session['sess_nomeusuario'];
         $model->contratos_id = $id;
@@ -173,6 +176,7 @@ class ContratosController extends Controller
         } else {
             return $this->renderAjax('gerar-aditivo', [
                 'model' => $model,
+                'modelTiposAditivos' => $modelTiposAditivos,
             ]);
         }
     }
@@ -185,7 +189,6 @@ class ContratosController extends Controller
             return $this->AccessoAdministrador();
         }
         $model = new Aditivos();
-        $aditivos = Aditivos::find()->where(['contratos_id' => $_GET['id']])->all();
 
         if ($model->load(Yii::$app->request->post())) {
 

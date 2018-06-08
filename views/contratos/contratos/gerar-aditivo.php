@@ -21,7 +21,20 @@ use kartik\number\NumberControl;
 
   <div class="panel-body">
       <div class="row">
-          <div class="col-md-6"><?= $form->field($model, 'adit_numeroaditivo')->textInput(['maxlength' => true]) ?></div>
+          <div class="col-md-4"><?= $form->field($model, 'adit_numeroaditivo')->textInput(['maxlength' => true]) ?></div>
+
+          <div class="col-md-3">
+              <?php
+                  $data_tiposAditivos = ArrayHelper::map($modelTiposAditivos, 'tipad_codtipo', 'tipad_descricao');
+                  echo $form->field($model, 'tiposAditivos')->widget(Select2::classname(), [
+                      'data' =>  $data_tiposAditivos,
+                      'options' => ['placeholder' => 'Selecione o tipo...', 'multiple'=>true],
+                      'pluginOptions' => [
+                              'allowClear' => true
+                          ],
+                      ]); 
+              ?>
+          </div>
 
           <div class="col-md-3">
             <?= $form->field($model, 'adit_valor')->widget(NumberControl::classname(), [
@@ -40,7 +53,7 @@ use kartik\number\NumberControl;
             ?>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-2">
               <?php
                   echo $form->field($model, 'diaPagamento')->widget(Select2::classname(), [
                       'data' =>  [7 => 7, 17 => 17, 27 => 27 ],
