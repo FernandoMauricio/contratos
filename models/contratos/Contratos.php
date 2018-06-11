@@ -68,7 +68,7 @@ class Contratos extends \yii\db\ActiveRecord
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
             [['cont_codtipo'], 'exist', 'skipOnError' => true, 'targetClass' => Tipocontrato::className(), 'targetAttribute' => ['cont_codtipo' => 'tico_codtipo']],
-            [['cont_valor', 'diaPagamento'], 'required', 'when' => function($model) {               
+            [['cont_valor', 'diaPagamento'], 'required', 'on' => 'insert', 'when' => function($model) {               
                         return $model->tipocontrato->tico_codtipo != 3; //'Sem Valor'            
                     }, 'whenClient' => "function (attribute, value) {
                 return $('#contratos-cont_codtipo').val() != 3;
