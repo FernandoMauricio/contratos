@@ -57,7 +57,7 @@ class Contratos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cont_numerocontrato', 'cont_origem', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codprestador', 'cont_valor', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'unidadesAtendidas'], 'required'],
+            [['cont_numerocontrato', 'cont_origem', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'unidadesAtendidas'], 'required'],
             [['cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'diaPagamento'], 'integer'],
             [['cont_data_ini_vigencia', 'cont_data_fim_vigencia'], 'safe'],
             [['cont_objeto', 'cont_observacao'], 'string'],
@@ -68,6 +68,12 @@ class Contratos extends \yii\db\ActiveRecord
             [['cont_codinstrumento'], 'exist', 'skipOnError' => true, 'targetClass' => Instrumentos::className(), 'targetAttribute' => ['cont_codinstrumento' => 'inst_codinstrumento']],
             [['cont_codprestador'], 'exist', 'skipOnError' => true, 'targetClass' => Prestadores::className(), 'targetAttribute' => ['cont_codprestador' => 'pres_codprestador']],
             [['cont_codtipo'], 'exist', 'skipOnError' => true, 'targetClass' => Tipocontrato::className(), 'targetAttribute' => ['cont_codtipo' => 'tico_codtipo']],
+            [['cont_valor', 'diaPagamento'], 'required', 'when' => function($model) {               
+                        return $model->tipocontrato->tico_codtipo != 3; //'Sem Valor'            
+                    }, 'whenClient' => "function (attribute, value) {
+                return $('#contratos-cont_codtipo').val() != 3;
+            }", 'message' => '"Valor" não pode ficar em branco.'
+            ],
             [['file'], 'file', 'maxFiles' => 10, 'extensions' => 'pdf', 'maxSize' => 1024 * 1024 * 16, 'tooBig' => 'O arquivo é grande demais. Seu tamanho não pode exceder 16MB.','checkExtensionByMimeType'=>false, 'extensions' => 'pdf, zip, rar, doc, docx'],
         ];
     }

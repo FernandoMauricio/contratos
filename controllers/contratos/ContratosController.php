@@ -279,23 +279,26 @@ class ContratosController extends Controller
         $index = 0;
         $valorTotalPagar = 0;
         $valorRateio = 0;
-        foreach ($modelsPagamentos as $index => $modelPagamento) {
-            for($i = new DateTime($model->cont_data_ini_vigencia); $i <= new DateTime($model->cont_data_fim_vigencia); $i->modify('+1 month')) {
-                $date = $i->format('Y-m-'.$model->diaPagamento.'');
-                //Inclui as informações dos candidatos classificados
-                    Yii::$app->db->createCommand()->insert('pagamentos_pag',
-                        [
-                            'pag_codcontrato' => $model->cont_codcontrato, 
-                            'pag_datavencimento' => $date, //Contador dos meses a partir da data de vigência
-                            'pag_valorpagar' => $model->cont_valor,    
-                            'pag_databaixado' => NULL, 
-                            'pag_valorpago' => 0,
-                            'pag_situacao' => 'Pendente' 
-                        ])->execute();
-                $index++;
+
+        if($model->cont_codtipo != 3) { //Se a opção for sem valor, não precisará distribuir os pagamentos
+            foreach ($modelsPagamentos as $index => $modelPagamento) {
+                for($i = new DateTime($model->cont_data_ini_vigencia); $i <= new DateTime($model->cont_data_fim_vigencia); $i->modify('+1 month')) {
+                    $date = $i->format('Y-m-'.$model->diaPagamento.'');
+                    //Inclui as informações dos candidatos classificados
+                        Yii::$app->db->createCommand()->insert('pagamentos_pag',
+                            [
+                                'pag_codcontrato' => $model->cont_codcontrato, 
+                                'pag_datavencimento' => $date, //Contador dos meses a partir da data de vigência
+                                'pag_valorpagar' => $model->cont_valor,    
+                                'pag_databaixado' => NULL, 
+                                'pag_valorpago' => 0,
+                                'pag_situacao' => 'Pendente' 
+                            ])->execute();
+                    $index++;
+                }
+                //Busca o valor que será reateado no período escolhido
+               $valorRateio = $model->cont_valor / $index;
             }
-            //Busca o valor que será reateado no período escolhido
-           $valorRateio = $model->cont_valor / $index;
         }
         //Atualiza os pagamentos com o valor Rateado
         foreach ($modelsPagamentos as $modelPagamento) {
