@@ -9,9 +9,6 @@ use yii\helpers\Url;
 
 ?>
 <div class="contratos-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> DETALHES DO CONTRATO</h3>
