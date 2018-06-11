@@ -37,6 +37,11 @@ class InstrumentosController extends Controller
      */
     public function actionIndex()
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 53){
+            return $this->AccessoAdministrador();
+        }
         $searchModel = new InstrumentosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,6 +59,11 @@ class InstrumentosController extends Controller
      */
     public function actionView($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 53){
+            return $this->AccessoAdministrador();
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,6 +76,11 @@ class InstrumentosController extends Controller
      */
     public function actionCreate()
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 53){
+            return $this->AccessoAdministrador();
+        }
         $model = new Instrumentos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -87,6 +102,11 @@ class InstrumentosController extends Controller
      */
     public function actionUpdate($id)
     {
+        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
+        $session = Yii::$app->session;
+        if($session['sess_codunidade'] != 53){
+            return $this->AccessoAdministrador();
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
