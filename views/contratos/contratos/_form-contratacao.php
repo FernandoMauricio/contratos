@@ -32,6 +32,18 @@ use kartik\file\FileInput;
             ?>
         </div>
 
+        <div class="col-md-2">
+            <?php
+                echo $form->field($model, 'cont_permitirprazo')->widget(Select2::classname(), [
+                    'data' =>  [0 => 'Não' , 1 => 'Sim' ],
+                    'options' => ['placeholder' => 'Permitir prazo?'],
+                    'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); 
+            ?>
+        </div>
+
         <div class="col-md-2"><?= $form->field($model, 'cont_data_ini_vigencia')->widget(DateControl::classname(), [
                         'type'=>DateControl::FORMAT_DATE,
                         'ajaxConversion'=>false,
@@ -57,6 +69,21 @@ use kartik\file\FileInput;
                     ]); 
                 ?>
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <?php
+                $data_tipoContrato = ArrayHelper::map($tipoContrato, 'tico_codtipo', 'tico_descricao');
+                echo $form->field($model, 'cont_codtipo')->widget(Select2::classname(), [
+                    'data' =>  $data_tipoContrato,
+                    'options' => ['placeholder' => 'Selecione o Tipo de Contrato...'],
+                    'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); 
+            ?>
+        </div>
 
         <div class="col-md-2">
             <?php 
@@ -75,22 +102,8 @@ use kartik\file\FileInput;
                 ])                
             ?>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <?php
-                $data_tipoContrato = ArrayHelper::map($tipoContrato, 'tico_codtipo', 'tico_descricao');
-                echo $form->field($model, 'cont_codtipo')->widget(Select2::classname(), [
-                    'data' =>  $data_tipoContrato,
-                    'options' => ['placeholder' => 'Selecione o Tipo de Contrato...'],
-                    'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]); 
-            ?>
-        </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <?php
                 $data_instrumento = ArrayHelper::map($instrumentos, 'inst_codinstrumento', 'inst_descricao');
                 echo $form->field($model, 'cont_codinstrumento')->widget(Select2::classname(), [
@@ -103,7 +116,7 @@ use kartik\file\FileInput;
             ?>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-4">
             <?php
                 $data_naturezas = ArrayHelper::map($naturezas, 'tipna_codtipo', 'tipna_natureza');
                        echo $form->field($model, 'naturezasContrato')->widget(Select2::classname(), [

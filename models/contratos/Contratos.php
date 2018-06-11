@@ -28,6 +28,7 @@ use app\models\contratos\UnidadesAtendidas;
  * @property string $cont_observacao
  * @property int $cont_localizacaofisica
  * @property int $cont_localizacaogestor
+ * @property int $cont_permitirprazo
  *
  * @property InstrumentoInst $contCodinstrumento
  * @property PrestadoresPres $contCodprestador
@@ -58,7 +59,7 @@ class Contratos extends \yii\db\ActiveRecord
     {
         return [
             [['cont_numerocontrato', 'cont_origem', 'cont_data_ini_vigencia', 'cont_data_fim_vigencia', 'cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'naturezasContrato', 'unidadesAtendidas'], 'required'],
-            [['cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'diaPagamento'], 'integer'],
+            [['cont_codprestador', 'cont_codtipo', 'cont_codinstrumento', 'cont_localizacaofisica', 'cont_localizacaogestor', 'cont_permitirprazo', 'diaPagamento'], 'integer'],
             [['cont_data_ini_vigencia', 'cont_data_fim_vigencia'], 'safe'],
             [['cont_objeto', 'cont_observacao'], 'string'],
             [['cont_valor'], 'number'],
@@ -100,6 +101,7 @@ class Contratos extends \yii\db\ActiveRecord
             'cont_localizacaofisica' => 'Localização Física',
             'cont_localizacaogestor' => 'Gestor do Contrato',
             'cont_nomeacao' => 'Portaria de Nomeação',
+            'cont_permitirprazo' => 'Prazo 60 meses',
             'naturezasContrato' => 'Naturezas do Contrato',
             'unidadesAtendidas' => 'Unidades Atendidas',
             'file' => 'Arquivo',

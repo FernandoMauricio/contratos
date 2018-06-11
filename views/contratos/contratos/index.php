@@ -52,10 +52,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'headerOptions'=>['class'=>'kartik-sheet-style'], 
             'expandOneOnly'=>true
         ],
-
         'cont_codcontrato',
         'cont_numerocontrato',
         'cont_origem',
+        [
+            'attribute'=>'cont_permitirprazo', 
+            'width'=>'5%',
+            'format' => 'raw',
+            'value'=>function ($model, $key, $index, $widget) { 
+               return $model->cont_permitirprazo == 0 ? '<span class="label label-danger">Não</span>' : '<span class="label label-success">Sim</span>';
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+            'filter'=>[0=>'Não', 1 => 'Sim'], 
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Permitir Prazo...'],
+        ],
         [
             'attribute' => 'cont_data_ini_vigencia',
             'format' => ['date', 'php:d/m/Y'],
@@ -115,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'beforeHeader'=>[
         [
             'columns'=>[
-                ['content'=>'Detalhes dos Contratos', 'options'=>['colspan'=>6, 'class'=>'text-center warning']], 
+                ['content'=>'Detalhes dos Contratos', 'options'=>['colspan'=>7, 'class'=>'text-center warning']], 
                 ['content'=>'Área de Ações', 'options'=>['colspan'=>1, 'class'=>'text-center warning']], 
             ],
         ]

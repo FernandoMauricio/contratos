@@ -25,6 +25,11 @@ use yii\helpers\Url;
                             'cont_numerocontrato',
                             'cont_origem',
                             [
+                                'attribute'=>'cont_permitirprazo',
+                                'value' => $model->cont_permitirprazo == 0 ? '<span class="label label-danger">Não</span>' : '<span class="label label-success">Sim</span>',
+                                'format' => 'raw',
+                            ],
+                            [
                                 'attribute' => 'cont_data_ini_vigencia',
                                 'format' => ['date', 'php:d/m/Y']
                             ],
