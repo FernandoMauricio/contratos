@@ -39,10 +39,10 @@ class Aditivos extends \yii\db\ActiveRecord
     {
         return [
             [['adit_numeroaditivo', 'adit_valor', 'adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'contratos_id', 'diaPagamento'], 'required'],
-            [['adit_tipos', 'adit_observacao'], 'string'],
+            [['adit_observacao'], 'string'],
             [['aditivo', 'adit_codaditivo'], 'integer'],
             [['adit_valor'], 'number'],
-            [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'adit_datacadastro', 'tiposAditivos'], 'safe'],
+            [['adit_data_ini_vigencia', 'adit_data_fim_vigencia', 'adit_datacadastro', 'tiposAditivos', 'adit_tipos'], 'safe'],
             [['contratos_id'], 'integer'],
             [['adit_numeroaditivo'], 'string', 'max' => 255],
             [['adit_usuario'], 'string', 'max' => 45],

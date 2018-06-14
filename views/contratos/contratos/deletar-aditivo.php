@@ -22,7 +22,7 @@ use kartik\datecontrol\DateControl;
       <div class="row">
           <div class="col-md-3">
             <?php
-                $data_aditivos = ArrayHelper::map($aditivos, 'adit_codaditivo', 'adit_codaditivo');
+                $data_aditivos = ArrayHelper::map($aditivos, 'adit_codaditivo', 'adit_numeroaditivo');
                 echo $form->field($model, 'aditivo')->widget(Select2::classname(), [
                     'data' =>  $data_aditivos,
                     'options' => ['placeholder' => 'Selecione o Aditivo...'],

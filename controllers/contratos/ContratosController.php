@@ -133,7 +133,9 @@ class ContratosController extends Controller
 
         $model->adit_datacadastro = date('Y-m-d');
         $model->adit_usuario = $session['sess_nomeusuario'];
+        $model->adit_valor = 0;
         $model->contratos_id = $id;
+
 
         if ($model->load(Yii::$app->request->post())) {
             //Validação para que o Fim da vigência não seja menor que o Início da Vigência
@@ -141,8 +143,8 @@ class ContratosController extends Controller
                 Yii::$app->session->setFlash('danger', '<b>ERRO!</b>  <b>Fim da Vigência</b> não pode ser menor que a data de <b>Início da Vigência</b>!');
                 return $this->redirect(['update', 'id' => $contratos->cont_codcontrato]);
             }
-        $model->adit_tipos = implode(', ', $model->adit_tipos);
-        $model->save();
+        $model->adit_tipos = is_array($model->adit_tipos) ? implode(', ', $model->adit_tipos) : null;
+        $model->save(false);
         $index = 0;
         $valorTotalPagar = 0;
         $valorRateio = 0;
@@ -186,7 +188,7 @@ class ContratosController extends Controller
             return $this->AccessoAdministrador();
         }
         $model = new Aditivos();
-        $aditivos = Aditivos::find()->where(['contratos_id' => $_GET['id']])->all();   
+        $aditivos = Aditivos::find()->select([new \yii\db\Expression("adit_codaditivo, CONCAT(adit_codaditivo,' - ' ,adit_numeroaditivo) as adit_numeroaditivo")])->where(['contratos_id' => $_GET['id']])->all();
 
         if ($model->load(Yii::$app->request->post())) {
 

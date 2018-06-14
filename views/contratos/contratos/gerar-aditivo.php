@@ -21,7 +21,7 @@ use kartik\number\NumberControl;
 
   <div class="panel-body">
       <div class="row">
-          <div class="col-md-4"><?= $form->field($model, 'adit_numeroaditivo')->textInput(['maxlength' => true]) ?></div>
+          <div class="col-md-4"><?= $form->field($model, 'adit_numeroaditivo')->textInput(['maxlength' => true, 'required' => true]) ?></div>
 
           <div class="col-md-3">
               <?php
@@ -29,8 +29,10 @@ use kartik\number\NumberControl;
                       'data' =>  ['Prazo' => 'Prazo', 'Valor' => 'Valor', 'Cláusulas' => 'Cláusulas'],
                       'options' => ['placeholder' => 'Selecione o tipo...', 'multiple'=>true],
                       'pluginOptions' => [
-                              'allowClear' => true
+                              'allowClear' => true,
+                              'required' => true
                           ],
+
                       ]); 
               ?>
           </div>
