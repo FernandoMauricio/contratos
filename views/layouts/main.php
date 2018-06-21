@@ -38,6 +38,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+if($session['sess_codunidade'] == 53){ //ÁREA DA EQUIPE SERVIÇOS DE CONTRATO
     echo NavX::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -53,16 +54,33 @@ AppAsset::register($this);
                 ]]
                 ]
             ],
-        ['label' => 'Usuário (' . utf8_encode(ucwords(strtolower($session['sess_nomeusuario']))) . ')',
+            ['label' => 'Usuário (' . utf8_encode(ucwords(strtolower($session['sess_nomeusuario']))) . ')',
         'items' => [
                     '<li class="dropdown-header">Área Usuário</li>',
                         //['label' => 'Alterar Senha', 'url' => ['usuario-usu/update', 'id' => $sess_codusuario]],
                         ['label' => 'Versões Anteriores', 'url' => ['/site/versao']],
                         ['label' => 'Sair', 'url' => 'http://portalsenac.am.senac.br/portal_senac/control_base_vermodulos/control_base_vermodulos.php'],
                ],
-        ],
+            ],
         ],
     ]);
+} else{
+    echo NavX::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => [
+            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Listagem de Contratos', 'url' => ['/contratos/contratos/listagem-contratos']],
+            ['label' => 'Usuário (' . utf8_encode(ucwords(strtolower($session['sess_nomeusuario']))) . ')',
+        'items' =>  [
+                        '<li class="dropdown-header">Área Usuário</li>',
+                        ['label' => 'Versões Anteriores', 'url' => ['/site/versao']],
+                        ['label' => 'Sair', 'url' => 'http://portalsenac.am.senac.br/portal_senac/control_base_vermodulos/control_base_vermodulos.php'],
+                    ],
+            ],
+        ],
+    ]);
+
+}
     NavBar::end();
     ?>
 

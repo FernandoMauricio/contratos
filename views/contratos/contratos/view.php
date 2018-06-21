@@ -10,15 +10,22 @@ use yii\helpers\Url;
 $this->title = $model->cont_codcontrato;
 $this->params['breadcrumbs'][] = ['label' => 'Contratos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$session = Yii::$app->session;
 ?>
 <div class="contratos-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+<?php if($session['sess_codunidade'] == 53) { ?>
     <p>
         <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span> Retornar', ['index'], ['class' => 'btn btn-default']) ?>
         <?= Html::a('<span class="glyphicon glyphicon-pencil"></span> Atualizar', ['update', 'id' => $model->cont_codcontrato], ['class' => 'btn btn-primary']) ?>  
     </p>
+<?php }else{ ?>
+    <p>
+        <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span> Retornar', ['listagem-contratos'], ['class' => 'btn btn-default']) ?>
+    </p>
+<?php } ?>
 
     <div class="panel panel-primary">
         <div class="panel-heading">

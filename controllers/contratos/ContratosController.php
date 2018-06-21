@@ -119,6 +119,21 @@ class ContratosController extends Controller
         ]);
     }
 
+    /**
+     * Lists all Contratos models for Managers
+     * @return mixed
+     */
+    public function actionListagemContratos()
+    {
+        $searchModel = new ContratosSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('listagem-contratos', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionGerarAditivo($id)
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
@@ -217,9 +232,7 @@ class ContratosController extends Controller
     {
         //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
         $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 53){
-            return $this->AccessoAdministrador();
-        }
+
         $model = $this->findModel($id);
         $modelsPagamentos = $model->pagamentos;
         $modelsAditivos = $model->aditivos;
@@ -470,15 +483,9 @@ class ContratosController extends Controller
      */
     protected function findModel($id)
     {
-        //VERIFICA SE O COLABORADOR FAZ PARTE DA DIF
-        $session = Yii::$app->session;
-        if($session['sess_codunidade'] != 53){
-            return $this->AccessoAdministrador();
-        }
         if (($model = Contratos::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
