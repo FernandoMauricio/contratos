@@ -153,6 +153,8 @@ class ContratosController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
+
+            $arrayValor = $model->adit_tipos;
             //Validação para que o Fim da vigência não seja menor que o Início da Vigência
             if ($model->adit_data_fim_vigencia <= $model->adit_data_ini_vigencia) {
                 Yii::$app->session->setFlash('danger', '<b>ERRO!</b>  <b>Fim da Vigência</b> não pode ser menor que a data de <b>Início da Vigência</b>!');
@@ -163,7 +165,8 @@ class ContratosController extends Controller
         $index = 0;
         $valorTotalPagar = 0;
         $valorRateio = 0;
-        if($model->adit_tipos != 'Prazo') { //Se a opção for PRAZO, não precisará distribuir os pagamentos
+
+        if (in_array('Valor', $arrayValor)) {//Se a opção tiver VALOR, precisará distribuir os pagamentos
             foreach ($aditivosPagamentos as $index => $AditivoPagamento) {
                 for($i = new DateTime($model->adit_data_ini_vigencia); $i <= new DateTime($model->adit_data_fim_vigencia); $i->modify('+1 month')) {
                     $date = $i->format('Y-m-'.$model->diaPagamento.'');
