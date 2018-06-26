@@ -163,23 +163,25 @@ class ContratosController extends Controller
         $index = 0;
         $valorTotalPagar = 0;
         $valorRateio = 0;
-        foreach ($aditivosPagamentos as $index => $AditivoPagamento) {
-            for($i = new DateTime($model->adit_data_ini_vigencia); $i <= new DateTime($model->adit_data_fim_vigencia); $i->modify('+1 month')) {
-                $date = $i->format('Y-m-'.$model->diaPagamento.'');
-                //Inclui as informações dos candidatos classificados
-                    Yii::$app->db->createCommand()->insert('aditivos_pag',
-                        [
-                            'aditivos_id' => $model->adit_codaditivo,
-                            'adipa_datavencimento' => $date, //Contador dos meses a partir da data de vigência
-                            'adipa_valorpagar' => $model->adit_valor,    
-                            'adipa_databaixado' => NULL, 
-                            'adipa_valorpago' => 0, 
-                            'adipa_situacao' => 'Pendente' 
-                        ])->execute();
-                $index++;
+        if($model->adit_tipos != 'Prazo') { //Se a opção for PRAZO, não precisará distribuir os pagamentos
+            foreach ($aditivosPagamentos as $index => $AditivoPagamento) {
+                for($i = new DateTime($model->adit_data_ini_vigencia); $i <= new DateTime($model->adit_data_fim_vigencia); $i->modify('+1 month')) {
+                    $date = $i->format('Y-m-'.$model->diaPagamento.'');
+                    //Inclui as informações dos candidatos classificados
+                        Yii::$app->db->createCommand()->insert('aditivos_pag',
+                            [
+                                'aditivos_id' => $model->adit_codaditivo,
+                                'adipa_datavencimento' => $date, //Contador dos meses a partir da data de vigência
+                                'adipa_valorpagar' => $model->adit_valor,    
+                                'adipa_databaixado' => NULL, 
+                                'adipa_valorpago' => 0, 
+                                'adipa_situacao' => 'Pendente' 
+                            ])->execute();
+                    $index++;
+                }
+                //Busca o valor que será reateado no período escolhido
+               $valorRateio = $model->adit_valor / $index;
             }
-            //Busca o valor que será reateado no período escolhido
-           $valorRateio = $model->adit_valor / $index;
         }
         //Atualiza os pagamentos com o valor Rateado
         foreach ($aditivosPagamentos as $AditivoPagamento) {

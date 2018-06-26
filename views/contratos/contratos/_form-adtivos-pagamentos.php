@@ -10,6 +10,7 @@ use kartik\widgets\DatePicker;
 use kartik\number\NumberControl;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
+use app\models\contratos\aditivos\AditivosPagamentos;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\contratos\Contratos */
@@ -80,6 +81,8 @@ use yii\bootstrap\Modal;
             <?= date('d/m/Y', strtotime($modelAditivo->adit_datacadastro)) ?>
         </div>
     </div><br />
+
+<?php if(isset($modelAditivo->aditivosPagamentos[0])): ?>
 
 <div class="panel-body">
     <?php DynamicFormWidget::begin([
@@ -200,6 +203,7 @@ use yii\bootstrap\Modal;
     </div>
     <?php DynamicFormWidget::end(); ?>
     </div>
+    <?php endif; ?>
     <?php endforeach; ?>
     <?php endif; ?>
 </div>
