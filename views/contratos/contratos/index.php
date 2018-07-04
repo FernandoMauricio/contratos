@@ -8,6 +8,8 @@ use kartik\date\DatePicker;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 
+use app\models\base\prestadores\Prestadores;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\contratos\ContratosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -53,8 +55,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'expandOneOnly'=>true
         ],
         'cont_codcontrato',
-        'cont_numerocontrato',
         'cont_origem',
+	    [
+	        'attribute'=>'cont_codprestador', 
+	        'width'=>'5%',
+	        'value'=>function ($model, $key, $index, $widget) { 
+	            return $model->cont_codprestador != NULL ? $model->prestadores->pres_nome : '' ;
+	        },
+	        'filterType'=>GridView::FILTER_SELECT2,
+	        'filter'=>ArrayHelper::map(Prestadores::find()->select(['pres_codprestador', 'pres_nome'])->asArray()->all(), 'pres_codprestador', 'pres_nome'),
+	        'filterInputOptions'=>['placeholder'=>'Selecione o Prestador...'],
+	        'filterWidgetOptions'=>[
+	            'pluginOptions'=>['allowClear'=>true],
+	        ],
+	    ],
+        'cont_numerocontrato',
         [
             'attribute'=>'cont_permitirprazo', 
             'width'=>'5%',
@@ -128,7 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'beforeHeader'=>[
         [
             'columns'=>[
-                ['content'=>'Detalhes dos Contratos', 'options'=>['colspan'=>7, 'class'=>'text-center warning']], 
+                ['content'=>'Detalhes dos Contratos', 'options'=>['colspan'=>8, 'class'=>'text-center warning']], 
                 ['content'=>'Área de Ações', 'options'=>['colspan'=>1, 'class'=>'text-center warning']], 
             ],
         ]
