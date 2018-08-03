@@ -103,7 +103,7 @@ $session = Yii::$app->session;
                     <?php   if($files=\yii\helpers\FileHelper::findFiles('uploads/contratos/' . $model->cont_codcontrato,['recursive'=>FALSE])):
                             if (isset($files[0])):
                                 foreach ($files as $index => $file):
-                                $nameFicheiro = substr($file, strrpos($file, '/') + 1); ?>
+                                $nameFicheiro = substr($file, strrpos($file, '/') + 3); ?>
                                 <tbody>
                                     <td><?= $index + 1; ?></td>
                                     <td><?= Html::a($nameFicheiro, Url::base().'/uploads/contratos/'. $model->cont_codcontrato. '/' . $nameFicheiro, ['target'=>'_blank', 'data-pjax'=>"0"]); ?></td>
