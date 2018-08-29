@@ -78,7 +78,7 @@ use yii\helpers\Url;
                                 $nameFicheiro = substr($file, strrpos($file, '/') + 3); ?>
                                 <tbody>
                                     <td><?= $index + 1; ?></td>
-                                    <td><?= Html::a($nameFicheiro, Url::base().'/uploads/contratos/'. $model->cont_codcontrato. '/' . $nameFicheiro, ['target'=>'_blank', 'data-pjax'=>"0"]); ?></td>
+                                    <td><?= Html::a($nameFicheiro, Url::base().'/uploads/contratos/'. $model->cont_codcontrato. '/' . utf8_encode($nameFicheiro), ['target'=>'_blank', 'data-pjax'=>"0"]); ?></td>
                                 </tbody>
                                 <?php endforeach; ?>
                             <?php endif; ?>
