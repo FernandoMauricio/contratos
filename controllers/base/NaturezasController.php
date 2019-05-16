@@ -163,7 +163,7 @@ class NaturezasController extends Controller
             && !isset($session['sess_unidade']) 
             && !isset($session['sess_responsavelsetor'])) 
         {
-           return $this->redirect('http://portalsenac.am.senac.br');
+           return $this->redirect('https://portalsenac.am.senac.br');
         }
     }
 

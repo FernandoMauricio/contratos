@@ -75,7 +75,7 @@ class Contratos extends \yii\db\ActiveRecord
                 return $('#contratos-cont_codtipo').val() != 3;
             }", 'message' => '"Valor" não pode ficar em branco.'
             ],
-            [['file'], 'file', 'maxFiles' => 10, 'extensions' => 'pdf', 'maxSize' => 1024 * 1024 * 16, 'tooBig' => 'O arquivo é grande demais. Seu tamanho não pode exceder 16MB.','checkExtensionByMimeType'=>false, 'extensions' => 'pdf, zip, rar, doc, docx'],
+            [['file'], 'file', 'maxFiles' => 10, 'extensions' => 'pdf', 'maxSize' => 2048 * 2048 * 16, 'tooBig' => 'O arquivo é grande demais. Seu tamanho não pode exceder 16MB.','checkExtensionByMimeType'=>false, 'extensions' => 'pdf, zip, rar, doc, docx'],
         ];
     }
 
