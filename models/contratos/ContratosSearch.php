@@ -48,6 +48,7 @@ class ContratosSearch extends Contratos
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['cont_codcontrato' => SORT_DESC]]
         ]);
 
         $this->load($params);
