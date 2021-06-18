@@ -43,6 +43,7 @@ class Contratos extends \yii\db\ActiveRecord
     public $unidadesAtendidas;
     public $diaPagamento;
     public $file;
+    public $diasRestantes;
     
     /**
      * @inheritdoc

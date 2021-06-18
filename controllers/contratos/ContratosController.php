@@ -49,7 +49,10 @@ class ContratosController extends Controller
 
     public function actionPrazoVigencia()//Envia emails automáticos para o responsável pelo contrato
     {
-        $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 6 MONTH';
+        $sql = 'SELECT *, DATEDIFF(`cont_data_fim_vigencia`, curdate()) AS `diasRestantes` FROM `contratos_cont` WHERE 
+        `cont_data_fim_vigencia` BETWEEN NOW() and DATE_ADD(NOW(), INTERVAL 6 MONTH)
+    
+        ';
         $models = Contratos::findBySql($sql)->all();
         foreach ($models as $model) {
             $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
@@ -59,62 +62,33 @@ class ContratosController extends Controller
                     Yii::$app->mailer->compose()
                     ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
                     ->setTo($email_gerente)
-                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 6 meses')
-                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em 6 meses')
-                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br> O contrato com a empresa '.$model->prestadores->pres_nome.' vencerá em 6 meses. Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br> Controle de Contratos - Senac AM.</h4>')
+                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em '. Yii::$app->formatter->asDate($model->cont_data_fim_vigencia, 'd/M/Y').' ('.$model->diasRestantes.' dias restantes).')
+                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em '. Yii::$app->formatter->asDate($model->cont_data_fim_vigencia, 'd/M/Y').' ('.$model->diasRestantes.' dias restantes).')
+                    ->setHtmlBody('Prezado(a) Gerente, <br><br> O contrato com a empresa <b>'.$model->prestadores->pres_nome.'</b> vencerá em <b>'. Yii::$app->formatter->asDate($model->cont_data_fim_vigencia, 'd/M/Y').'</b> <b style="color:red;">('.$model->diasRestantes.' dias restantes)</b>. Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br><br> Controle de Contratos - Senac AM.')
                     ->send();
                 } 
-        }
-        $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 3 MONTH';
-        $models = Contratos::findBySql($sql)->all();
-        foreach ($models as $model) {
-            $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
-            $email_solicitacao = Email::findBySql($sql_email)->all(); 
-            foreach ($email_solicitacao as $email) {
-                $email_gerente  = $email["emus_email"];
-                    Yii::$app->mailer->compose()
-                    ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
-                    ->setTo($email_gerente)
-                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 3 meses')
-                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em 3 meses')
-                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br> O contrato com a empresa '.$model->prestadores->pres_nome.' vencerá em 3 meses. Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br> Controle de Contratos - Senac AM.</h4>')
-                    ->send();
-                } 
-        }
-        $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 2 MONTH';
-        $models = Contratos::findBySql($sql)->all();
-        foreach ($models as $model) {
-            $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
-            $email_solicitacao = Email::findBySql($sql_email)->all(); 
-            foreach ($email_solicitacao as $email) {
-                $email_gerente  = $email["emus_email"];
-                    Yii::$app->mailer->compose()
-                    ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
-                    ->setTo($email_gerente)
-                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 2 meses')
-                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em 2 meses')
-                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br> O contrato com a empresa '.$model->prestadores->pres_nome.' vencerá em 2 meses. <br> Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br> Controle de Contratos - Senac AM.</h4>')
-                    ->send();
-                } 
-        }
-        $sql = 'SELECT * FROM `contratos_cont` WHERE `cont_data_fim_vigencia` = DATE(NOW()) + INTERVAL 1 MONTH';
-        $models = Contratos::findBySql($sql)->all();
-        foreach ($models as $model) {
-            $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
-            $email_solicitacao = Email::findBySql($sql_email)->all(); 
-            foreach ($email_solicitacao as $email) {
-                $email_gerente  = $email["emus_email"];
-                    Yii::$app->mailer->compose()
-                    ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
-                    ->setTo($email_gerente)
-                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em 1 mês')
-                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em 1 mês')
-                    ->setHtmlBody('<h4>Prezado(a) Gerente, <br><br> O contrato com a empresa '.$model->prestadores->pres_nome.' vencerá em 1 mês. <br> Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br> Controle de Contratos - Senac AM.</h4>')
-                    ->send();
-            } 
         }
     }
 
+    public function actionPrazoVigenciaUmMes()//Envia emails automáticos para o responsável pelo contrato
+    {
+        $sql = 'SELECT *,DATEDIFF(`cont_data_fim_vigencia`, curdate()) AS `diasRestantes`, cont_data_fim_vigencia FROM `contratos_cont` WHERE `cont_data_fim_vigencia` BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 MONTH)';
+        $models = Contratos::findBySql($sql)->all();
+        foreach ($models as $model) {
+            $sql_email = "SELECT emus_email FROM emailusuario_emus, colaborador_col, responsavelambiente_ream WHERE ream_codunidade = '".$model->cont_localizacaogestor."' AND ream_codcolaborador = col_codcolaborador AND col_codusuario = emus_codusuario";
+            $email_solicitacao = Email::findBySql($sql_email)->all(); 
+            foreach ($email_solicitacao as $email) {
+                $email_gerente  = $email["emus_email"];
+                    Yii::$app->mailer->compose()
+                    ->setFrom(['no-reply@am.senac.br' => 'Controle de Contratos - Senac AM'])
+                    ->setTo($email_gerente)
+                    ->setSubject('Contrato '.$model->cont_numerocontrato.' vence em '. Yii::$app->formatter->asDate($model->cont_data_fim_vigencia, 'd/M/Y').' ('.$model->diasRestantes.' dias restantes).')
+                    ->setTextBody('Contrato '.$model->cont_numerocontrato.' vence em '. Yii::$app->formatter->asDate($model->cont_data_fim_vigencia, 'd/M/Y').' ('.$model->diasRestantes.' dias restantes).')
+                    ->setHtmlBody('Prezado(a) Gerente, <br><br> O contrato com a empresa <b>'.$model->prestadores->pres_nome.'</b> vencerá em <b>'. Yii::$app->formatter->asDate($model->cont_data_fim_vigencia, 'd/M/Y').'</b> <b style="color:red;">('.$model->diasRestantes.' dias restantes)</b>. Por favor, não responda esse e-mail.<br><br> Atenciosamente, <br><br> Controle de Contratos - Senac AM.')
+                    ->send();
+                } 
+        }
+    }
     /**
      * Lists all Contratos models.
      * @return mixed
